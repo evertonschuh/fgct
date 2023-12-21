@@ -1,0 +1,15 @@
+.bootstrap-touchspin .bootstrap-touchspin-down {
+	margin-right:-2px !important;
+}
+
+.bootstrap-touchspin .bootstrap-touchspin-up {
+	margin-left:-2px !important;
+}
+
+.bootstrap-touchspin  .bootstrap-touchspin-postfix {
+	border-left: none;
+	border-right:none;
+}
+.bootstrap-touchspin .value-porcentage {
+	margin: 0 !important;
+}

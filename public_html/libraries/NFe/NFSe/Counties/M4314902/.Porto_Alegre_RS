@@ -1,0 +1,9 @@
+Porto_Alegre RS
+IBGE: 4314902
+#SIAF:
+#Padrãqo: ABRASF (modificado)
+#SOAP Version: 1.1 e/ou SOAP Version: 1.2
+URL Homologação: http://nfse-hom.procempa.com.br/nfe-ws
+URL Produção: http://nfe.portoalegre.rs.gov.br/nfe-ws
+#xmlns: http://www.issnetonline.com.br/webservice/nfd
+#Atenção com os XSD: nesse caso existe um prefixo "servico_" no nome e não tem sulfixos

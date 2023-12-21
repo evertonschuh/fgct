@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="content" method="upgrade">
+	<name>AllVideos (by JoomlaWorks)</name>
+	<author>JoomlaWorks</author>
+	<authorEmail>please-use-the-contact-form@joomlaworks.net</authorEmail>
+	<authorUrl>www.joomlaworks.net</authorUrl>
+	<copyright>Copyright (c) 2006 - 2015 JoomlaWorks Ltd. All rights reserved.</copyright>
+	<creationDate>April 20th, 2015</creationDate>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<version>4.7.0</version>
+	<description>Este Plugin serve para a exibição de vídeos em artigos do Blog<br/>Utilize as TAGS</description>
+	<!-- Parameters -->
+	<config>
+		<fields name="params">
+			<fieldset name="basic" addfieldpath="/plugins/content/allvideos/allvideos/includes/elements">
+				<field name="" type="header" default="Parametros para Vídeo" label="" description="" />
+				<field name="vfolder" type="text" default="images/videos" label="Pasta de vídeo local:" description="Informe a pasta local onde os arquivos de vídeos são armazenados"  class="col-xs-8 col-sm-9 col-md-9 col-lg-9"  />
+				<field name="vwidth" type="text" default="400" label="Largura padrão:" description="Informe a Largura máxima (em px) que o player de vídeo terá ao ser exibido em seu artigo." class="col-xs-8 col-sm-9 col-md-3 col-lg-2"  />
+				<field name="vheight" type="text" default="300" label="Altura padrão:" description="Informe a Altura máxima (em px) que o player de vídeo terá ao ser exibido em seu artigo." class="col-xs-8 col-sm-9 col-md-3 col-lg-2"  />
+				<field name="transparency" type="radio" default="transparent" label="WebM transparente:" description="Defina se o Player WebM será transparente ao reproduzir arquivos Flash, MP4, OGG Theora" class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
+					<option value="opaque">JNO</option>
+					<option value="transparent">JYES</option>
+				</field>
+				<field name="background" type="text" default="#010101" label="Backgroung WebM:" description="Defina a cor de fundo para midia reproduzidas pelo player WebM ao reproduzir arquivos Flash, MP4, OGG Theora" class="col-xs-8 col-sm-9 col-md-3 col-lg-2" />
+				<field name="controls" type="radio" default="1" label="Exibir controles JW" description="" class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="backgroundQT" type="list" default="black" label="Backgroung QuickTime:" description="Defina a cor de fundo para midia reproduzidas pelo player QuickTime" class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
+					<option value="black">preto (# 000000)</option>
+					<option value="green">verde (# 008000)</option>
+					<option value="silver">prata (# c0c0c0)</option>
+					<option value="lime">cal (# 00ff00)</option>
+					<option value="gray">cinza (# 808080)</option>
+					<option value="olive">oliva (# 808000)</option>
+					<option value="white">branco (#ffffff)</option>
+					<option value="yellow">amarelo (# ffff00)</option>
+					<option value="maroon">marrom (# 800000)</option>
+					<option value="navy">navy (# 000080)</option>
+					<option value="red">vermelho (# ff0000)</option>
+					<option value="blue">azul (# 0000FF)</option>
+					<option value="purple">roxo (# 800080)</option>
+					<option value="teal">teal (# 008080)</option>
+					<option value="fuchsia">fúcsia (# ff00ff)</option>
+					<option value="aqua">Aqua (# 00ffff)</option>
+				</field>
+				<field name="" type="header" default="Parametros para Audio" label="" description="" />
+				<field name="afolder" type="text" default="images/audio" label="Pasta de audio local:" description="Informe a pasta local onde os arquivos de audio são armazenados"  class="col-xs-8 col-sm-9 col-md-9 col-lg-9"  />
+				<field name="awidth" type="text" default="480" label="Largura padrão:" description="Informe a Largura máxima (em px) que o player de audio terá ao ser exibido em seu artigo." class="col-xs-8 col-sm-9 col-md-3 col-lg-2"  />
+				<field name="aheight" type="text" default="24" label="Altura padrão:" description="Informe a Altura máxima (em px) que o player de audio terá ao ser exibido em seu artigo." class="col-xs-8 col-sm-9 col-md-3 col-lg-2"  />
+				<field name="abackground" type="text" default="#010101" size="6" label="Backgroung WebM:" description="Defina a cor de fundo leitor de áudio" class="col-xs-8 col-sm-9 col-md-3 col-lg-2" />
+				<field name="afrontcolor" type="text" default="#FFFFFF" size="6" label="Frontgroung WebM:" description="Defina a cor de frente leitor de áudio" class="col-xs-8 col-sm-9 col-md-3 col-lg-2" />
+				<field name="alightcolor" type="text" default="#00ADE3" size="6" label="Cor Ligth:" description="Difina uma cor clara para o leitor de áudio" class="col-xs-8 col-sm-9 col-md-3 col-lg-2" />
+				<field name="allowAudioDownloading" type="radio" default="0" label="Download de áudio:" description="Permitir o download de áudio">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="" type="header" default="Parâmetros globais" label="" description="" />
+				<field name="autoplay" type="radio" default="0" label="Autoplay:" description="Reproduzir automaticamente o Video/Audio ao carregar o artigo." class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="loop" type="radio" default="0" label="Loop:" description="Reproduzir infinitamente o Video/Audio" class="col-xs-8 col-sm-9 col-md-9 col-lg-9">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+	<!-- Files -->
+	<files folder="plugin" destination="allvideos">
+		<filename plugin="allvideos">allvideos.php</filename>
+		<filename plugin="allvideos">allvideos.xml</filename>
+		<folder>allvideos</folder>
+	</files>
+	<media folder="plugin/media" destination="allvideos">
+		<filename>AllVideos_300x119_24.png</filename>
+	</media>
+</extension>

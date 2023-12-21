@@ -1,0 +1,41 @@
+.modal {
+  text-align: center;
+}
+
+.modal-dialog  {
+	  margin:25px;
+  }
+
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 80%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+  
+}
+
+#sbox-btn-close {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: -15px;
+    top: -15px;
+    background: url(../images/closebox.png) no-repeat center;
+    border: none;
+	z-index:2;
+}
+
+.modal-transparent{
+    -webkit-box-shadow: none;
+    box-shadow: none;
+	background: transparent;
+	border:none;
+	};
