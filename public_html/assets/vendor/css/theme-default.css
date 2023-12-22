@@ -1,15 +1,15 @@
 @charset "UTF-8";
 :root {
-  --primary: #FF7000; /*#696cff;*/
-  --secondary:#ff7700; /*#5f61e6*/
-  --tertiary:#ee6700; /*#6467f2*/
-  --primary-rgba-0: rgba(255, 112, 0, 0); /*rgba(105, 108, 255, 0);*/
-  --primary-rgba-08: rgba(255, 112, 0, 0.08); /*rgba(105, 108, 255, 0.08);*/
-  --primary-rgba-11: rgba(255, 112, 0, 0.11); /*rgba(105, 108, 255, 0.11);*/
-  --primary-rgba-15: rgba(255, 112, 0, 0.15); /*rgba(105, 108, 255, 0.15);*/
-  --primary-rgba-16: rgba(255, 112, 0, 0.16); /*rgba(105, 108, 255, 0.16);*/
-  --primary-rgba-4: rgba(255, 112, 0, 0.4); /*rgba(105, 108, 255, 0.4);*/
-  --primary-rgba-85: rgba(255, 112, 0, 0.85); /*rgba(105, 108, 255, 0.85);*/
+  --primary: #8DA500; /*#696cff;*/
+  --secondary:#a6c400; /*#5f61e6*/
+  --tertiary:#7e9400; /*#6467f2*/
+  --primary-rgba-0: rgba(141, 165, 0, 0); /*rgba(105, 108, 255, 0);*/
+  --primary-rgba-08: rgba(141, 165, 0, 0.08); /*rgba(105, 108, 255, 0.08);*/
+  --primary-rgba-11: rgba(141, 165, 0, 0.11); /*rgba(105, 108, 255, 0.11);*/
+  --primary-rgba-15: rgba(141, 165, 0, 0.15); /*rgba(105, 108, 255, 0.15);*/
+  --primary-rgba-16: rgba(141, 165, 0, 0.16); /*rgba(105, 108, 255, 0.16);*/
+  --primary-rgba-4: rgba(141, 165, 0, 0.4); /*rgba(105, 108, 255, 0.4);*/
+  --primary-rgba-85: rgba(141, 165, 0, 0.85); /*rgba(105, 108, 255, 0.85);*/
 }
 
 .layout-navbar-fixed .layout-wrapper:not(.layout-horizontal) .layout-page:before {

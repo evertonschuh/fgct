@@ -11,8 +11,14 @@ jQuery(document).ready(function(){
 
 
     if (element.is('li')) {
+        console.log();
         element.addClass('active');
+        if(element.parent('.menu-sub').parent('.menu-item').length > 0){
+            element.parent('.menu-sub').parent('.menu-item').addClass('active').addClass('open');
+        }
     }
+
+    
 
 
 });

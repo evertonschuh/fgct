@@ -319,23 +319,46 @@ abstract class JUserHelper
 	 */
 	public static function verifyPassword($password, $hash, $user_id = 0)
 	{
-		$rehash = false;
-		$match = false;
-
-
-
-		// If we are using phpass
-
-		if (strpos($hash, '$P$') === 0) {
-
-			require_once(JPATH_LIBRARIES . DS . 'phpass' . DS . 'PasswordHash.php');
+		if (strpos($hash, '$P$') === 0)
+		{
 			// Use PHPass's portable hashes with a cost of 10.
 			$phpass = new PasswordHash(10, true);
-
 			$match = $phpass->CheckPassword($password, $hash);
-
 			$rehash = false;
-		} else {
+		}
+		// Check for Argon2i hashes
+		elseif (strpos($hash, '$argon2i') === 0)
+		{
+			// This implementation is not supported through any existing polyfills
+			$match = password_verify($password, $hash);
+
+			$rehash = password_needs_rehash($hash, PASSWORD_ARGON2I);
+		}
+		// Check for bcrypt hashes
+		elseif (strpos($hash, '$2') === 0)
+		{
+			JCrypt::hasStrongPasswordSupport();
+
+			// \JCrypt::hasStrongPasswordSupport() includes a fallback for us in the worst case
+			
+			$match = password_verify($password, $hash);
+
+
+			$rehash = password_needs_rehash($hash, PASSWORD_BCRYPT);
+		}
+		elseif (substr($hash, 0, 8) == '{SHA256}')
+		{
+			// Check the password
+			$parts     = explode(':', $hash);
+			$salt      = @$parts[1];
+			$testcrypt = static::getCryptedPassword($password, $salt, 'sha256', true);
+
+			$match = JCrypt::timingSafeCompare($hash, $testcrypt);
+
+			$rehash = true;
+		}
+		else
+		{
 			// Check the password
 			$parts = explode(':', $hash);
 			$crypt = $parts[0];
@@ -346,10 +369,12 @@ abstract class JUserHelper
 			$testcrypt = md5($password . $salt) . ($salt ? ':' . $salt : '');
 
 			$match = JCrypt::timingSafeCompare($hash, $testcrypt);
+			
 		}
 
 		// If we have a match and rehash = true, rehash the password with the current algorithm.
-		if ((int) $user_id > 0 && $match && $rehash) {
+		if ((int) $user_id > 0 && $match && $rehash)
+		{
 			$user = new JUser($user_id);
 			$user->password = self::hashPassword($password);
 			$user->save();

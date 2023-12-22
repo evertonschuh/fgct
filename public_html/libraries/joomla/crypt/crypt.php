@@ -47,7 +47,22 @@ class JCrypt
 		// Set the encryption cipher.
 		$this->_cipher = isset($cipher) ? $cipher : new JCryptCipherSimple;
 	}
+	
+	public static function hasStrongPasswordSupport()
+	{
+		
+		//JLog::add(__METHOD__ . '() is deprecated without replacement.', Log::WARNING, 'deprecated');
 
+		// Log usage of deprecated function
+		
+		if (!defined('PASSWORD_DEFAULT'))
+		{
+			// Always make sure that the password hashing API has been defined.
+			include_once JPATH_LIBRARIES . '/vendor/ircmaxell/password-compat/lib/password.php';
+		}
+		
+		return true;
+	}
 	/**
 	 * Method to decrypt a data string.
 	 *

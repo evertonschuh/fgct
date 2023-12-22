@@ -38,7 +38,7 @@ endif;
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="<?php echo $this->language; ?>" class="light-style layout-navbar-fixed layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="/assets/" data-template="vertical-menu-template">
+<html lang="<?php echo $this->language; ?>" class="light-style layout-navbar-fixed layout-compact layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="/assets/" data-template="vertical-menu-template">
   
     <head>
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -62,8 +62,8 @@ endif;
         <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
         <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />   
 			  <link rel="stylesheet" href="/assets/vendor/libs/toast-notification/toast-notification.css" />
-        <script src="/assets/vendor/js/helpers.js"></script>
 
+        <script src="/assets/vendor/js/helpers.js"></script>
         <script src="/assets/vendor/js/template-customizer.js"></script>
         <script src="/assets/js/config.js"></script>
     </head>
@@ -77,20 +77,20 @@ endif;
       <div class="layout-container">
         <!-- Menu -->
 
-        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" >
           <div class="app-brand main">
             <!-- Logo -->
               <div class="app-brand-logo main justify-content-center">
               </div>
             <!-- /Logo -->
-            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block">
               <i class="bx bx-chevron-left bx-sm align-middle"></i>
             </a>
           </div>
 
           <div class="menu-inner-shadow"></div>
 
-          <ul class="menu-inner py-1">
+          <ul class="menu-inner py-1 ps ps--active-y">
             <!-- Dashboard -->
             <li class="menu-item">
               <a href="<?php echo JRoute::_('index.php?view=dashboard');?>"  class="menu-link">
@@ -99,15 +99,15 @@ endif;
               </a>
             </li>
             <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Clientes</span>
+              <span class="menu-header-text">Cadastro</span>
             </li>
             <li class="menu-item">
-              <a href="<?php echo JRoute::_('index.php?view=corredors');?>" class="menu-link">
+              <a href="<?php echo JRoute::_('index.php?view=associados');?>" class="menu-link">
                 <div data-i18n="Corredors">Associados</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="<?php echo JRoute::_('index.php?view=corredors');?>" class="menu-link">
+              <a href="<?php echo JRoute::_('index.php?view=conviniados');?>" class="menu-link">
                 <div data-i18n="Corredors">Conveniados</div>
               </a>
             </li>
@@ -139,7 +139,7 @@ endif;
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="index.php?view=corredors" class="menu-link">
+                  <a href="index.php?view=cobrancas" class="menu-link">
                     <div data-i18n="Account">Cobranças</div>
                   </a>
                 </li>
@@ -489,7 +489,7 @@ endif;
     <script src="/assets/vendor/libs/popper/popper.js"></script>
     <script src="/assets/vendor/js/bootstrap.js"></script>
     <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-   
+    <script src="/assets/vendor/libs/hammer/hammer.js"></script>
     <!-- endbuild -->
 
 

@@ -38,6 +38,7 @@ class plgAuthenticationJoomla extends JPlugin
 		$cookie_path = $config->get('cookie_path', '/');
 		$testAdmin = false;
 		$response->type = 'Joomla';
+
 		// Joomla does not like blank passwords
 		if (empty($credentials['password'])) {
 			$response->status = JAuthentication::STATUS_FAILURE;
@@ -73,6 +74,7 @@ class plgAuthenticationJoomla extends JPlugin
 			endif;
 
 			if ($match === true) {
+				
 				$user = JUser::getInstance($result->id); // Bring this in line with the rest of the system
 				$response->email = $user->email;
 				$response->fullname = $user->name;

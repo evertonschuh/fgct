@@ -418,7 +418,7 @@ class JComponentHelper
 			// Fatal error.
 			//echo 'Componente: ' . $option;
 			//Error::raiseWarning(500, JText::sprintf('JLIB_APPLICATION_ERROR_COMPONENT_NOT_LOADING', $option, $error));
-			//return false;
+			return false;
 		}
 
 		// Convert the params to an object.

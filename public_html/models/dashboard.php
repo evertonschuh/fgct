@@ -35,8 +35,8 @@ class EASistemasModelDashboard extends JModel
 	function getCorredors()
 	{
 		$query = $this->_db->getQuery(true);
-		$query->select('COUNT(id_corredor)');
-		$query->from($this->_db->quoteName('#__corredor'));
+		$query->select('COUNT(id_associado)');
+		$query->from($this->_db->quoteName('#__intranet_associado'));
 		//$query->innerJoin($this->_db->quoteName('#__id_corredor') . ' ON(' . $this->_db->quoteName('id') . '=' . $this->_db->quoteName('id_user') . ')');	
 		//$query->where( $this->_db->quoteName('id') . '=' . $this->_db->quote( $this->_user->get('id') ) );
 		//$query->where( $this->_db->quoteName('block') . '=' . $this->_db->quote( '0' ) );
@@ -47,6 +47,7 @@ class EASistemasModelDashboard extends JModel
 	}
 	function getAniversariantes()
 	{
+		/*
 		$query = $this->_db->getQuery(true);
 		$query->select($this->_db->quoteName(array(
 			'name_corredor',
@@ -60,6 +61,6 @@ class EASistemasModelDashboard extends JModel
 		$query->where($this->_db->quoteName('status_corredor') . '=' . $this->_db->quote('1'));
 
 		$this->_db->setQuery($query);
-		return $this->_db->loadObjectList();
+		return $this->_db->loadObjectList();*/
 	}
 }
