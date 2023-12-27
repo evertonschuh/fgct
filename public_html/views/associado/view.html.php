@@ -4,9 +4,9 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.view');
 
-include_once(JPATH_SITE . DS . 'views' . DS . 'corredor' . DS . 'language.scrips.php');
+include_once(JPATH_SITE . DS . 'views' . DS . 'associado' . DS . 'language.scrips.php');
 
-class EASistemasViewCorredor extends JView
+class EASistemasViewAssociado extends JView
 {
 	public function display($tpl = null)
 	{
@@ -35,7 +35,8 @@ class EASistemasViewCorredor extends JView
 		//$document->addScript('/assets/js/moment-with-locales.js');
 		//$document->addScript('/assets/js/bootstrap-datetimepicker.js');
 
-		$document->addScript('/assets/js-custom/corredor.js');
+		//$document->addScript('/assets/js-custom/corredor.js');
+		$document->addScript('/assets/js-custom/associado.js');
 	
 
 
@@ -44,14 +45,12 @@ class EASistemasViewCorredor extends JView
 		$this->item = $this->get('Item');
 		$this->estados = $this->get('Estados');
 		$this->cidades = $this->get('Cidades');
-		$this->grupos = $this->get('Grupos');
-		$this->categorias = $this->get('Categorias');
 
 
 
 
 
-		if (!empty($this->item->name_corredor)) :
+		if (!empty($this->item->name_pf)) :
 		//$document->addStyleSheet('views/system/css/jquery.fileupload.css');
 		//$document->addStyleSheet('views/system/css/jquery.fileupload-ui.css');
 		//$document->addScript('views/system/js/jquery.ui.widget.js');
@@ -71,10 +70,10 @@ class EASistemasViewCorredor extends JView
 		//$document->addScript('views/system/js/pf-upload.js');
 		endif;
 
-		if( empty($this->item->name_corredor) )
-			JToolBarHelper::title('<span class="text-muted fw-light">CLIENTE / Corredores / </span> ' . JText::_('Novo Corredor'));
+		if( empty($this->item->name) )
+			JToolBarHelper::title('<span class="text-muted fw-light">CADASTRO / Associados / </span> ' . JText::_('Novo Associado'));
 		else
-			JToolBarHelper::title('<span class="text-muted fw-light">CLIENTE / Corredores / </span> ' . $this->item->name_corredor);
+			JToolBarHelper::title('<span class="text-muted fw-light">CADASTRO / Associados / </span> ' . $this->item->name);
 
 
 		// Display the template*/

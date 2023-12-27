@@ -29,7 +29,7 @@ class InejeDynamicSelect {
 			$this->_db	= JFactory::getDBO();
 			$query = $this->_db->getQuery(true);		
 			$query->select($this->_db->quoteName('id_cidade') .' as value, '. $this->_db->quoteName('name_cidade') . ' as text');
-			$query->from($this->_db->quoteName('#__cidade'));
+			$query->from($this->_db->quoteName('#__intranet_cidade'));
 			$query->where($this->_db->quoteName('status_cidade') . ' = 1');
 			$query->where($this->_db->quoteName('id_estado') . ' = '. $this->_db->quote( $id_estado ));
 			$query->order($this->_db->quoteName('ordering'));
@@ -45,7 +45,7 @@ class InejeDynamicSelect {
 			$this->_db	= JFactory::getDBO();
 			$query = $this->_db->getQuery(true);		
 			$query->select($this->_db->quoteName('id_cidade') .' as value, '. $this->_db->quoteName('name_cidade') . ' as text');
-			$query->from($this->_db->quoteName('#__cidade'));
+			$query->from($this->_db->quoteName('#__intranet_cidade'));
 			$query->where($this->_db->quoteName('status_cidade') . ' = 1');
 			$query->where($this->_db->quoteName('id_estado') . ' = '. $this->_db->quote( $estado_buscacep ));
 			$query->order($this->_db->quoteName('ordering'));

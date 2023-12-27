@@ -33,103 +33,113 @@ class EASistemasCompletCep {
 		if ( !empty($cep_endereco ) )
 		{
 
-			$config = array(
-				"trace" => 1, 
-				"exception" => 0, 
-				"cache_wsdl" => 200
-			);
-			$address = 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';   
-			$client = new SoapClient($address, $config);
-			$results  = $client->consultaCEP(['cep' => $cep_endereco]);
 
-			$uf         = $results->return->uf;
-			$cidade     = $results->return->cidade;		
-			$bairro     = $results->return->bairro;
-			$logradouro = $results->return->end;
-			
-			$posicao = strpos($logradouro, ' - ');
-			if ($posicao!=0)
-				$logradouro = substr($logradouro, 0, $posicao);				
-			else
-				$logradouro = $logradouro;
-			
-			
-			//$uf = str_replace('&nbsp;','',$uf);
-			$uf = substr($uf, 0,2);
+			try
+				{
+					$config = array(
+						"trace" => 1, 
+						"exception" => 0, 
+						"cache_wsdl" => 200
+					);
+					$address = 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';   
+					$client = new SoapClient($address, $config);
+					$results  = $client->consultaCEP(['cep' => $cep_endereco]);
 
-			$this->_db	= JFactory::getDBO();
-			
-			$query = $this->_db->getQuery(true);
-			$query->select($this->_db->quoteName(array('id_estado', 'name_estado')));
-			$query->from('#__estado');
-			$query->where('sigla_estado =' .$this->_db->quote( $uf ));
-			$this->_db->setQuery($query);
-			$result = $this->_db->loadObject();
-			$id_estado =  $result->id_estado;
-			$estado = $result->name_estado;
-
-
-			$query = $this->_db->getQuery(true);
-			$query->select( 'id_cidade' );
-			$query->from( '#__cidade' );
-			$query->where( 'name_cidade='. $this->_db->quote( $cidade ));
-			$this->_db->setQuery($query);
-			
-			if ( (boolean) $result = $this->_db->loadObject() )
-				$id_cidade = $result->id_cidade;
-				
-			else {
-				
-				$query = $this->_db->getQuery(true);
-				$query->select( 'MAX( ' . $this->_db->quoteName('ordering') . ' ) as ordering' );
-				$query->from( '#__cidade' );
-				$query->where( 'id_estado ='.$this->_db->quote( $id_estado ) );
-				$this->_db->setQuery($query);					
-				$result = $this->_db->loadObject();
-				$ordering = $result->ordering +1;
-									
-				$columns = array('id_estado',
-								 'status_cidade',
-								 'name_cidade',
-								 'ordering');
-								 
-				$values = array($this->_db->quote( $id_estado ), 
-								$this->_db->quote(1), 
-								$this->_db->quote( $cidade ) ,  
-								$this->_db->quote( $ordering ) );										 
-
-			
-				$query = $this->_db->getQuery(true);
-				$query->insert( $this->_db->quoteName('#__cidade') );
-				$query->columns($this->_db->quoteName($columns));	
-				$query->values(implode(',', $values));
-				$this->_db->setQuery($query);
-				$this->_db->query();
-
-				$query = $this->_db->getQuery(true);
-				$query->select( 'id_cidade' );
-				$query->from( '#__cidade' );
-				$query->where( 'name_cidade='. $this->_db->quote( $cidade ) );
-				
-				$this->_db->setQuery($query);
-				
-				$result = $this->_db->loadObject();
-				
-				$id_cidade = $result->id_cidade;
+					if(!isset($results->return->uf))
+						die();
+					$uf         = $results->return->uf;
+					$cidade     = $results->return->cidade;		
+					$bairro     = $results->return->bairro;
+					$logradouro = $results->return->end;
 					
+					$posicao = strpos($logradouro, ' - ');
+					if ($posicao!=0)
+						$logradouro = substr($logradouro, 0, $posicao);				
+					else
+						$logradouro = $logradouro;
+					
+					
+					//$uf = str_replace('&nbsp;','',$uf);
+					$uf = substr($uf, 0,2);
 
-			}
-		 
-			$dados = array(
-					'logradouro'=> $logradouro,
-					'bairro'=> $bairro,
-					'cidade'=> $cidade,
-					'id_cidade'=> $id_cidade,
-					'estado'=> $estado,
-					'id_estado'=> $id_estado,
-			);
- 
-			die(json_encode($dados));
+					$this->_db	= JFactory::getDBO();
+					
+					$query = $this->_db->getQuery(true);
+					$query->select($this->_db->quoteName(array('id_estado', 'name_estado')));
+					$query->from('#__intranet_estado');
+					$query->where('sigla_estado =' .$this->_db->quote( $uf ));
+					$this->_db->setQuery($query);
+					$result = $this->_db->loadObject();
+					$id_estado =  $result->id_estado;
+					$estado = $result->name_estado;
+
+
+					$query = $this->_db->getQuery(true);
+					$query->select( 'id_cidade' );
+					$query->from( '#__intranet_cidade' );
+					$query->where( 'name_cidade='. $this->_db->quote( $cidade ));
+					$this->_db->setQuery($query);
+					
+					if ( (boolean) $result = $this->_db->loadObject() )
+						$id_cidade = $result->id_cidade;
+						
+					else {
+						
+						$query = $this->_db->getQuery(true);
+						$query->select( 'MAX( ' . $this->_db->quoteName('ordering') . ' ) as ordering' );
+						$query->from( '#__intranet_cidade' );
+						$query->where( 'id_estado ='.$this->_db->quote( $id_estado ) );
+						$this->_db->setQuery($query);					
+						$result = $this->_db->loadObject();
+						$ordering = $result->ordering +1;
+											
+						$columns = array('id_estado',
+										'status_cidade',
+										'name_cidade',
+										'ordering');
+										
+						$values = array($this->_db->quote( $id_estado ), 
+										$this->_db->quote(1), 
+										$this->_db->quote( $cidade ) ,  
+										$this->_db->quote( $ordering ) );										 
+
+					
+						$query = $this->_db->getQuery(true);
+						$query->insert( $this->_db->quoteName('#__intranet_cidade') );
+						$query->columns($this->_db->quoteName($columns));	
+						$query->values(implode(',', $values));
+						$this->_db->setQuery($query);
+						$this->_db->query();
+
+						$query = $this->_db->getQuery(true);
+						$query->select( 'id_cidade' );
+						$query->from( '#__intranet_cidade' );
+						$query->where( 'name_cidade='. $this->_db->quote( $cidade ) );
+						
+						$this->_db->setQuery($query);
+						
+						$result = $this->_db->loadObject();
+						
+						$id_cidade = $result->id_cidade;
+							
+
+					}
+				
+					$dados = array(
+							'logradouro'=> $logradouro,
+							'bairro'=> $bairro,
+							'cidade'=> $cidade,
+							'id_cidade'=> $id_cidade,
+							'estado'=> $estado,
+							'id_estado'=> $id_estado,
+					);
+					die(json_encode($dados));
+				}
+				catch(Exception $e) 
+				{
+					die();
+				}
+			
 			
 		}
 
@@ -146,7 +156,7 @@ class EASistemasCompletCep {
 			$id_estado = $estado_buscacep;
 			$query = $this->_db->getQuery(true);
 			$query->select($this->_db->quoteName('sigla_estado') . ', ' . $this->_db->quoteName('name_estado') );
-			$query->from($this->_db->quoteName('#__estado'));
+			$query->from($this->_db->quoteName('#__intranet_estado'));
 			$query->where($this->_db->quoteName('id_estado'). ' = ' . $this->_db->quote( $id_estado ) );
 			$this->_db->setQuery($query);
 			$result = $this->_db->loadObject();	
@@ -158,7 +168,7 @@ class EASistemasCompletCep {
 			$id_cidade = $cidade_buscacep;
 			$query = $this->_db->getQuery(true);
 			$query->select($this->_db->quoteName('name_cidade'));
-			$query->from($this->_db->quoteName('#__cidade'));
+			$query->from($this->_db->quoteName('#__intranet_cidade'));
 			$query->where($this->_db->quoteName('id_cidade'). ' = ' . $this->_db->quote( $id_cidade ) );
 			$this->_db->setQuery($query);
 			$result = $this->_db->loadObject();	
@@ -344,7 +354,7 @@ class EASistemasCompletCep {
 
 				$query = $this->_db->getQuery(true);
 				$query->select( 'id_cidade' );
-				$query->from( '#__cidade' );
+				$query->from( '#__intranet_cidade' );
 				$query->where( 'name_cidade='. $this->_db->quote( $cidade ));
 				$this->_db->setQuery($query);
 				
@@ -355,7 +365,7 @@ class EASistemasCompletCep {
 					
 					$query = $this->_db->getQuery(true);
 					$query->select( 'MAX( ' . $this->_db->quoteName('ordering') . ' ) as ordering' );
-					$query->from( '#__cidade' );
+					$query->from( '#__intranet_cidade' );
 					$query->where( 'id_estado ='.$this->_db->quote( $id_estado ) );
 					$this->_db->setQuery($query);					
 					$result = $this->_db->loadObject();
@@ -373,7 +383,7 @@ class EASistemasCompletCep {
 
 				
 					$query = $this->_db->getQuery(true);
-					$query->insert( $this->_db->quoteName('#__cidade') );
+					$query->insert( $this->_db->quoteName('#__intranet_cidade') );
 					$query->columns($this->_db->quoteName($columns));	
 					$query->values(implode(',', $values));
 					$this->_db->setQuery($query);
@@ -381,7 +391,7 @@ class EASistemasCompletCep {
 
 					$query = $this->_db->getQuery(true);
 					$query->select( 'id_cidade' );
-					$query->from( '#__cidade' );
+					$query->from( '#__intranet_cidade' );
 					$query->where( 'name_cidade='. $this->_db->quote( $cidade ) );
 					
 					$this->_db->setQuery($query);
@@ -482,7 +492,7 @@ class EASistemasCompletCep {
 
 				$query = $this->_db->getQuery(true);
 				$query->select( 'id_cidade' );
-				$query->from( '#__cidade' );
+				$query->from( '#__intranet_cidade' );
 				$query->where( 'name_cidade='. $this->_db->quote( $cidade ));
 				$this->_db->setQuery($query);
 				
@@ -493,7 +503,7 @@ class EASistemasCompletCep {
 					
 					$query = $this->_db->getQuery(true);
 					$query->select( 'MAX( ' . $this->_db->quoteName('ordering') . ' ) as ordering' );
-					$query->from( '#__cidade' );
+					$query->from( '#__intranet_cidade' );
 					$query->where( 'id_estado ='.$this->_db->quote( $id_estado ) );
 					$this->_db->setQuery($query);					
 					$result = $this->_db->loadObject();
@@ -511,7 +521,7 @@ class EASistemasCompletCep {
 
 				
 					$query = $this->_db->getQuery(true);
-					$query->insert( $this->_db->quoteName('#__cidade') );
+					$query->insert( $this->_db->quoteName('#__intranet_cidade') );
 					$query->columns($this->_db->quoteName($columns));	
 					$query->values(implode(',', $values));
 					$this->_db->setQuery($query);
@@ -519,7 +529,7 @@ class EASistemasCompletCep {
 
 					$query = $this->_db->getQuery(true);
 					$query->select( 'id_cidade' );
-					$query->from( '#__cidade' );
+					$query->from( '#__intranet_cidade' );
 					$query->where( 'name_cidade='. $this->_db->quote( $cidade ) );
 					
 					$this->_db->setQuery($query);

@@ -6,12 +6,10 @@ JHTML::_('behavior.formvalidation');
 
 jimport('joomla.image.resize');
 $resize = new JResize();
-
 $config   = JFactory::getConfig();
 $siteOffset = $config->getValue('offset');
-
 if ( !empty( $this->item->image_pf )):
-    $imageUser = $resize->resize(JPATH_CDN .DS. 'images' .DS. 'avatar' .DS. $this->item->image_pf, 100, 100, 'cache/' . $this->item->image_pf, 'manterProporcao');
+    $imageUser = $resize->resize(JPATH_MEDIA .DS. 'images' .DS. 'avatar'  .DS. $this->item->image, 100, 100, 'cache/' . $this->item->image_pf, 'manterProporcao');
 else:
     $imageUser = $resize->resize(JPATH_IMAGES .DS. 'noimageuser.png' , 100, 100, 'cache/noimageuser.png', 'manterProporcao'); 
 endif;   
@@ -20,53 +18,29 @@ endif;
 <form method="post" name="adminForm" enctype="multipart/form-data" class="form-validate">
     <div class="row">
         <div class="col-md-12">
-         <?php if(isset($this->item->id_associado)): ?> 
+         <?php if(isset($this->item->tipo)): ?> 
             <ul class="nav nav-pills flex-column flex-md-row mb-3">
                 <li class="nav-item">
-                    <a class="nav-link active" href="javascript:void(0);">
-                        <i class="bx bx-user me-1"></i> Cadastro
-                    </a>
+                    <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Cadastro</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo JRoute::_('index.php?view=ccategoria&layout=desempenho&cid[]=' . $this->item->id_associado, false); ?>">
-                        <i class="bx bx-run me-1"></i> Desempenho
-                    </a>
+                    <a class="nav-link" href="pages-account-settings-notifications.html"
+                    ><i class="bx bx-bell me-1"></i> Serviços</a
+                    >
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo JRoute::_('index.php?view=ccategoria&layout=pagamentos&cid[]=' . $this->item->id_associado, false); ?>">
-                        <i class="bx bx-dollar me-1"></i> Pagamentos
-                    </a>
+                    <a class="nav-link" href="pages-account-settings-connections.html"
+                    ><i class="bx bx-link-alt me-1"></i> Finanças</a
+                    >
                 </li>
             </ul>
             <?php endif; ?>
             <div class="card mb-4">
-                <div class="card-header sticky-element  d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h5 class="card-title mb-sm-0 me-2">Cadastro do Associado</h5>
-                            <?php if($this->item->status_associado < 0 ): ?>
-                                <span class="badge bg-label-secondary mt-3">
-                                    <span class="badge bg-label-secondary">
-                                        Item na Lixeira
-                                    <span>
-                                </span>
-                                <input name="status_pf" value="<?php echo $this->item->status_associado;?>" type="hidden">
-                            <?php else: ?>
-                            <div class="form-check form-switch mt-3">
-                                <input value="1" class="form-check-input" name="status_pf" <?php echo $this->item->status_associado == 1 ? 'checked="checked"' :'';?> type="checkbox" id="checkStatus">
-                                <label class="form-check-label" for="checkStatus"><?php echo $this->item->status_associado == 1 ? 'Ativo' : 'Inativo';?></label>
-                            </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                    <div class="action-btns">
-                        <button type="button" onclick="Joomla.submitbutton('save')" class="btn btn-primary">Salvar</button>
-                        <button type="button" onclick="Joomla.submitbutton('cancel')" class="btn btn-outline-secondary me-1">Sair</button>
-                    </div>
-                </div>
-                <hr class="my-0" />
+                <h5 class="card-header">Cadastro do Associado</h5>
+                <input type="hidden" name="tipo" value="<?php echo $this->item->tipo; ?>" />
+                <!-- Account -->
                 <div class="card-body">
-                    <div class="row mb-3">
+                    <div class="row">
                         <div class="col-md mb-md-0 mb-2">
                             <div class="d-flex align-items-start align-items-sm-center gap-4">
                                 <img
@@ -76,7 +50,7 @@ endif;
                                     height="100"
                                     width="100"
                                 />
-                                <input type="hidden" name="image_pf" value="<?php echo $this->item->image_pf; ?>" />
+                                <input type="hidden" name="image" value="<?php echo isset($this->item->tipo) ? $this->item->image : ''; ?>" />
                                 <input type="hidden" id="imgSRC" value="<?php echo $imageUser; ?>" />
                                 <div class="button-wrapper">
                                     <label for="upload" class="btn btn-primary me-2 mb-3 upload-image" tabindex="0">
@@ -87,7 +61,7 @@ endif;
                                             id="upload"
                                             class="account-file-input"
                                             hidden
-                                            name="image_pf_new"
+                                            name="image_new"
                                             accept="image/png, image/jpeg, image/gif"
                                         />
                                     </label>
@@ -96,10 +70,10 @@ endif;
                                         <span class="d-none d-sm-block">Desistir do Envio</span>
                                     </button>
                                     <div class="col mb-2">
-                                        <?php if ( !empty( $this->item->image_pf )): ?>
+                                        <?php if ( !empty( $this->item->image )): ?>
                                         <fieldset class="checkbox-img-remove">
                                             <label>
-                                                <input type="checkbox" name="remove_image_pf" value="1" />
+                                                <input type="checkbox" name="remove_image" value="1" />
                                                 <?php echo JText::_('Marque e salve para remover a imagem!'); ?>
                                             </label>  
                                         </fieldset>
@@ -112,11 +86,11 @@ endif;
                         </div>
                         <div class="col-md float-rigth">
                             <div class="row">
-                                <?php if(!isset($this->item->id_tipo) || $this->item->id_tipo=='0'): ?> 
+                                <?php if(!isset($this->item->tipo) || $this->item->tipo=='0'): ?> 
                                 <div class="col-md mb-md-0 mb-2">
-                                    <div class="form-check custom-option custom-option-icon <?php echo !isset($this->item->id_tipo) || $this->item->id_tipo=='0' ? 'checked' : ''; ?>">
+                                    <div class="form-check custom-option custom-option-icon <?php echo !isset($this->item->tipo) || $this->item->tipo=='0' ? 'checked' : ''; ?>">
                                         <label class="form-check-label custom-option-content" for="tipo0">
-                                            <input class="form-check-input" <?php echo isset($this->item->id_tipo) ? 'style="display:none"' : 'style="margin: 7px 7px 0 0 !important;"' ?> <?php echo !isset($this->item->tipo) ||  $this->item->tipo=='0' ? 'checked' : ''; ?> type="radio" value="0" name="tipo" id="tipo0">
+                                            <input class="form-check-input" <?php echo isset($this->item->tipo) ? 'style="display:none"' : 'style="margin: 7px 7px 0 0 !important;"' ?> <?php echo !isset($this->item->tipo) ||  $this->item->tipo=='0' ? 'checked' : ''; ?> type="radio" value="0" name="tipo" id="tipo0">
                                             <span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2">
                                                 <i class="bx bx-user bx-xs"></i>
                                             </span>
@@ -125,11 +99,11 @@ endif;
                                     </div>
                                 </div>
                                 <?php  endif; ?>
-                                <?php  if(!isset($this->item->id_tipo) || $this->item->id_tipo=='1'): ?> 
+                                <?php  if(!isset($this->item->tipo) || $this->item->tipo=='1'): ?> 
                                 <div class="col-md">
-                                    <div class="form-check custom-option custom-option-icon <?php echo isset($this->item->id_tipo) && $this->item->id_tipo=='1' ? 'checked' : ''; ?>">
+                                    <div class="form-check custom-option custom-option-icon <?php echo isset($this->item->tipo) && $this->item->tipo=='1' ? 'checked' : ''; ?>">
                                         <label class="form-check-label custom-option-content" for="tipo1">
-                                            <input  class="form-check-input" <?php echo isset($this->item->id_tipo) ? 'style="display:none"' : 'style="margin: 7px 7px 0 0 !important;"' ?> <?php echo isset($this->item->tipo) && $this->item->tipo=='1' ? 'checked' : ''; ?> type="radio" value="1" name="tipo" id="tipo1">
+                                            <input  class="form-check-input" <?php echo isset($this->item->tipo) ? 'style="display:none"' : 'style="margin: 7px 7px 0 0 !important;"' ?> <?php echo isset($this->item->tipo) && $this->item->tipo=='1' ? 'checked' : ''; ?> type="radio" value="1" name="tipo" id="tipo1">
                                             <span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2">
                                                 <i class="bx bxs-business bx-xs"></i>
                                             </span>
@@ -141,15 +115,18 @@ endif;
                             </div>
                         </div>
                     </div>
+                </div>
+                <hr class="my-0" />
+                <div class="card-body">
                     <div class="row">
                         <div class="mb-3 col-md-8">
-                            <label for="name" class="form-label">Nome Completo</label>
+                            <label for="name" class="form-label"><?php echo !isset($this->item->tipo) || $this->item->tipo == '0' ? 'Nome Completo' : 'Razão Social'; ?></label>
                             <input
                                 class="form-control required"
                                 type="text"
                                 id="name"
                                 name="name"
-                                value="<?php echo $this->item->name; ?>"
+                                value="<?php echo isset($this->item->tipo) ? $this->item->name : ''; ?>"
                                 autofocus
                             />
                         </div>
@@ -160,116 +137,112 @@ endif;
                                 type="text"
                                 id="email"
                                 name="email"
-                                value="<?php echo $this->item->email; ?>"
+                                value="<?php echo isset($this->item->tipo) ? $this->item->email : ''; ?>"
                                 placeholder="email"
                             />
                         </div>
                         <div class="mb-3 col-md-3">
-                            <label for="cpf_pf" class="form-label">CPF</label>
-                            <input class="form-control required validate-cpf" type="text" name="cpf_pf" id="cpf_pf" value="<?php echo $this->item->cpf_pf; ?>" />
+                            <label for="doc" class="form-label"><?php echo !isset($this->item->tipo) || $this->item->tipo == '0' ? 'CPF' : 'CNPJ'; ?></label>
+                            <input class="form-control required validate-<?php echo !isset($this->item->tipo) || $this->item->tipo == '0' ? 'cpf' : 'cnpj'; ?>" type="text" name="doc" id="doc" value="<?php echo isset($this->item->tipo) ? $this->item->doc : ''; ?>" />
                         </div>
-                        <div class="mb-3 col-md-3" class="dte">
-                        <label for="data_nascimento_pf" class="form-label">Data de Nascimento</label>
-                            <input class="form-control date" 
+                        <div class="mb-3 col-md-3" class="date">
+                            <label for="date" class="form-label"><?php echo !isset($this->item->tipo) || $this->item->tipo == '0' ? 'Data de Nascimento' : 'Data de Fundação'; ?></label>
+                            <input class="form-control" 
                                    type="text" 
-                                   value="<?php echo $this->item->data_nascimento_pf ? JHtml::date(JFactory::getDate($this->item->data_nascimento_pf, $siteOffset)->toISO8601(), 'DATE_FORMAT') : ''; ?>" 
-                                   name="data_nascimento_pf" 
-                                   id="data_nascimento_pf"
+                                   value="<?php echo isset($this->item->tipo) ? $this->item->date : ''; ?>" 
+                                   name="date" 
+                                   id="date"
                             />
                         </div>
                         <div class="mb-3 col-md-3">
-                            <label class="form-label" for="tel_residencial_pf">Telefone</label>
+                            <label class="form-label" for="telefone">Telefone</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text">BR (55)</span>
                                 <input
                                     type="text"
-                                    id="tel_residencial_pf"
-                                    name="tel_residencial_pf"
+                                    name="telefone"
                                     class="form-control"
                                     placeholder="Telefone"
-                                    value="<?php echo $this->item->tel_residencial_pf; ?>" 
+                                    value="<?php echo isset($this->item->tipo) ? $this->item->telefone : ''; ?>" 
                                 />
                             </div>
                         </div>
                         <div class="mb-3 col-md-3">
-                            <label class="form-label" for="tel_celular_pf">Celular</label>
+                            <label class="form-label" for="celular">Celular</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text">BR (55)</span>
                                 <input
                                     type="text"
-                                    id="tel_celular_pf"
-                                    name="tel_celular_pf"
+                                    name="celular"
                                     class="form-control"
-                                    placeholder="Celular"
-                                    value="<?php echo $this->item->tel_celular_pf; ?>" 
+                                    placeholder="Telefone"
+                                    value="<?php echo isset($this->item->tipo) ? $this->item->celular : ''; ?>" 
                                 />
                             </div>
                         </div>
                         <div class="clearfix"></div>
                         <div class="mb-3 col-md-3">
-                            <label class="form-label" for="cep_pf">CEP</label>
+                            <label class="form-label" for="celular">CEP</label>
                             <div class="input-group input-group-merge">
                                 <input
                                     type="text"
-                                    name="cep_pf"
+                                    name="cep"
                                     id="cep"
                                     class="form-control"
                                     placeholder="CEP"
-                                    value="<?php echo $this->item->cep_pf; ?>" 
+                                    value="<?php echo isset($this->item->tipo) ? $this->item->cep : ''; ?>" 
                                 />
                                 <button class="btn btn-outline-primary" type="button" id="complete"><i class='bx bx-search'></i></button>
                             </div>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label class="form-label" for="logradouro_pf">Endereço</label>
+                            <label class="form-label" for="logradouro">Endereço</label>
                             <div class="input-group input-group-merge">
                                 <input
                                     type="text"
                                     id="logradouro"
-                                    name="logradouro_pf"
+                                    name="logradouro"
                                     class="form-control"
                                     placeholder="Endereço"
-                                    value="<?php echo $this->item->logradouro_pf; ?>" 
+                                    value="<?php echo isset($this->item->tipo) ? $this->item->logradouro : ''; ?>" 
                                 />
                             </div>
                         </div>
                         <div class="mb-3 col-md-3">
-                            <label class="form-label" for="numero_pf">Número</label>
+                            <label class="form-label" for="numero">Número</label>
                             <div class="input-group input-group-merge">
                                 <input
                                     type="text"
-                                    id="numero"
-                                    name="numero_pf"
+                                    name="numero"
                                     class="form-control"
                                     placeholder="Número"
-                                    value="<?php echo $this->item->numero_pf; ?>" 
+                                    value="<?php echo isset($this->item->tipo) ? $this->item->numero : ''; ?>" 
                                 />
                             </div>
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label class="form-label" for="complemento_pf">Complemento</label>
+                            <label class="form-label" for="complemento">Complemento</label>
                             <div class="input-group input-group-merge">
                                 <input
                                     type="text"
-                                    id="complemento"
-                                    name="complemento_pf"
+                                    name="complemento"
                                     class="form-control"
                                     placeholder="Complemento"
-                                    value="<?php echo $this->item->complemento_pf; ?>" 
+                                    value="<?php echo isset($this->item->tipo) ? $this->item->complemento : ''; ?>" 
                                 />
                             </div>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label class="form-label" for="bairro_pf">Bairro</label>
+                            <label class="form-label" for="bairro">Bairro</label>
                             <div class="input-group input-group-merge">
                                 <input
                                     type="text"
                                     id="bairro"
-                                    name="bairro_pf"
+                                    name="bairro"
                                     class="form-control"
                                     placeholder="Bairro"
-                                    value="<?php echo $this->item->bairro_pf; ?>" 
+                                    value="<?php echo isset($this->item->tipo) ? $this->item->bairro : ''; ?>" 
                                 />
                             </div>
                         </div>
@@ -279,7 +252,7 @@ endif;
                                 <?php if (empty($this->item->id_estado)) { ?>
                                 <option disabled selected class="default" value=""><?php echo JText::_('- Estados -'); ?></option>
                                 <?php } ?>
-                                <?php echo JHTML::_('select.options',  $this->estados, 'value', 'text',  $this->item->id_estado); ?>    
+                                <?php echo JHTML::_('select.options',  $this->estados, 'value', 'text',  (isset($this->item->tipo) ? $this->item->id_estado : '')); ?>    
                             </select>    
                         </div>  
                         <div class="mb-3 col-md-6">
@@ -289,9 +262,13 @@ endif;
                                 <option disabled selected class="default" value=""><?php echo JText::_('- Cidades -'); ?></option>
                                 <?php }
                                 if ($this->item->id_estado > 0)
-                                    echo JHTML::_('select.options',  $this->cidades, 'value', 'text', $this->item->id_cidade);
+                                    echo JHTML::_('select.options',  $this->cidades, 'value', 'text',  (isset($this->item->tipo) ?$this->item->id_cidade : ''));
                                 ?>   
                             </select>    
+                        </div> 
+                        <div class="mt-2">
+                            <button type="button" onclick="Joomla.submitbutton('save')" class="btn btn-primary me-2">Salvar</button>
+                            <button type="button" onclick="Joomla.submitbutton('cancel')" class="btn btn-outline-secondary">Sair</button>
                         </div>
                     </div>
                 </form>
@@ -731,7 +708,7 @@ endif;
      */ ?>
     <input type="hidden" name="task" value="" />
     <input type="hidden" name="cid[]" id="cid" value="<?php echo $this->item->id_associado; ?>" />
-    <input type="hidden" name="id_pf" value="<?php echo $this->item->id_associado; ?>" />
+    <input type="hidden" name="id_associado" value="<?php echo $this->item->id_associado; ?>" />
     <input type="hidden" name="controller" value="associado" />
     <input type="hidden" name="view" value="associado" />
     <?php echo JHTML::_('form.token'); ?>

@@ -72,10 +72,8 @@ class EASistemasControllerAssociado extends JController {
 		JRequest::checkToken() or jexit('JINVALID_TOKEN');
 		$model = $this->getModel('associado');
 		$model->checkin();
-		$msg = JText::_('JGLOBAL_CONTROLLER_CANCEL');
-		$msgType = 'alert-success';
 		JRequest::setVar( 'hidemainmenu', 0 );
-		$this->setRedirect(JRoute::_('index.php?view=associados', false), $msg, $msgType);
+		$this->setRedirect(JRoute::_('index.php?view=associados', false));
 	}
 
 }

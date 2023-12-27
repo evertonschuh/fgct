@@ -1,14 +1,13 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 
-require_once(JPATH_THEMES_NATIVE .DS. 'includes' .DS. 'trataimagem.php');
 
 jimport( 'joomla.application.component.model' );
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 jimport('joomla.image.image');
 
-class IntranetModelAssociado extends JModel {
+class EASistemasModelAssociado extends JModel {
 
 	var $_id = null;
 	var $_doc = null;
@@ -33,7 +32,7 @@ class IntranetModelAssociado extends JModel {
 		$this->_isRoot		= $this->_user->get('isRoot');	
 		$this->_userAdmin	= $this->_user->get('id');
 		
-		$this->_trataImagem = new TrataImagem();
+		
 		$this->_session_id = JFactory::getSession()->getId();
 		
 		$this->_siteOffset = $this->_app->getCfg('offset');
@@ -233,18 +232,7 @@ class IntranetModelAssociado extends JModel {
 		}			
 		return array();
 	}
-	
-	
-	function getTrataImagem()
-	{
-		return $this->_trataImagem;
-	}
-	
-	function getSession() 
-	{
-		return $this->_session_id;
-	}	
-		
+			
 	function getUfs() 
 	{
 		$query = $this->_db->getQuery(true);
