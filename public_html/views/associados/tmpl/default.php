@@ -17,23 +17,33 @@ $saveOrder    = $listOrder == 'ordering';
         <div class="card-header border-bottom">
             <h5 class="card-title">Filtros para Pesquisa</h5>
             <div class="d-flex justify-content-between align-items-center row py-2 gap-3 gap-md-0">
-                <div class="col-md-4 user_role">
-                    <select id="UserRole" class="form-select text-capitalize">
-                        <option value="">- Tipo de Associado -</option>
-                        <option value="Admin">Pessoa Física</option>
-                        <option value="Author">Pessoa Jurídica</option>
+                <div class="col-md-4 tipo">
+                    <select name="tipo" class="form-select text-capitalize" onchange="this.form.submit()" >
+                        <?php 
+                            $tipo[] = JHTML::_('select.option', '', JText::_( '- Tipo -' ), 'value', 'text' );
+                            $tipo[] = JHTML::_('select.option', '0', JText::_( 'Associado' ), 'value', 'text' );
+                            $tipo[] = JHTML::_('select.option', '1', JText::_( '|- Associado Padrâo' ), 'value', 'text' );
+                            $tipo[] = JHTML::_('select.option', '2', JText::_( '|- Associado Ar Comprimido' ), 'value', 'text' );
+                            $tipo[] = JHTML::_('select.option', '3', JText::_( '|- Associado Copa Brasil' ), 'value', 'text' );
+                            $tipo[] = JHTML::_('select.option', '4', JText::_( 'Clube' ), 'value', 'text' );
+                            echo JHtml::_('select.options',  $tipo, 'value', 'text', $this->state->get('filter.tipo') );
+                        ?>
                     </select>
                 </div>
-                <div class="col-md-4 user_plan">
-                    <select id="UserPlan" class="form-select text-capitalize">
-                        <option value="">- Plano de Associação -</option>
-                        <option value="Basic">Basico</option>
-                        <option value="Company">Company</option>
-                        <option value="Enterprise">Enterprise</option>
-                        <option value="Team">Team</option>
-                    </select>
+                <div class="col-md-4 situacao">
+                    <select name="situacao" class="form-select text-capitalize" onchange="this.form.submit()" >
+                        <?php 
+                            $situacao[] = JHTML::_('select.option', '', JText::_( '- Situação -' ), 'value', 'text' );
+                            $situacao[] = JHTML::_('select.option', '0', JText::_( 'Novo' ), 'value', 'text' );
+                            $situacao[] = JHTML::_('select.option', '1', JText::_( 'Ativo' ), 'value', 'text' );
+                            $situacao[] = JHTML::_('select.option', '2', JText::_( 'Vencido' ), 'value', 'text' );
+                            $situacao[] = JHTML::_('select.option', '3', JText::_( 'Abandono' ), 'value', 'text' );
+                            $situacao[] = JHTML::_('select.option', '4', JText::_( 'Inativo' ), 'value', 'text' );
+                            echo JHtml::_('select.options',  $situacao, 'value', 'text', $this->state->get('filter.situacao') );
+                        ?>
+                    </select>  
                 </div>
-                <div class="col-md-4 user_status">
+                <div class="col-md-4 status">
                     <select id="status" name="status" class="form-select text-capitalize" onchange="this.form.submit()">
                         <?php
                         $status[] = JHTML::_('select.option', '', JText::_('- Status -'), 'value', 'text');
@@ -88,8 +98,8 @@ $saveOrder    = $listOrder == 'ordering';
                             <th class="sorting sorting_desc"><?php echo JHtml::_('grid.sort',  'Nome', 'name', $listDirn, $listOrder); ?></th>
                             <th class="sorting"><?php echo JHtml::_('grid.sort', 'Tipo', 'tipo', $listDirn, $listOrder); ?></th>
                             <th class="sorting"><?php echo JHtml::_('grid.sort', 'Documento', 'doc', $listDirn, $listOrder); ?></th>
-                            <th class="sorting"><?php echo JHtml::_('grid.sort', 'Plano', 'status_pf', $listDirn, $listOrder); ?></th>
-                            <th class="sorting"><?php echo JHtml::_('grid.sort', 'Validade', 'status_pf', $listDirn, $listOrder); ?></th>
+                            <th class="sorting text-center"><?php echo JHtml::_('grid.sort', 'Anuidade', 'validate_associado', $listDirn, $listOrder); ?></th>
+                            <th class="sorting  text-center"><?php echo JHtml::_('grid.sort', 'Situação', 'status_pf', $listDirn, $listOrder); ?></th>
                             <th class="sorting_disabled" style="width: 145px;">Ações</th>
                         </tr>
                     </thead>

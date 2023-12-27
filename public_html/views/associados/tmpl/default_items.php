@@ -87,30 +87,28 @@ if (count($this->items)) {
     <td>
         <span class="fw-semibold"><?php echo $item->doc; ?></span>
     </td>
-    <td><?php echo $item->doc; ?></td>
-    <td>
-        <?php 
-        $aa = rand(1,9);
-        
-        switch($aa){
-            case 1:
-            case 2:
-            case 3:
-                echo '<span class="badge bg-label-success">Ativo</span>';
-            break;
-            case 4:
-            case 5:   
-            case 6:
-                echo '<span class="badge bg-label-secondary">Inativo</span>';
-            break;
-            case 7:
-            case 8:
-            case 9:
-                echo '<span class="badge bg-label-warning">Pendente</span>';
-            break;
+    <td class="text-center"><?php echo !empty($item->validate_associado) ? JFactory::getDate($item->validate_associado, $siteOffset)->toFormat('%Y', true) : '-'; ?></td>
+    <td class="text-center">
 
-        }
-        
+
+
+    
+        <?php 
+
+        $status = '<span class="badge bg-label-success">Ativo</span>';
+        if($item->status_associado==1):
+            if(is_null($item->validate_associado)):
+                $status = '<span class="badge bg-label-info">Novo</span>';;
+            elseif( JFactory::getDate('now -1 year', $siteOffset)->toFormat('%Y-%m-%d', true) > JFactory::getDate($item->validate_associado, $siteOffset)->toFormat('%Y-%m-%d', true) ):
+                $status = '<span class="badge bg-label-danger">Abandono</span>';
+            elseif( JFactory::getDate('now', $siteOffset)->toFormat('%Y-%m-%d', true) > JFactory::getDate($item->validate_associado, $siteOffset)->toFormat('%Y-%m-%d', true) ):
+                $status = '<span class="badge bg-label-warning">Vencido</span>';
+            endif;
+        else:
+            $status = '<span class="badge bg-label-secondary">Inativo</span>';
+        endif;
+        echo $status;
+       
         ?>
         
     </td>

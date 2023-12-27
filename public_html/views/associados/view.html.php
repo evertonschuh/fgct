@@ -30,7 +30,7 @@ class EASistemasViewAssociados extends JView
 
 		$this->pagination->setAdditionalUrlParam('view', 'associados');
 
-		JToolBarHelper::title('<span class="text-muted fw-light">CLIENTE /</span> ' . JText::_('Corredores'));
+		JToolBarHelper::title('<span class="text-muted fw-light">CADASTRO /</span> ' . JText::_('Associados'));
 
 		parent::display($tpl);
 	}

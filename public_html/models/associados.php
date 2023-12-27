@@ -137,9 +137,9 @@ class EASistemasModelAssociados extends JModelList
 		$query->leftJoin($this->_db->quoteName('#__intranet_estado').' AS ClubeEstado ON ('.$this->_db->quoteName('ClubeEstado.id_estado').'='.$this->_db->quoteName('Clube.id_estado').')');
 		$query->leftJoin($this->_db->quoteName('#__intranet_cidade').' AS ClubeCidade ON ('.$this->_db->quoteName('ClubeCidade.id_cidade').'='.$this->_db->quoteName('Clube.id_cidade').')');
 
-		$status = $this->getState('filter.status');
-        if ($status!='')
-			 $query->where( $this->_db->quoteName('status_associado') . '=' . $this->_db->escape( $status ) );
+		//$status = $this->getState('filter.status');
+       // if ($status!='')
+		//	 $query->where( $this->_db->quoteName('status_associado') . '=' . $this->_db->escape( $status ) );
 
 		$cidade = $this->getState('filter.cidade');
 		if (count($cidade)>'0')
@@ -186,16 +186,25 @@ class EASistemasModelAssociados extends JModelList
 			switch ($situacao):
 				case '0':
 						$query->where( $this->_db->quoteName('validate_associado') . ' IS NULL');
+						$query->where( $this->_db->quoteName('status_associado') . '=' . $this->_db->quote( '1' ) );
 				break;
 				case '1':
 						$query->where( $this->_db->quoteName('validate_associado') . '>=' . $this->_db->quote(JFactory::getDate('now', $this->_siteOffset)->toFormat('%Y-%m-%d', true)));
+						$query->where( $this->_db->quoteName('status_associado') . '=' . $this->_db->quote( '1' ) );
 				break;
 				case '2':
-						$query->where( $this->_db->quoteName('validate_associado') . '<' . $this->_db->quote(JFactory::getDate('now', $this->_siteOffset)->toFormat('%Y-%m-%d', true)));
+						$query->where( $this->_db->quoteName('validate_associado') . '<=' . $this->_db->quote(JFactory::getDate('now', $this->_siteOffset)->toFormat('%Y-%m-%d', true)));
 						$query->where( $this->_db->quoteName('validate_associado') . '>=' . $this->_db->quote(JFactory::getDate('now -1 year', $this->_siteOffset)->toFormat('%Y-%m-%d', true)));
+						$query->where( $this->_db->quoteName('status_associado') . '=' . $this->_db->quote( '1' ) );
 				break;
 				case '3':
-						$query->where( $this->_db->quoteName('validate_associado') . '<' . $this->_db->quote(JFactory::getDate('now', $this->_siteOffset)->toFormat('%Y-%m-%d', true)));
+					$query->where( $this->_db->quoteName('validate_associado') . '<=' . $this->_db->quote(JFactory::getDate('now', $this->_siteOffset)->toFormat('%Y-%m-%d', true)));
+					$query->where( $this->_db->quoteName('validate_associado') . '<' . $this->_db->quote(JFactory::getDate('now -1 year', $this->_siteOffset)->toFormat('%Y-%m-%d', true)));
+					$query->where( $this->_db->quoteName('status_associado') . '=' . $this->_db->quote( '1' ) );
+				break;
+				case '3':	
+					$query->where( $this->_db->quoteName('validate_associado') . '<=' . $this->_db->quote(JFactory::getDate('now', $this->_siteOffset)->toFormat('%Y-%m-%d', true)));				
+					$query->where( $this->_db->quoteName('status_associado') . '=' . $this->_db->quote( '0' ) );
 				break;
 			endswitch;	
 		endif;
@@ -331,7 +340,9 @@ class EASistemasModelAssociados extends JModelList
 		$query->leftJoin($this->_db->quoteName('#__intranet_produto') . ' USING(' . $this->_db->quoteName('id_produto'). ')');	
 		
 		$query->leftJoin($this->_db->quoteName('#__intranet_pf') . ' USING(' . $this->_db->quoteName('id_user'). ')');
-		$query->leftJoin($this->_db->quoteName('#__intranet_pj') . ' USING(' . $this->_db->quoteName('id_user'). ')');;	
+		$query->leftJoin($this->_db->quoteName('#__intranet_pj') . ' USING(' . $this->_db->quoteName('id_user'). ')');	
+		$query->leftJoin($this->_db->quoteName('#__intranet_associado') . ' USING(' . $this->_db->quoteName('id_user'). ')');
+		
 		$query->innerJoin($this->_db->quoteName('#__users') . ' ON(' . $this->_db->quoteName('id'). '=' . $this->_db->quoteName('id_user'). ')');
 		$query->leftJoin($this->_db->quoteName('#__intranet_estado') . ' ON(' 
 																	 . $this->_db->quoteName('#__intranet_estado.id_estado'). '=' . $this->_db->quoteName('#__intranet_pf.id_estado')
@@ -347,6 +358,7 @@ class EASistemasModelAssociados extends JModelList
 		$query->where( $this->_db->quoteName('id_anuidade') . '=' . $this->_db->quote( '15' ) );
 		$query->where( $this->_db->quoteName('status_pagamento') . '=' . $this->_db->quote( '1' ) );
 		$query->where( '(' . $this->_db->quoteName('cadastro_pagamento') . '=' . $this->_db->quote('2023-11-13') . ')');
+		$query->where( '(' . $this->_db->quoteName('validate_associado') . '<' . $this->_db->quote('2024-12-01') . ')');
 		$query->where( $this->_db->quoteName('baixa_pagamento') . ' IS NULL'  );
 		
 		$this->_db->setQuery($query);
