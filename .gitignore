@@ -1,8 +1,6 @@
 *.log
 .DS_Store
 configuration.php
-/public_html/admin/cache/
-/public_html/admin/logs/
 /public_html/cache/
 /public_html/tmp/
 /public_html/logs/
