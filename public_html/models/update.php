@@ -5,7 +5,7 @@ require_once(JPATH_THEMES_NATIVE .DS. 'includes' .DS. 'trataimagem.php');
 
 jimport( 'joomla.application.component.model' );
 
-class IntranetModelUpdate extends JModel {
+class EASistemasModelUpdate extends JModel {
 
 	var $_id = null;
 	var $_doc = null;
@@ -49,7 +49,7 @@ class IntranetModelUpdate extends JModel {
 			else {
 				$tipo = 'alert-warning';
 				$msg = JText::_( 'JGLOBAL_CONTROLLER_CHECKIN_ITEM' );
-				$link = 'index.php?view=associados';
+				$link = 'index.php?view=updates';
 				$this->_app->redirect($link, $msg, $tipo);
 			}
 		}

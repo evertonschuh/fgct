@@ -21,7 +21,7 @@ $parts = explode(DIRECTORY_SEPARATOR, JPATH_BASE);
 //Defines.
 define('JPATH_ROOT',            implode(DIRECTORY_SEPARATOR, $parts));
 define('JPATH_ROOT_ABSOLUT',	dirname(dirname(dirname(dirname(__FILE__)))));
-define('JPATH_CDN',     JPATH_ROOT_ABSOLUT . '/fgct_intranet/public_html/media');
+define('JPATH_CDN',             JPATH_ROOT_ABSOLUT . '/fgct_intranet/public_html/media');
 define('JPATH_SITE',            JPATH_ROOT);
 define('JPATH_CONFIGURATION',   JPATH_ROOT);
 define('JPATH_ADMINISTRATOR',   JPATH_ROOT);

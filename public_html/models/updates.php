@@ -10,7 +10,7 @@ defined( '_JEXEC' ) or die;
 jimport( 'joomla.application.component.modellist' );
 
 
-class IntranetModelUpdates extends JModelList
+class EASistemasModelUpdates extends JModelList
 {
 	var $_db = null;
 	var $_user = null;
@@ -99,10 +99,14 @@ class IntranetModelUpdates extends JModelList
 		$query->select('#__intranet_pf_update.id_clube AS id_clube_update');
 		$query->select('IF(ISNULL(Atual.cpf_pf), \'Cadastro Novo\', \'Atualização Cadastral\') AS tipo_executa_pf_update');
 		$query->select('IF(ISNULL(Atual.cpf_pf), name_pf_update, User.name) AS name_pf_update');	
-			
+		$query->select('EstEnd.sigla_estado AS sigla_estado');
+		$query->select('CidEnd.name_cidade AS name_cidade');
 		$query->from($this->_db->quoteName('#__intranet_pf_update'));
 		$query->leftJoin($this->_db->quoteName('#__intranet_pf') . ' AS Atual ON ('.$this->_db->quoteName('cpf_pf').'='.$this->_db->quoteName('cpf_pf_update').')');
 		$query->leftJoin($this->_db->quoteName('#__users').' AS User ON ('.$this->_db->quoteName('User.id').'='.$this->_db->quoteName('Atual.id_user').')');
+		$query->leftJoin($this->_db->quoteName('#__intranet_estado') . ' AS EstEnd ON ('.$this->_db->quoteName('#__intranet_pf_update.id_estado').'='.$this->_db->quoteName('EstEnd.id_estado').')');
+		$query->leftJoin($this->_db->quoteName('#__intranet_cidade') . ' AS CidEnd ON ('.$this->_db->quoteName('#__intranet_pf_update.id_cidade').'='.$this->_db->quoteName('CidEnd.id_cidade').')');
+
 
 
 		$search = $this->getState('filter.search');

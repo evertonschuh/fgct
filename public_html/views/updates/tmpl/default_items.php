@@ -9,7 +9,7 @@ $resize = new JResize();
 
 if (count($this->items)) {
     foreach ($this->items as $i => $item) {
-
+/*
         $classLine = '';
 		if($item->status_associado==1):
 			if(is_null($item->validate_associado)):
@@ -21,7 +21,7 @@ if (count($this->items)) {
 			endif;
 		else:
 			$classLine = 'dark';
-		endif;
+		endif;*/
 ?>
 
 
@@ -34,7 +34,7 @@ if (count($this->items)) {
                 <?php if(empty($item->image_pf)): ?>
                 <div class="avatar avatar-sm me-3">
                     <?php 
-                        $name = explode(' ', trim($item->name));
+                        $name = explode(' ', trim($item->name_pf_update));
                         $sigla = substr($name[0], 0, 1) . substr(end($name), 0, 1);
                     ?>
                     <span class="avatar-initial rounded-circle bg-label-danger"><?php echo strtoupper($sigla); ?></span>
@@ -47,7 +47,7 @@ if (count($this->items)) {
             </div>
             <div class="d-flex flex-column">
                 <a href="<?php echo JRoute::_('index.php?view=associado&cid=' . $item->id_associado); ?>" class="text-body text-truncate">
-                    <span class="fw-semibold"><?php echo $item->name; ?></span>
+                    <span class="fw-semibold"><?php echo $item->name_pf_update; ?></span>
                 </a>
                 <small class="text-muted"><?php echo $item->name_cidade .'/'.$item->sigla_estado; ?></small>
             </div>
@@ -55,38 +55,17 @@ if (count($this->items)) {
     </td>
     <td>
         <?php 
-            if($item->tipo == 1): 
-                $name_type = 'Clube/Associação';
-                $color_type = 'primary';
-                $icon_type = 'bxs-business';
-            elseif($item->compressed_air_pf == '0' && $item->copa_brasil_pf == '0'):
-                $name_type = 'Sócio Padrão';
-                $icon_type = 'bx-user';
-                $color_type = 'success';
-            elseif($item->compressed_air_pf == '1' && $item->copa_brasil_pf == '0'):
-                $name_type = 'Ar Comprimido';
-                $color_type = 'warning';
-                $icon_type = 'bxs-spray-can';
-
-            elseif($item->compressed_air_pf == '0' && $item->copa_brasil_pf == '1'):
-                $name_type = 'Copa Brasil';
-                $color_type = 'danger';
-                $icon_type = 'bxs-trophy';
-            endif; 
+        $status = '<span class="badge bg-label-success">Atualização</span>';
+        if($item->tipo_executa_pf_update=="Cadastro Novo"):
+                $status = '<span class="badge bg-label-info">Novo</span>';;
+        endif;
+        echo $status;
         ?>
-
-
-        <a class="jgrid grid-icon" title="<?php echo $name_type; ?>">
-            <span class="text-truncate d-flex align-items-center">
-                <span class="badge badge-center rounded-pill bg-label-<?php echo $color_type; ?> w-px-30 h-px-30 me-2">
-                    <i class="bx <?php echo $icon_type; ?> bx-xs"></i>
-                </span>
-            </span>
-        </a>
     </td>
     <td>
-        <span class="fw-semibold"><?php echo $item->doc; ?></span>
+        <span class="fw-semibold"><?php echo JHtml::date(JFactory::getDate($item->register_pf_update, $siteOffset)->toISO8601(), 'DATE_FORMAT', true); ?></span>
     </td>
+    <?php /*
     <td class="text-center"><?php echo !empty($item->validate_associado) ? JFactory::getDate($item->validate_associado, $siteOffset)->toFormat('%Y', true) : '-'; ?></td>
     <td class="text-center">
 
@@ -109,7 +88,7 @@ if (count($this->items)) {
         endif;
         echo $status;
        
-        ?>
+       */ ?>
         
     </td>
     <td>

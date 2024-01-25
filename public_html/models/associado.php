@@ -25,9 +25,10 @@ class EASistemasModelAssociado extends JModel {
 	{
 		parent::__construct();
 		
-		$this->_app 	= JFactory::getApplication(); 
 		$this->_db		= JFactory::getDBO();
+		$this->_app 	= JFactory::getApplication(); 
 		$this->_user	= JFactory::getUser();
+		$this->_siteOffset = $this->_app->getCfg('offset');
 		
 		$this->_isRoot		= $this->_user->get('isRoot');	
 		$this->_userAdmin	= $this->_user->get('id');
@@ -35,7 +36,7 @@ class EASistemasModelAssociado extends JModel {
 		
 		$this->_session_id = JFactory::getSession()->getId();
 		
-		$this->_siteOffset = $this->_app->getCfg('offset');
+		
 		$this->_doc = JRequest::getVar( 'doc', '', 'GET');
 		$this->_type = JRequest::getVar( 'type', '', 'GET');
 		//echo JPATH_ADMINISTRATOR;
@@ -61,6 +62,16 @@ class EASistemasModelAssociado extends JModel {
 	{
 		$this->_id		= $id;
 		$this->_data	= null;
+	}
+
+	function getUtil(){
+
+		$_util = new stdClass();
+
+		$_util->_app = $this->_app; 
+		$_util->_user = $this->_user;
+		$_util->_siteOffset = $this->_siteOffset;
+		return $_util;
 	}
 
 	function setDoc()
