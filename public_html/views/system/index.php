@@ -13,9 +13,8 @@ $this->siteOffset = $this->config->getValue('offset');
 
 if ( !$user->get('guest') ):
 		
-	$user_id = $user->get('id'); 
+	$id_user = $user->get('id'); 
 	$NameUser = trim($user->get('name')); 
-	$avatar = trim($user->get('avatar')); 
 	$lastvisitDate = $user->get('lastvisitDate'); 
 	
 	$NameUser = explode(" ", $NameUser);
@@ -24,12 +23,35 @@ if ( !$user->get('guest') ):
 	else
 		$Nome =  end($NameUser);
 
-	
-	if ( !empty( $avatar )):
-		$avatarUser = $resize->resize(JPATH_MEDIA.DS. 'images' . DS . 'avatar' .DS. $avatar, 266, 266, 'cache/tmp_' . $avatar, 'tirarProporcao');
-	else:
-		$avatarUser = $resize->resize(JPATH_IMAGES . DS . 'noimageuser.png', 266, 266, 'cache/tmp_noimageuser.png', 'tirarProporcao');
-	endif;
+  $_db	= JFactory::getDBO();
+  $query = $_db->getQuery(true);
+  $query->select($_db->quoteName('image_pf'));
+  $query->from($_db->quoteName('#__intranet_pf'));
+  $query->where($_db->quoteName('id_user') . '  = ' . $_db->quote( $id_user ) );
+  $_db->setQuery($query);
+  $avatar = $_db->loadResult();	
+
+  if ( !empty( $avatar ) && JFile::exists(JPATH_CDN.DS. 'images' . DS . 'avatar' .DS. $avatar)):
+    $avatarUser = $resize->resize(JPATH_CDN.DS. 'images' . DS . 'avatar' .DS. $avatar, 266, 266, 'cache/tmp_' . $avatar, 'tirarProporcao');
+  else:
+    $avatarUser = $resize->resize(JPATH_IMAGES . DS . 'noimageuser.png', 266, 266, 'cache/tmp_noimageuser.png', 'tirarProporcao');
+  endif;
+
+
+	$query->clear();
+	$query->select($_db->quoteName(array( 'id_pf_update',
+                                        'name_pf_update',
+                                        'status_pf_update',
+                                        'register_pf_update',
+                                        'image_pf'
+                                        )));
+	$query->from($_db->quoteName('#__intranet_pf_update'));
+  $query->leftJoin($_db->quoteName('#__intranet_pf').'ON('.$_db->quoteName('cpf_pf').'='.$_db->quoteName('cpf_pf_update').')');
+	//$query->where($_db->quoteName('status_pf_update') . '  = ' . $_db->quote( '1' ) );
+	$query->order($_db->quoteName('status_pf_update') . ' DESC');
+	$query->order($_db->quoteName('register_pf_update') . ' ASC');
+	$_db->setQuery($query,0,5);
+	$udatesPfs = $_db->loadObjectList();
 endif;
 
 
@@ -115,8 +137,8 @@ endif;
               <span class="menu-header-text">Serviços</span>
             </li>
             <li class="menu-item">
-              <a href="<?php echo JRoute::_('index.php?view=treinos');?>" class="menu-link">
-                <div data-i18n="Account">Atualização Cadastral</div>
+              <a href="<?php echo JRoute::_('index.php?view=updates');?>" class="menu-link">
+                <div data-i18n="Account">Atualizações Cadastrais</div>
               </a>
             </li>
             <li class="menu-item">
@@ -281,7 +303,20 @@ endif;
                 <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">   
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <i class="bx bx-bell bx-sm"></i>
-                    <span class="badge bg-danger rounded-pill badge-notifications">5</span>
+                    <?php 
+                      $noView = 0;
+                      if(count($udatesPfs)>0):
+                          foreach ($udatesPfs as $i => $udatePf)
+                              if($udatePf->status_pf_update == '1')
+                                  $noView++;
+                          if($noView>0):
+                      ?>
+                      <span class="badge bg-danger rounded-pill badge-notifications"><?php echo $noView; ?></span>
+                      <?php 
+                          endif;
+                      endif;
+                      ?>
+                    
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end py-0">
                     <li class="dropdown-menu-header border-bottom">
@@ -291,25 +326,61 @@ endif;
                       </div>
                     </li>
                     <li class="dropdown-notifications-list scrollable-container ps">
+                      <?php if(count($udatesPfs)>0):?>
                       <ul class="list-group list-group-flush">
-                        <li class="list-group-item list-group-item-action dropdown-notifications-item">
-                          <div class="d-flex">
-                            <div class="flex-shrink-0 me-3">
-                              <div class="avatar">
-                                <span class="avatar-initial rounded-circle bg-label-danger">CF</span>
+                        <?php foreach ($udatesPfs as $i => $udatePf):?>
+
+                            <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                              <div class="d-flex">
+                                <div class="flex-shrink-0 me-3">
+                                  <div class="avatar">
+                                  <?php if(empty($udatePf->image_pf)): ?>
+                                    <div class="avatar avatar-sm me-3">
+                                        <?php 
+                                            $name = explode(' ', trim($udatePf->name_pf_update));
+                                            $sigla = substr($name[0], 0, 1) . substr(end($name), 0, 1);
+                                        ?>
+                                        <span class="avatar-initial rounded-circle bg-label-danger"><?php echo strtoupper($sigla); ?></span>
+                                    </div>
+                                    <?php else: ?>
+                                    <div class="avatar avatar-sm me-3">
+                                        <img src="<?php echo $resize->resize(JPATH_CDN .DS. 'images' .DS. 'avatar'  .DS. $udatePf->image_pf, 100, 100, 'cache/' . $udatePf->image_pf, 'manterProporcao');?>" alt="Avatar" class="rounded-circle">
+                                    </div>
+                                  <?php endif; ?>
+                                  </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                  <h6 class="mb-1"><?php if($udatePf->status_pf_update == 1){ echo '<strong>';}?> <?php echo strlen($udatePf->name_pf_update)>40 ? substr($udatePf->name_pf_update, 0,40) . '...' : $udatePf->name_pf_update; ?><?php if($udatePf->status_pf_update == 1){ echo '</strong>';}?></h6>
+                                  <p class="mb-0">Accepted your connection</p>
+                                  <small class="text-muted">Registrado em <?php echo JHtml::date(JFactory::getDate($udatePf->register_pf_update, $this->siteOffset)->toISO8601(), 'DATE_FORMAT_DATATIME');?></small>
+                                </div>
+                                <div class="flex-shrink-0 dropdown-notifications-actions">
+                                  <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
+                                  <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
+                                </div>
                               </div>
-                            </div>
-                            <div class="flex-grow-1">
-                              <h6 class="mb-1">Charles Franklin</h6>
-                              <p class="mb-0">Accepted your connection</p>
-                              <small class="text-muted">12hr ago</small>
-                            </div>
-                            <div class="flex-shrink-0 dropdown-notifications-actions">
-                              <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
-                              <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
-                            </div>
-                          </div>
-                        </li>
+                            </li>
+                          <?php /*
+                          if(count($udatesPfs)>$i+1):?>
+                          <li class="divider"></li>
+                          <?php endif;
+                          */ ?>
+                          <?php endforeach; ?>
+                        <?php else: ?>
+                          <li class="dropdown-menu-footer border-top">
+                            <span class="dropdown-item d-flex justify-content-center p-3">
+                              Nenhuma notificações encontrada
+                            </span>
+                          </li>
+                        <?php endif; ?>
+
+
+
+
+
+
+
+
                         <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
                           <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
