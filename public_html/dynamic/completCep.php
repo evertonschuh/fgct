@@ -70,6 +70,9 @@ class EASistemasCompletCep {
 					$query->where('sigla_estado =' .$this->_db->quote( $uf ));
 					$this->_db->setQuery($query);
 					$result = $this->_db->loadObject();
+					if ( !(boolean) $result = $this->_db->loadObject() )
+						die();
+
 					$id_estado =  $result->id_estado;
 					$estado = $result->name_estado;
 
@@ -77,53 +80,16 @@ class EASistemasCompletCep {
 					$query = $this->_db->getQuery(true);
 					$query->select( 'id_cidade' );
 					$query->from( '#__intranet_cidade' );
+					$query->where( 'id_estado='. $this->_db->quote( $id_estado ));
 					$query->where( 'name_cidade='. $this->_db->quote( $cidade ));
 					$this->_db->setQuery($query);
 					
 					if ( (boolean) $result = $this->_db->loadObject() )
 						$id_cidade = $result->id_cidade;
-						
-					else {
-						
-						$query = $this->_db->getQuery(true);
-						$query->select( 'MAX( ' . $this->_db->quoteName('ordering') . ' ) as ordering' );
-						$query->from( '#__intranet_cidade' );
-						$query->where( 'id_estado ='.$this->_db->quote( $id_estado ) );
-						$this->_db->setQuery($query);					
-						$result = $this->_db->loadObject();
-						$ordering = $result->ordering +1;
-											
-						$columns = array('id_estado',
-										'status_cidade',
-										'name_cidade',
-										'ordering');
-										
-						$values = array($this->_db->quote( $id_estado ), 
-										$this->_db->quote(1), 
-										$this->_db->quote( $cidade ) ,  
-										$this->_db->quote( $ordering ) );										 
-
-					
-						$query = $this->_db->getQuery(true);
-						$query->insert( $this->_db->quoteName('#__intranet_cidade') );
-						$query->columns($this->_db->quoteName($columns));	
-						$query->values(implode(',', $values));
-						$this->_db->setQuery($query);
-						$this->_db->query();
-
-						$query = $this->_db->getQuery(true);
-						$query->select( 'id_cidade' );
-						$query->from( '#__intranet_cidade' );
-						$query->where( 'name_cidade='. $this->_db->quote( $cidade ) );
-						
-						$this->_db->setQuery($query);
-						
-						$result = $this->_db->loadObject();
-						
-						$id_cidade = $result->id_cidade;
+					else 
+						die();
 							
-
-					}
+					
 				
 					$dados = array(
 							'logradouro'=> $logradouro,

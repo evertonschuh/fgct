@@ -81,9 +81,10 @@
 }
 
 
+.has-error .form-control,
 
-.has-error .form-control{
-  border-color: #728600;
+.has-error .select2-container--default .select2-selection  {
+  border-color: #ff3e1d;
 } 
 
 .select2-container--default.select2-container--focus .select2-selection, .select2-container--default.select2-container--open .select2-selection {

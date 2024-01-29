@@ -145,12 +145,17 @@ endif;
                                 </div>
                                 <div class="mb-3 col-md-3" class="dte">
                                     <label for="data_nascimento_pf" class="form-label">Data de Nascimento</label>
-                                    <input class="form-control date" 
-                                        type="text" 
-                                        value="<?php echo $this->item->data_nascimento_pf ? JHtml::date(JFactory::getDate($this->item->data_nascimento_pf, $siteOffset)->toISO8601(), 'DATE_FORMAT') : ''; ?>" 
-                                        name="data_nascimento_pf" 
-                                        id="data_nascimento_pf"
-                                    />
+                                    <div class="input-group input-group-merge date">
+                                        <input class="form-control" 
+                                            type="text" 
+                                            value="<?php echo $this->item->data_nascimento_pf ? JHtml::date(JFactory::getDate($this->item->data_nascimento_pf, $siteOffset)->toISO8601(), 'DATE_FORMAT') : ''; ?>" 
+                                            name="data_nascimento_pf" 
+                                            id="data_nascimento_pf"
+                                        />
+                                        <button class="btn btn-outline-primary" type="button">
+                                            <i class="bx bx-calendar"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="mb-3 col-md-3">
                                     <label for="id_estado_civil" class="form-label"><?php echo JText::_('Estado Civil:'); ?></label>
@@ -216,14 +221,20 @@ endif;
                                         <?php echo JHTML::_('select.options',  $this->ufs, 'value', 'text', $this->item->uf_orga_expeditor_pf ); ?>
                                     </select>
                                 </div>
-
                                 <div class="mb-3 col-md-3">
-                                    <label for="data_expedicao_pf" class="form-label"><?php echo JText::_('Data de Expedição:*') ?></label>
-                                    <div class="input-group date col-md-4">
-                                        <input type="text" name="data_expedicao_pf" id="data_expedicao_pf" class="form-control" value="<?php if( $this->item->data_expedicao_pf ) echo JHtml::date(JFactory::getDate($this->item->data_expedicao_pf, $siteOffset)->toISO8601(), 'DATE_FORMAT'); ?>" placeholder="<?php echo JText::_('Data de Expedição RG') ?>" />
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </span>
+                                    <label for="data_expedicao_pf" class="form-label">Data de Expedição:</label>
+                                    <div class="input-group input-group-merge date">
+                                        <input 
+                                            type="text" 
+                                            name="data_expedicao_pf" 
+                                            id="data_expedicao_pf" 
+                                            class="form-control" 
+                                            value="<?php if( $this->item->data_expedicao_pf ) echo JHtml::date(JFactory::getDate($this->item->data_expedicao_pf, $siteOffset)->toISO8601(), 'DATE_FORMAT'); ?>" 
+                                            placeholder="<?php echo JText::_('Data de Expedição RG') ?>" 
+                                        />
+                                        <button class="btn btn-outline-primary" type="button">
+                                            <i class="bx bx-calendar"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -336,7 +347,7 @@ endif;
                                     </select>    
                                 </div>  
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label" for="id_cidade">Estado</label>
+                                    <label class="form-label" for="id_cidade">Cidade</label>
                                     <select id="id_cidade" name="id_cidade" class="select2 form-select cidade">
                                         <?php if (empty($this->item->id_cidade)) { ?>
                                         <option disabled selected class="default" value=""><?php echo JText::_('- Cidades -'); ?></option>
@@ -354,13 +365,10 @@ endif;
                                     </div>
                                 </div>
                                 <div class="add-endereco m-0 p-0 row" <?php echo $this->item->add_endereco_pf == 1 ? '' :'style="display:none"';?>>
-                                    
-                                    
                                     <div class="col-md-12">
                                         <h6 class="card-title mb-sm-0 me-2">Endereço para Correspondências</h6>
                                         <hr class="my-1 mb-3" />
                                     </div>
-             
                                     <div class="mb-3 col-md-3">
                                         <label class="form-label" for="add_cep_pf">CEP</label>
                                         <div class="input-group input-group-merge">
@@ -429,7 +437,7 @@ endif;
                                         </select>    
                                     </div>  
                                     <div class="mb-3 col-md-6">
-                                        <label class="form-label" for="add_id_cidade">Estado</label>
+                                        <label class="form-label" for="add_id_cidade">Cidade</label>
                                         <select id="add_id_cidade" name="add_id_cidade" class="select2 form-select cidade">
                                             <?php if (empty($this->item->add_id_cidade)) { ?>
                                             <option disabled selected class="default" value=""><?php echo JText::_('- Cidades -'); ?></option>
@@ -440,11 +448,51 @@ endif;
                                         </select>    
                                     </div>
                                 </div>
-
                             </div>    
                         </div>
                         <div class="tab-pane fade" id="athlete" role="tabpanel" aria-labelledby="athlete-tab">
-                            
+                            <div class="row">    
+                                <div class="mb-3 col-md-3">
+                                    <label class="form-label">Matricula</label>
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        disabled="disabled"
+                                        value="<?php echo $this->item->id_associado; ?>"
+
+                                    />
+                                </div>
+                                <div class="mb-3 col-md-3">
+                                    <label class="form-label">Cadastro</label>
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        disabled="disabled"
+                                        value="<?php echo JHtml::date(JFactory::getDate($this->item->cadastro_associado, $siteOffset)->toISO8601(), 'DATE_FORMAT'); ?>"
+
+                                    />
+                                </div>
+                                <div class="mb-3 col-md-3">
+                                    <label class="form-label">Validade</label>
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        disabled="disabled"
+                                        value="<?php echo JHtml::date(JFactory::getDate($this->item->confirmado_associado, $siteOffset)->toISO8601(), 'DATE_FORMAT'); ?>"
+
+                                    />
+                                </div>
+                                <div class="mb-3 col-md-3">
+                                    <label class="form-label">Validade</label>
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        disabled="disabled"
+                                        value="<?php echo JHtml::date(JFactory::getDate($this->item->validate_associado, $siteOffset)->toISO8601(), 'DATE_FORMAT'); ?>"
+
+                                    />
+                                </div>
+                                
                             <div class="col-md-4 col-lg-4">
                                 <label><?php echo JText::_('Tipo de Filiação:'); ?></label>
                                 <select name="tipo_socio" class="form-control select2">
@@ -508,9 +556,9 @@ endif;
                                         <label><?php echo JText::_('Vencimento CR:') ?></label>
                                         <div class="input-group date col-md-4">
                                             <input type="text" class="form-control" name="vencr_pf" value="<?php if( $this->item->vencr_pf ) echo JHtml::date(JFactory::getDate($this->item->vencr_pf, $siteOffset)->toISO8601(), 'DATE_FORMAT'); ?>" placeholder="<?php echo JText::_('Vencimento CR') ?>" />
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </span>
+                                            <button class="btn btn-outline-primary" type="button">
+                                                <i class="bx bx-calendar"></i>
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="form-group">

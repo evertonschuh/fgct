@@ -18,6 +18,18 @@ if ( !$user->get('guest') ):
 	$avatar = trim($user->get('avatar')); 
 	$lastvisitDate = $user->get('lastvisitDate'); 
 	
+  $this->db		= JFactory::getDBO();
+  $query = $this->db->getQuery(true);			
+  $query->select('IF(ISNULL(id_pj),#__intranet_pf.image_pf, #__intranet_pj.logo_pj) AS id_estado');		
+  $query->from('#__intranet_associado');	
+  $query->leftJoin($this->db->quoteName('#__intranet_pf') . ' USING( ' . $this->db->quoteName('id_user') . ')');
+  $query->leftJoin($this->db->quoteName('#__intranet_pj') . ' USING( ' . $this->db->quoteName('id_user') . ')');				
+  $query->where( $this->db->quoteName('id_user') . '=' . $this->db->escape( $user_id ) );
+  $this->db->setQuery($query);
+	$avatar = $this->db->loadResult();
+
+
+
 	$NameUser = explode(" ", $NameUser);
 	if ( count($NameUser)>1 ) 
 		$Nome = $NameUser[0] . ' ' . end($NameUser);
@@ -26,7 +38,7 @@ if ( !$user->get('guest') ):
 
 	
 	if ( !empty( $avatar )):
-		$avatarUser = $resize->resize(JPATH_MEDIA.DS. 'images' . DS . 'avatar' .DS. $avatar, 266, 266, 'cache/tmp_' . $avatar, 'tirarProporcao');
+		$avatarUser = $resize->resize(JPATH_CDN.DS. 'images' . DS . 'avatar' .DS. $avatar, 266, 266, 'cache/tmp_' . $avatar, 'tirarProporcao');
 	else:
 		$avatarUser = $resize->resize(JPATH_IMAGES . DS . 'noimageuser.png', 266, 266, 'cache/tmp_noimageuser.png', 'tirarProporcao');
 	endif;
@@ -69,7 +81,7 @@ endif;
     </head>
 
     <body>
-    <?php if( !$user->get('guest')):?>
+    <?php if( !$user->get('guest')): ?>
 
     <div id="overlay" class="animate">
         <div class="preload-wrap"></div>
@@ -113,12 +125,12 @@ endif;
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="<?php echo JRoute::_('index.php?view=enrollment');?>" class="menu-link">
+                  <a href="<?php echo JRoute::_('index.php?view=myenrollment');?>" class="menu-link">
                     <div data-i18n="Minhas Inscriçôes">Minhas Inscriçôes</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="<?php echo JRoute::_('index.php?view=enrollmentopen');?>" class="menu-link">
+                  <a href="<?php echo JRoute::_('index.php?view=enrollmentopens');?>" class="menu-link">
                     <div data-i18n="Inscriçôes Abertas">Inscriçôes Abertas</div>
                   </a>
                 </li>
@@ -159,7 +171,7 @@ endif;
               </a>
             </li>
             <li class="menu-item">
-              <a href="<?php echo JRoute::_('index.php?view=guns');?>" class="menu-link">
+              <a href="<?php echo JRoute::_('index.php?view=weapons');?>" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-target-lock"></i>
                 <div data-i18n="Minhas Armas">Minhas Armas</div>
               </a>
@@ -560,23 +572,15 @@ endif;
     <script src="/assets/js/custom.js"></script>
     <script src="/assets/js/sweetalert.js"></script>
 		<jdoc:include type="footer" />
+    <?php if( !$user->get('guest')): ?>
     <script type="text/javascript">
       $(document).ready(function(){
         jQuery('a[data-bs-toggle="tab"]').on('show.bs.tab', function(e) {
             localStorage.setItem('activeTab', jQuery(e.target).attr('href'));
         });
         var activeTab = localStorage.getItem('activeTab');
-        if(activeTab){
-            //bootstrap.Tab.getInstance($('.nav-pills li a[href="' + activeTab + '"]')).show()
-            
-            //activaTab(activeTab);
-            //$('.nav-pills li a[href="' + activeTab + '"]').addClass('active');
+        if(activeTab)
             $('.nav-pills a[href="' + activeTab + '"]').tab('show');
-            //alert('.nav-pills li a[href="' + activeTab + '"]');
-        }
-
-       // jQuery('#overlay').css('opacity', '0');
-       // jQuery('#overlay').css('visibility', 'hidden');
 
         window.addEventListener('load', function() {
           overlay.style.opacity = '0';
@@ -589,11 +593,9 @@ endif;
             jQuery('#overlay').css('visibility', 'visible');
         });
 
-
-
       });
     </script> 
-
+    <?php endif; ?>
 <?php 
 /*
   <script src="/assets/vendor/libs/hammer/hammer.js"></script>

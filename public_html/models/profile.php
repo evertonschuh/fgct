@@ -289,6 +289,8 @@ class EASistemasModelProfile extends JModel {
 	function store() 
 	{
 
+
+
 		$data = JRequest::get( 'post' );
 		$data['id_user'] = $this->_user->get('id');
 		if(empty($this->_data))
@@ -324,7 +326,7 @@ class EASistemasModelProfile extends JModel {
 			$row = $this->getTable('pf');
 
 			$image = JRequest::getVar( 'image_pf_new', '', 'files', 'array' );
-			$_path = JPATH_MEDIA.DS.'images'.DS.'avatar';
+			$_path = JPATH_CDN.DS.'images'.DS.'avatar';
 			$key = 'pf';
 			$key_image = 'image_pf';
 			$id_load = $data['id_pf'];
@@ -364,7 +366,7 @@ class EASistemasModelProfile extends JModel {
 		else:
 			$row = $this->getTable('pj');
 			$image = JRequest::getVar( 'logo_pj_new', '', 'files', 'array' );
-			$_path = JPATH_MEDIA.DS.'images'.DS.'logos';
+			$_path = JPATH_CDN.DS.'images'.DS.'logos';
 			$key = 'pj';
 			$key_image = 'logo_pj';
 			$id_load = $data['id_pj'];
