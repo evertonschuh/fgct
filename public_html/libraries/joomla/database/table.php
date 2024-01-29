@@ -161,10 +161,10 @@ abstract class JTable extends JObject
 	 */
 	public function getFields()
 	{
-		static $cache = null;
+		//static $cache = null;
 
-		if ($cache === null)
-		{
+		//if ($cache === null)
+		//{
 			// Lookup the fields for this table only once.
 			$name = $this->_tbl;
 			$fields = $this->_db->getTableColumns($name, false);
@@ -176,7 +176,7 @@ abstract class JTable extends JObject
 				return false;
 			}
 			$cache = $fields;
-		}
+		//}
 
 		return $cache;
 	}
@@ -197,6 +197,8 @@ abstract class JTable extends JObject
 	 */
 	public static function getInstance($type, $prefix = 'JTable', $config = array())
 	{
+
+		//$this->reset();
 		// Sanitize and prepare the table class name.
 		$type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
 		$tableClass = $prefix . ucfirst($type);
@@ -578,6 +580,10 @@ abstract class JTable extends JObject
 	 */
 	public function load($keys = null, $reset = true)
 	{
+		if ($reset)
+		{
+			$this->reset();
+		}
 		if (empty($keys))
 		{
 			$empty = true;
@@ -602,10 +608,7 @@ abstract class JTable extends JObject
 			$keys = array($this->_tbl_key => $keys);
 		}
 
-		if ($reset)
-		{
-			$this->reset();
-		}
+
 
 		// Initialise the query.
 		$query = $this->_db->getQuery(true);

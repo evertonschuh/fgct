@@ -7,11 +7,10 @@ jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 jimport('joomla.image.image');
 
-class EASistemasModelAssociado extends JModel {
+class EASistemasModelProfile extends JModel {
 
-	var $_id = null;
-	var $_doc = null;
-	var $_type = null;
+
+	
 	var $_data = null;
 	var $_db = null;
 	var $_app = null;	
@@ -29,40 +28,9 @@ class EASistemasModelAssociado extends JModel {
 		$this->_app 	= JFactory::getApplication(); 
 		$this->_user	= JFactory::getUser();
 		$this->_siteOffset = $this->_app->getCfg('offset');
-		
-		$this->_isRoot		= $this->_user->get('isRoot');	
-		$this->_userAdmin	= $this->_user->get('id');
-		
-		
-		$this->_session_id = JFactory::getSession()->getId();
-		
-		
-		$this->_doc = JRequest::getVar( 'doc', '', 'GET');
-		$this->_type = JRequest::getVar( 'type', '', 'GET');
-		//echo JPATH_ADMINISTRATOR;
-		if( JRequest::getVar( 'task' )  != 'add')
-		{
-			$array  	= JRequest::getVar( 'cid', array(0), '', 'array');
-			JRequest::setVar( 'cid', $array[0] );
-			$this->setId( (int) $array[0] );
-		
-			if (!$this->isCheckedOut() ) {
-				$this->checkout();		
-			}
-			else {
-				$tipo = 'alert-warning';
-				$msg = JText::_( 'JGLOBAL_CONTROLLER_CHECKIN_ITEM' );
-				$link = 'index.php?view=associados';
-				$this->_app->redirect($link, $msg, $tipo);
-			}
-		}
+
 	}
 
-	function setId( $id ) 
-	{
-		$this->_id		= $id;
-		$this->_data	= null;
-	}
 
 	function getUtil(){
 
@@ -74,102 +42,27 @@ class EASistemasModelAssociado extends JModel {
 		return $_util;
 	}
 
-	function setDoc()
-	{
-
-		$data = JRequest::get( 'post' );
-		$this->_type = $data['id_type'];
-		$this->_doc = $data['doc'];
-
-		$query = $this->_db->getQuery(true);			
-		$query->select('*');
-		$query->select('IF(ISNULL(id_pj),0,1) AS id_tipo');
-		$query->select('IF(ISNULL(id_pj),#__intranet_pf.id_estado, #__intranet_pj.id_estado) AS id_estado');
-		$query->select('IF(ISNULL(id_pj),#__intranet_pf.id_cidade, #__intranet_pj.id_cidade) AS id_cidade');
-		$query->select('IF(ISNULL(id_pj),#__intranet_pf.add_id_estado, #__intranet_pj.add_id_estado) AS add_id_estado');
-		$query->select('IF(ISNULL(id_pj),#__intranet_pf.add_id_cidade, #__intranet_pj.add_id_cidade) AS add_id_cidade');			
-		
-		$query->from('#__intranet_associado');	
-		$query->leftJoin($this->_db->quoteName('#__intranet_pf') . ' USING( ' . $this->_db->quoteName('id_user') . ')');
-		$query->leftJoin($this->_db->quoteName('#__intranet_pj') . ' USING( ' . $this->_db->quoteName('id_user') . ')');				
-		$query->leftJoin($this->_db->quoteName('#__users').'  ON ('.$this->_db->quoteName('id').'='.$this->_db->quoteName('id_user').')');
-
-		$searches = array();
-		$searches[]	= $this->_db->quoteName('#__intranet_pf.cpf_pf') . '=' . $this->_db->quote( $this->_doc ) ;
-		$searches[]	= $this->_db->quoteName('#__intranet_pj.cnpj_pj') . '=' . $this->_db->quote( $this->_doc ) ;
-			
-
-		$query->where('('.implode(' OR ', $searches).')');
-
-		$this->_db->setQuery($query);
-		if(!(boolean) $this->_db->loadObject()) 
-			return true;
-		
-		return false;
-		
-	}
-	
 	function getItem()
 	{
-		if (empty($this->_data)):
-			$query = $this->_db->getQuery(true);	
-			if(empty($this->_id)):
-				if(!empty($this->_doc)):
-				
-					$query->select('*');
-					$query->select('IF(ISNULL(id_pj),0,1) AS id_tipo');
-					$query->select('IF(ISNULL(id_pj),#__intranet_pf.id_user, #__intranet_pj.id_user) AS id_user');
-					$query->select('IF(ISNULL(id_pj),#__intranet_pf.id_estado, #__intranet_pj.id_estado) AS id_estado');
-					$query->select('IF(ISNULL(id_pj),#__intranet_pf.id_cidade, #__intranet_pj.id_cidade) AS id_cidade');
-					$query->select('IF(ISNULL(id_pj),#__intranet_pf.add_id_estado, #__intranet_pj.add_id_estado) AS add_id_estado');
-					$query->select('IF(ISNULL(id_pj),#__intranet_pf.add_id_cidade, #__intranet_pj.add_id_cidade) AS add_id_cidade');			
-					
-					$query->from('#__users');	
-					$query->leftJoin($this->_db->quoteName('#__intranet_pf') .'  ON ('.$this->_db->quoteName('id').'='.$this->_db->quoteName('#__intranet_pf.id_user').')');
-					$query->leftJoin($this->_db->quoteName('#__intranet_pj') .'  ON ('.$this->_db->quoteName('id').'='.$this->_db->quoteName('#__intranet_pj.id_user').')');				
-					
-					$searches = array();
-					$searches[]	= $this->_db->quoteName('#__intranet_pf.cpf_pf') . '=' . $this->_db->quote( $this->_doc ) ;
-					$searches[]	= $this->_db->quoteName('#__intranet_pj.cnpj_pj') . '=' . $this->_db->quote( $this->_doc ) ;
+		if (empty($this->_data)){
+			$query = $this->_db->getQuery(true);			
+			$query->select('*');
+			$query->select('IF(ISNULL(id_pj),0,1) AS id_tipo');
+			$query->select('IF(ISNULL(id_pj),#__intranet_pf.id_estado, #__intranet_pj.id_estado) AS id_estado');
+			$query->select('IF(ISNULL(id_pj),#__intranet_pf.id_cidade, #__intranet_pj.id_cidade) AS id_cidade');
+			$query->select('IF(ISNULL(id_pj),#__intranet_pf.add_id_estado, #__intranet_pj.add_id_estado) AS add_id_estado');
+			$query->select('IF(ISNULL(id_pj),#__intranet_pf.add_id_cidade, #__intranet_pj.add_id_cidade) AS add_id_cidade');			
 			
-					$query->where('('.implode(' OR ', $searches).')');
-					$this->_db->setQuery($query);
-					
-					if(!(boolean) $this->_data = $this->_db->loadObject()):
-						$this->addTablePath(JPATH_ADMINISTRATOR.'/tables');
-						if($this->_type == 0)
-							$this->_data = $this->getTable('pf');
-						else
-							$this->_data = $this->getTable('pj');
-						
-						$this->_data->id_tipo = $this->_type;	
-						$this->_data->name='';
-						$this->_data->email='';
-					endif;
-					$this->_data->doc = $this->_doc;
-					$this->_data->status_associado = 0;
-				endif;
-			else:	
-			
-				$query->select('*');
-				$query->select('IF(ISNULL(id_pj),0,1) AS id_tipo');
-				$query->select('IF(ISNULL(id_pj),#__intranet_pf.id_estado, #__intranet_pj.id_estado) AS id_estado');
-				$query->select('IF(ISNULL(id_pj),#__intranet_pf.id_cidade, #__intranet_pj.id_cidade) AS id_cidade');
-				$query->select('IF(ISNULL(id_pj),#__intranet_pf.add_id_estado, #__intranet_pj.add_id_estado) AS add_id_estado');
-				$query->select('IF(ISNULL(id_pj),#__intranet_pf.add_id_cidade, #__intranet_pj.add_id_cidade) AS add_id_cidade');			
-				
-				$query->from('#__intranet_associado');	
-				$query->leftJoin($this->_db->quoteName('#__intranet_pf') . ' USING( ' . $this->_db->quoteName('id_user') . ')');
-				$query->leftJoin($this->_db->quoteName('#__intranet_pj') . ' USING( ' . $this->_db->quoteName('id_user') . ')');				
-				$query->leftJoin($this->_db->quoteName('#__users').'  ON ('.$this->_db->quoteName('id').'='.$this->_db->quoteName('id_user').')');
-			
-				$query->where( $this->_db->quoteName('id_associado') . '=' . $this->_db->escape( $this->_id ) );
+			$query->from('#__intranet_associado');	
+			$query->leftJoin($this->_db->quoteName('#__intranet_pf') . ' USING( ' . $this->_db->quoteName('id_user') . ')');
+			$query->leftJoin($this->_db->quoteName('#__intranet_pj') . ' USING( ' . $this->_db->quoteName('id_user') . ')');				
+			$query->leftJoin($this->_db->quoteName('#__users').'  ON ('.$this->_db->quoteName('id').'='.$this->_db->quoteName('id_user').')');
+		
+			$query->where( $this->_db->quoteName('id') . '=' . $this->_db->escape( $this->_user->get('id') ) );
 
-				$this->_db->setQuery($query);
-				$this->_data = $this->_db->loadObject();
-				
-			endif;
-		endif;
+			$this->_db->setQuery($query);
+			$this->_data = $this->_db->loadObject();
+		}
 		
 		return $this->_data;
 	}
@@ -231,17 +124,17 @@ class EASistemasModelAssociado extends JModel {
 	
 	function getItemAtividades()
 	{
-		if($this->_id) {
-			if(empty($this->_data))
-				$this->getItem();	
-			$query = $this->_db->getQuery(true);
-			$query->select( $this->_db->quoteName('id_atividade') );
-			$query->from( $this->_db->quoteName('#__intranet_atividade_map') );
-			$query->where($this->_db->quoteName('id_user') . ' = ' . $this->_db->quote( $this->_data->id_user ));
-			$this->_db->setQuery($query);
-			return 	$this->_db->loadResultArray();
-		}			
-		return array();
+
+		if(empty($this->_data))
+			$this->getItem();	
+		$query = $this->_db->getQuery(true);
+		$query->select( $this->_db->quoteName('id_atividade') );
+		$query->from( $this->_db->quoteName('#__intranet_atividade_map') );
+		$query->where($this->_db->quoteName('id_user') . ' = ' . $this->_db->quote( $this->_data->id_user ));
+		$this->_db->setQuery($query);
+		return 	$this->_db->loadResultArray();
+					
+
 	}
 			
 	function getUfs() 
@@ -396,100 +289,45 @@ class EASistemasModelAssociado extends JModel {
 	function store() 
 	{
 
-		$this->addTablePath(JPATH_ADMINISTRATOR.'/tables');
 		$data = JRequest::get( 'post' );
-		
+		$data['id_user'] = $this->_user->get('id');
 		if(empty($this->_data))
 			$this->getItem();
-		
-		$pk		= (!empty($data['id_user'])) ? $data['id_user'] : 0;
-		$dataUser = array();
-		$dataUser['name'] = $data['name'];
-		$dataUser['email'] = $data['email'];		
-		
-		if($data['status_associado']==0):
-			$dataUser['block'] = 1;
-		elseif(!empty($this->_data) && !empty($this->_data->validate_associado) && JFactory::getDate($this->_data->validate_associado, $this->_siteOffset)->toFormat('%Y-%m-%d', true) >= JFactory::getDate('now', $this->_siteOffset)->toFormat('%Y-%m-%d', true) ):
-			$dataUser['block'] = 0;
-		else:
-			$dataUser['block'] = 1;
-		endif;
-		
-		if(!empty($data['id_user'])):
-			$user	= JUser::getInstance($data['id_user']);
-			if ( $user->get('name') != $data['name'] || $user->get('email') != $data['email'] || $user->get('block') != $dataUser['block'] ):
-				if (!$user->bind($dataUser)):
-					$this->setError($user->getError());
-					return false;
-				endif;
-				
-				if (!$user->save()):
-					$this->setError($user->getError());
-					return false;
-				endif;
-			endif;
-		else:
-			$dataUser = array();
-			$dataUser['name'] = $data['name'];
-			$dataUser['email'] = $data['email'];
-			$dataUser['username'] = preg_replace("/[^0-9]/", "", $this->_doc);
-			$dataUser['password'] = substr( preg_replace("/[^0-9]/", "", $this->_doc), 0, 7); 
-			$dataUser['block'] = 1;	
-			$dataUser['sendEmail'] = 1;
-			
-			if($data['id_tipo'] == 0):
-				$dataUser['groups'] = array(2);
-			else:
-				$dataUser['groups'] = array(2,17);
-			endif;
-			$user = new JUser;
-			$dataU = (array)$dataUser;
-	
-			if (!$user->bind($dataU)) {
-				return false;
-			}
-			
-			if (!$user->save()) {
-				return false;
-			}
-			$data['id_user'] = $user->get('id');
-		endif;
-						
-		unset($dataUser);
 
-		if($data['id_tipo'] == 0):
+		if (empty($this->_user))
+			$this->_user = JFactory::getUser();
+
+
+		$data['id_user'] = $this->_user->get('id');
+
+		if ( $this->_user->get('name') != $data['name'] || $this->_user->get('email') != $data['email'] ):
+
+			$email	= JRequest::getVar('email', '', 'post');
+			$name	= JRequest::getVar('name', '', 'post');
+
+			if(empty($this->_user))
+				$this->_user = JFactory::getUser();
+
+			if($this->_user->get('name') != $name)
+				$this->_user->set('name', $name);
+			if($this->_user->get('email') != $email)
+				$this->_user->set('email', $email);
+
+			if(!$this->_user->save(true))
+				return false;
+			
+		endif;
+
+		$this->addTablePath(JPATH_SITE.'/tables');
+		
+		if($this->_data->id_tipo == 0):
 			$row = $this->getTable('pf');
+
 			$image = JRequest::getVar( 'image_pf_new', '', 'files', 'array' );
 			$_path = JPATH_MEDIA.DS.'images'.DS.'avatar';
 			$key = 'pf';
 			$key_image = 'image_pf';
 			$id_load = $data['id_pf'];
-			if(!isset($data['cpf_pf']))
-				$data['cpf_pf'] = $this->_doc;
-				
-			$data['status_pf'] = '1';
-
-			$data['observacao_pf'] = JRequest::getVar('observacao_pf', null, 'default', 'none', JREQUEST_ALLOWHTML);
-			
-
-			switch($data['tipo_socio']) {
-
-				case '0': 
-					$data['compressed_air_pf'] = '0';
-					$data['copa_brasil_pf'] = '0';
-				break;
-				case '1': 
-					$data['compressed_air_pf'] = '1';
-					$data['copa_brasil_pf'] = '0';
-				break;				
-				case '2': 
-					$data['compressed_air_pf'] = '0';
-					$data['copa_brasil_pf'] = '1';
-				break;
-			}
-
-
-
 
 			if(!empty($data['data_nascimento_pf']))
 			{
@@ -508,8 +346,7 @@ class EASistemasModelAssociado extends JModel {
 			}
 			else
 				$data['data_expedicao_pf'] = NULL;
-			
-			
+			/*
 			if(!empty($data['vencr_pf']))
 			{
 				$dataaTmp = explode(" ",$data['vencr_pf']);
@@ -522,6 +359,8 @@ class EASistemasModelAssociado extends JModel {
 			if($data['id_clube']===''):
 				$data['id_clube'] = NULL;	
 			endif;
+			*/
+
 		else:
 			$row = $this->getTable('pj');
 			$image = JRequest::getVar( 'logo_pj_new', '', 'files', 'array' );
@@ -555,8 +394,6 @@ class EASistemasModelAssociado extends JModel {
 			
 		endif;
 
-		$data['block_'.$key] = 0;
-		
 		if (!JFolder::exists($_path))
 		{
 			$_folder_permissions = "0755";
@@ -565,7 +402,7 @@ class EASistemasModelAssociado extends JModel {
 			$buffer = '<html><body bgcolor="#FFFFFF"></body></html>';
 			JFile::write( $_path . DS. 'index.html', $buffer ); 
 		}
-		
+
 		$key_remove_image = 'remove_' . $key_image;
 		if(isset($data[$key_remove_image]))
 		{
@@ -590,31 +427,32 @@ class EASistemasModelAssociado extends JModel {
 
 			$data[$key_image] = $thumb;
 		}
-					
+		
 		//salva data se for novo
 		if($id_load>0) {
 			$row->load($id_load);
 			$data['update_' . $key] = JFactory::getDate('now', $this->_siteOffset)->toISO8601(true);
-			$data['user_update_' . $key] = $this->_userAdmin;			
+			$data['user_update_' . $key] = $data['id_user'];			
 		}
 		else {
 			$data['register_' . $key] = JFactory::getDate('now', $this->_siteOffset)->toISO8601(true);
-			$data['user_register_' . $key] = $this->_userAdmin;
+			$data['user_register_' . $key] = $data['id_user'];
 		}
-		
+	
 		if ( !$row->bind($data)) {
 			return false;	
 		}
 		
 		if(isset($data[$key_remove_image]))
 			$row->$key_image = NULL;
-			
-		if($data['id_tipo'] == 0){
+	
+		if($this->_data->id_tipo == 0){
 
+			/*
 			if(!$data['vencr_pf']) {
 				$row->vencr_pf = NULL;
 			}
-			
+			*/
 			if(!$data['data_nascimento_pf']) {
 				$row->data_nascimento_pf = NULL;
 			}
@@ -622,10 +460,10 @@ class EASistemasModelAssociado extends JModel {
 			if(!$data['data_expedicao_pf']) {
 				$row->data_expedicao_pf = NULL;
 			}
-			
+			/*
 			if($data['id_clube']===NULL) {
 				$row->id_clube = NULL;
-			}		
+			}	*/	
 		}
 		else{
 			if(!$data['fundacao_pj']) {
@@ -640,11 +478,14 @@ class EASistemasModelAssociado extends JModel {
 		if ( !$row->check($data)) {
 			return false;	
 		}	
-			
+////////print_r($row);
+//exit;
+
 		if ( !$row->store(TRUE) ) {	
 			return false;	
 		}
-				
+	
+		/*
 		$row = $this->getTable('associado');
 		if($this->_id) {
 			$row->load($this->_id);
@@ -665,18 +506,13 @@ class EASistemasModelAssociado extends JModel {
 		if ( !$row->store($data) ) {	
 			return false;	
 		}
-
+*/
 		jimport('joomla.log.log');
-		JLog::addLogger(array( 'text_file' => 'log.associado.php'));
+		JLog::addLogger(array( 'text_file' => 'log.profile.php'));
+		JLog::add($data['id_user'] . JText::_(' - profile edit'), JLog::INFO, 'profile');
+
 		
-		if($this->_id):
-			$row->checkin($this->_id);
-			JLog::add($this->_user->get('id') . JText::_('		Associado Editado -  idAssoc('.$this->_id.')'), JLog::INFO, 'associado');
-		else:
-			$this->setId( $row->get('id_associado') ); 	
-			JLog::add($this->_user->get('id') . JText::_('		Associado Cadastrado -  idAssoc('.$this->_id.')'), JLog::INFO, 'associado');
-		endif;
-		
+		/*
 		JRequest::setVar( 'cid', $this->_id );
 		
 		// store Map Clube
@@ -699,7 +535,7 @@ class EASistemasModelAssociado extends JModel {
 		
 		$this->_db->setQuery($query);
 		$this->_db->query();
-
+*/
 		
 		
 		return true;

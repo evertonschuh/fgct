@@ -1,106 +1,93 @@
 <?php
-/**
- * @site		Site
- * @developer	Everton Alexandre Schuh
- * @copyright	Copyright (C) 2014, All rights reserved. 
- */
- 
-defined('_JEXEC') or die;
+
+defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.view');
 
-include_once (JPATH_BASE.DS.'views'.DS.'profile'.DS.'language.scrips.php');
+include_once(JPATH_SITE . DS . 'views' . DS . 'profile' . DS . 'language.scrips.php');
 
-class EASistemasViewProfile extends JView 
+class EASistemasViewprofile extends JView
 {
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
-		
-		$token = md5(uniqid(''));
-		
-		$document = JFactory::getDocument();
-		
-		$document->addStyleSheet('/views/system/css/cropper.min.css');
-		$document->addStyleSheet('/views/system/css/crop.main.css');
-		$document->addStyleSheet('views/system/css/imgmanager.css');
-		
-		$document->addstylesheet( 'views/system/css/bootstrap-datetimepicker.css' );
-				//
-		$document->addScript( 'views/system/js/moment-with-locales.js' );
-		$document->addScript( 'views/system/js/bootstrap-datetimepicker.js' );
-		$document->addScript( 'views/system/js/jquery.bootstrap-touchspin.js' );
-		
-		$document->addScript( 'views/system/js/cropper.min.js' );
-		$document->addScript( 'views/system/js/crop.main.js' );
-		$document->addScript( 'views/system/js/jquery.maskedinput.js' );
-		$document->addScript( 'views/system/js/spin.js' );
-		$document->addScript( 'views/system/js/loading.js' );
-		$document->addScript( 'views/system/js/util.js' );
-
-		$document->addScript('views/system/js/perfil.js?ver='.$token);		
-
-		//$document->addScript('/views/system/js/jquery.themepunch.tools.min.js');
-		
-		
-		/*
-		$document->addScript('/views/system/apanel/plugins/daterangepicker/moment.min.js');
-		$document->addScript('/views/system/apanel/plugins/datepicker/bootstrap-datepicker.js');
-		$document->addScript('/views/system/apanel/plugins/daterangepicker/daterangepicker.js');
-		$document->addScript('/views/system/apanel/plugins/datepicker/locales/bootstrap-datepicker.pt-BR.js');
-		$document->addStyleSheet('/views/system/apanel/plugins/datepicker/datepicker3.css');
-		$document->addScript('/views/system/apanel/plugins/slimScroll/jquery.slimscroll.min.js');
-		
-		
-		
-		$document->addStyleSheet('/views/system/css/dynamic-captions.css');
-		$document->addStyleSheet('/views/system/css/static-captions.css');
-		$document->addScript('/views/system/js/jquery.themepunch.tools.min.js');
-		$document->addScript('/views/system/js/jquery.themepunch.revolution.min.js');
-		*/
-		
-		
-		$this->item =  $this->get( 'Item');
-
-		$ufs = $this->get('Ufs');
-		$this->assignRef( 'ufs', $ufs);
-		
-		$paises = $this->get('Paises');
-		$this->assignRef( 'paises', $paises);	
-		
-		$estados = $this->get('Estados');
-		$this->assignRef( 'estados', $estados);
-		
-		$cidades = $this->get('Cidades');
-		$this->assignRef( 'cidades', $cidades);	
-		
-		$register = $this->get('Register');
-		$this->assignRef( 'register', $register);	
-		
-		$estadosCivil = $this->get('EstadosCivil');
-		$this->assignRef( 'estadosCivil', $estadosCivil);	
-				
-		JToolBarHelper::title('<i class="fas fa-user fa-fw"></i> ' . JText::_( 'Perfil' ) );
-		
 		//// Set the toolbar
-		JToolBarHelper::apply();		
-				
-		//$this->items =  $this->get( 'Items');
-		
-		/*
-		$cursosDisciplinas =  $this->get( 'CursosDisciplinas');
-		$this->assignRef('cursosDisciplinas',	$cursosDisciplinas);
-		
-		$cursosOutros =  $this->get( 'CursosOutros');
-		$this->assignRef('cursosOutros',	$cursosOutros);
 
-		$agenda =  $this->get( 'Agenda');
-		$this->assignRef('agenda',	$agenda);	
-		
-		$avisos =  $this->get( 'Avisos');
-		$this->assignRef('avisos',	$avisos);
-		*/
-		
-		parent::display( $tpl);
-		
+		$document = JFactory::getDocument();
+
+
+		$document->addStyleSheet('/assets/vendor/libs/select2/select2.css');
+		$document->addScript('/assets/vendor/libs/select2/select2.js');
+
+		$document->addStyleSheet('/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css');
+		$document->addScript('/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js');
+		$document->addScript('/assets/vendor/libs/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.js');
+
+
+
+
+		$document->addStyleSheet('/assets/vendor/libs/bootstrap-select/bootstrap-select.css');
+		$document->addStyleSheet('/assets/vendor/libs/bootstrap-select/bootstrap-select.js');
+
+		$document->addScript('/assets/js/jquery.mask.js');
+
+		//$document->addstylesheet('/assets/css/bootstrap-datetimepicker.css');
+		//$document->addScript('/assets/js/moment-with-locales.js');
+		//$document->addScript('/assets/js/bootstrap-datetimepicker.js');
+
+		//$document->addScript('/assets/js-custom/corredor.js');
+		$document->addScript('/assets/js-custom/profile.js');
+	
+
+
+		$document->addScriptDeclaration('window.Helpers.initCustomOptionCheck();');
+
+		$this->item = $this->get('Item');
+		$this->estados = $this->get('Estados');
+		$this->cidades = $this->get('Cidades');
+		$this->ufs = $this->get('Ufs');
+
+		if($this->item->id_tipo==0): 
+			$this->estadoCivil = $this->get('EstadoCivil');
+			//$this->assignRef( 'estadoCivil', $estadoCivil);
+
+			$this->cidadesNasceu = $this->get('CidadesNasceu');
+			//$this->assignRef( 'cidadesNasceu', $cidadesNasceu);	
+			
+			$this->clubes = $this->get('Clubes');
+			//$this->assignRef( 'clubes', $clubes);	
+			
+			//$ranking = $this->get('Ranking');
+			//$this->assignRef( 'ranking', $ranking);	
+		endif;
+
+
+		if (!empty($this->item->name_pf)) :
+		//$document->addStyleSheet('views/system/css/jquery.fileupload.css');
+		//$document->addStyleSheet('views/system/css/jquery.fileupload-ui.css');
+		//$document->addScript('views/system/js/jquery.ui.widget.js');
+		//$document->addStyleSheet('views/system/app-assets/css/pages/page-account-settings.css');
+		//$document->addStyleSheet('views/system/app-assets/css/pages/page-contact.css');
+		//$document->addScript('views/system/app-assets/js/scripts/page-account-settings.js');
+		//$document->addStyleSheet('views/system/app-assets/vendors/select2/select2.min.css');
+		//$document->addStyleSheet('views/system/app-assets/vendors/select2/select2-materialize.css');
+		//$document->addScript('views/system/app-assets/js/scripts/page-account-settings.js');
+		//$document->addScript('views/system/app-assets/vendors/select2/select2.full.min.js');
+		//$document->addScript('views/system/js/tmpl.min.js');
+		//$document->addScript('views/system/js/jquery.iframe-transport.js');
+		//$document->addScript('views/system/js/jquery.fileupload.js');
+		//$document->addScript('views/system/js/jquery.fileupload-process.js');
+
+		//$document->addScript('views/system/js/jquery.fileupload-ui.js');
+		//$document->addScript('views/system/js/pf-upload.js');
+		endif;
+
+
+		JToolBarHelper::title('<span class="text-muted fw-light">CADASTRO / Meu Perfil / </span> ' . $this->item->name);
+
+
+		// Display the template*/
+		parent::display($tpl);
 	}
+
+
 }

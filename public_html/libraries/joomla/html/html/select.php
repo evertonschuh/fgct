@@ -705,8 +705,8 @@ abstract class JHtmlSelect
 				$extra .= ((string) $k == (string) $selected ? ' checked="checked"' : '');
 			}
 			
-			$html .= "\n\t"  . '<label for="' . $id_text . $k . '"' . ' id="' . $id_text . $k . '-lbl" class="radiobtn">'. '<input type="radio" name="' . $name . '"' . ' id="' . $id_text . $i . '" value="' . $k . '"' . ' ' . $extra . ' '
-				. $attribs . '/>' . "\n\t" . $t
+			$html .= "\n\t"  . '<label for="' . $id_text . $k . '"' . ' id="' . $id_text . $k . '-lbl" class="form-check-label radiobtn">'. '<input type="radio" name="' . $name . '"' . ' id="' . $id_text . $i . '" value="' . $k . '"' . ' ' . $extra . ' '
+				. $attribs . ' class="form-check-input" />' . "\n\t" . $t
 				. '</label>';
 		}
 

@@ -23,6 +23,11 @@
     --primary-rgba-85: rgba(70, 113, 25, 0.85); /*rgba(105, 108, 255, 0.85);*/
   }
 
+#overlay .preload-wrap {
+    border: 0.0625rem var(--primary) solid;
+    border-top: 0.25rem var(--primary) solid;
+}
+
 .authentication-wrapper.authentication-basic .authentication-inner .card .app-brand {
     margin-bottom: 2.5rem;
     background-image: url('/images/logo-dark.png');

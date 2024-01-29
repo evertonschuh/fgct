@@ -2,6 +2,9 @@
 * main.css
 * File include item main only specific css only
 ******************************************************************************/
+
+
+
 @charset "UTF-8";
 :root {
   --primary: #8DA500; /* #FF7000; #696cff;*/
@@ -13,6 +16,71 @@
   --primary-rgba-4: rgba(141, 165, 0, 0.4); /*rgba(105, 108, 255, 0.4);*/
   --primary-rgba-85: rgba(141, 165, 0, 0.85); /*rgba(105, 108, 255, 0.85);*/
 }
+
+#overlay {
+  background: rgba(245, 245, 249, 1);
+  visibility: visible;
+  z-index: 99999;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#overlay img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  width: 5.0625rem;
+  height: 4.9375rem;
+  max-width: 100%;
+}
+
+#overlay .preload-wrap {
+  position: absolute;
+  border-radius: 100%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  width: 7.5rem;
+  height: 7.5rem;
+  border: 0.0625rem var(--primary) solid;
+  border-top: 0.25rem var(--primary) solid;
+  -webkit-animation: spin 1s infinite linear;
+  animation: spin 1s infinite linear;
+}
+
+.animate {
+   -webkit-transition: all 0.75s ease-out;
+  -o-transition: all 0.75s ease-out;
+  transition: all 0.75s ease-out;	
+}
+
+@keyframes spin {
+  0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg)
+  }
+
+  to {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg)
+  }
+}
+
+
+.form-check-label {
+  margin-right: 10px;
+}
+
+
 
 .has-error .form-control{
   border-color: #728600;

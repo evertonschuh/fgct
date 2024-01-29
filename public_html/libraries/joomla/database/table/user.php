@@ -35,7 +35,7 @@ class JTableUser extends JTable
 	 *
 	 * @since  11.1
 	 */
-	public function __construct(&$db)
+	public function __construct($db)
 	{
 		parent::__construct('#__users', 'id', $db);
 

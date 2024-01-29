@@ -40,7 +40,23 @@ jQuery(document).ready(function(){
 	jQuery('#cep').mask('00000-000');	
 	jQuery('.validate-cpf').mask('000.000.000-00');
 	jQuery('.validate-cnpj').mask('00.000.000/0000-00');
-	
+
+    jQuery('#check_add_endereco').click(function(){
+		if(jQuery(this).is(':checked')){
+			jQuery('input[name="add_endereco_pf"]').val('1');
+			jQuery('.add-endereco').slideDown();
+			jQuery('.add-endereco :input').attr('disabled', false);
+			jQuery('.add-endereco :select').attr('disabled', false);
+		}	
+		else{
+			jQuery('input[name="add_endereco_pf"]').val('0');
+			jQuery('.add-endereco').slideUp();  
+			jQuery('.add-endereco :input').attr('disabled', true);
+			jQuery('.add-endereco :select').attr('disabled', true);
+		}
+	}); 
+
+
 	jQuery('#id_estado').change(function(){
 		jQuery('#id_cidade').html('<option value="0">'+Joomla.JText._('EASISTEMAS_SCRIPT_SELET_LOADING')+'</option>');	
 		jQuery.post('/dynamic/select.php', 
@@ -50,6 +66,27 @@ jQuery(document).ready(function(){
 			}
 		)
 	});	
+
+	jQuery('.add_estado').change(function(){
+		jQuery('.add_cidade').html('<option value="0">'+Joomla.JText._('EASISTEMAS_SCRIPT_SELET_LOADING')+'</option>');	
+		jQuery.post('/dynamic/select.php',  
+			{id_estado:jQuery(this).val()},
+			function(valor){
+				jQuery('.add_cidade').html(valor);
+			}
+		)
+	});	
+
+	jQuery('#naturalidade_uf_pf').change(function(){
+		jQuery('#naturalidade_pf').html('<option value="0">'+Joomla.JText._('EASISTEMAS_SCRIPT_SELET_LOADING')+'</option>');	
+		jQuery.post('/dynamic/select.php', 
+			{id_estado:jQuery(this).val()},
+			function(valor){
+				jQuery('#naturalidade_pf').html(valor);
+			}
+		)
+	});	
+
 	$('input[type=radio][name=tipo]').change(function() {
 		if (this.value == '0') {
 			jQuery('#doc').addClass('validate-cpf').removeClass('validate-cnpj').mask('000.000.000-00').prev('label').html('CPF');
@@ -63,93 +100,37 @@ jQuery(document).ready(function(){
 		}
 	});
 
-	jQuery('#doc').on('blur', function() {
-		validateCPF_CNPJ(jQuery(this));
-    });
 
-
-	function validateCPF_CNPJ(element){
-		if(element.hasClass('validate-cpf') && element.val().length == '14')
-		{
-			if (document.formvalidator.validate('doc') == true) {
-				var data = {
-					cpf_pf: element.val(),
-					id_associado: jQuery('#cid').val(),
-				}
-				jQuery.post('/dynamic/check.php', 
-					{value:JSON.stringify(data),
-					 execute:'check-cpf'},
-					function(valor){
-						if(valor === 'error'){
-							jQuery('#doc').parent('div').addClass('has-error');
-							if(jQuery('#doc').next('p.error').length)
-								jQuery('#doc').next('p.error').html(Joomla.JText._('EASISTEMAS_SCRIPT_VALIDATE_ERROR_INPUT_CPF_REPEAT'));
-							else
-								jQuery('#doc').after( '<p class="error">'+Joomla.JText._('EASISTEMAS_SCRIPT_VALIDATE_ERROR_INPUT_CPF_REPEAT')+'</p>' );
-						}
-					}
-		  		);
-			}
-		}
-		else if(element.hasClass('validate-cnpj') && element.val().length == '18') {
-			if (document.formvalidator.validate('doc') == true) {
-				var data = {
-					cnpj_pj: element.val(),
-					id_associado: jQuery('#cid').val(),
-				}
-				jQuery.post('/dynamic/check.php', 
-					{value:JSON.stringify(data),
-					 execute:'check-cpf'},
-					function(valor){
-						if(valor === 'error'){
-							jQuery('#doc').parent('div').addClass('has-error');
-							if(jQuery('#doc').next('p.error').length)
-								jQuery('#doc').next('p.error').html(Joomla.JText._('EASISTEMAS_SCRIPT_VALIDATE_ERROR_INPUT_CNPJ_REPEAT'));
-							else
-								jQuery('#doc').after( '<p class="error">'+Joomla.JText._('EASISTEMAS_SCRIPT_VALIDATE_ERROR_INPUT_CPF_REPEAT')+'</p>' );
-						}
-					}
-		  		);
-			}			
-		}
-	}
-
-
-
-
-	jQuery('#complete').click(function(){
-		var CEP = jQuery('#cep').val();
+	jQuery('.complete').click(function(){
 		var Control = jQuery(this);
-
 		Control.attr('disabled',true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-		
+		var CEP = Control.parent().find('.cep').val();
 		jQuery.post('/dynamic/completCep.php', 
 			  {cep_endereco:CEP},
 			  function(valor){
-				alert('asd')
 				 if(valor){
 						var obj = jQuery.parseJSON( valor )
 						//jQuery('#id_cidade').html(valor);
 						//jQuery('#id_cidade').next('label').remove();
 						//jQuery('#id_cidade').parent('div').removeClass('has-error');
 						
-						jQuery('#logradouro').val(obj.logradouro );	
+						Control.parent().parent().next().find('.logradouro').val(obj.logradouro );	
 						//jQuery('#logradouro').next('label').remove();
 						//jQuery('#logradouro').parent('div').removeClass('has-error');
 						
-						jQuery('#bairro').val(obj.bairro);	
+						Control.parent().find('.bairro').val(obj.bairro);	
 						//jQuery('#bairro').next('label').remove();
 						//jQuery('#bairro').parent('div').removeClass('has-error');
 						
-						jQuery('#id_estado').val(obj.id_estado);
+						Control.parent().find('.estado').val(obj.id_estado);
 						//jQuery('#id_estado').next('label').remove();
 						//jQuery('#id_estado').parent('div').removeClass('has-error');
-						jQuery('#id_cidade').html('<option value="0">'+Joomla.JText._('INTRANET_SCRIPT_SELET_LOADING')+'</option>');					
+						Control.parent().find('.cidade').html('<option value="0">'+Joomla.JText._('INTRANET_SCRIPT_SELET_LOADING')+'</option>');					
 						jQuery.post('/dynamic/select.php', 
 							{id_estado:obj.id_estado},
 							function(valor){
-								jQuery('#id_cidade').html(valor);
-								jQuery('#id_cidade').val(obj.id_cidade);
+								Control.parent().find('.cidade').html(valor);
+								Control.parent().find('.cidade').val(obj.id_cidade);
 								Control.attr('disabled',false).html('<i class="bx bx-search"></i>');
 							}
 						)

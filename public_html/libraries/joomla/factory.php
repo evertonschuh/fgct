@@ -209,6 +209,7 @@ abstract class JFactory
 	 */
 	public static function getUser($id = null)
 	{
+	
 		if (is_null($id))
 		{
 			$instance = self::getSession()->get('user');
@@ -939,14 +940,12 @@ abstract class JFactory
 		$document->MetaRights  = $config->MetaRights;		
 
 		$document->setCustonMetaTags($config->MetaCuston);
-		$document->_generator = $config->sitename. ' | By Everton Alexandre Schuh';
+		$document->_generator = $config->sitename. ' | By EASistemas';
 
 		$document->robots = $config->robots;
 
 		$document->sitename = $config->sitename;
 		$document->fromname = $config->fromname;
-		$document->file_logo = $config->file_logo;
-		$document->googleanalytics = $config->googleanalytics;
 
 		$document->addScript( '/assets/js/core.js' );
 		unset($config);

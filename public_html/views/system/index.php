@@ -13,8 +13,9 @@ $this->siteOffset = $this->config->getValue('offset');
 
 if ( !$user->get('guest') ):
 		
-	$id_user = $user->get('id'); 
+	$user_id = $user->get('id'); 
 	$NameUser = trim($user->get('name')); 
+	$avatar = trim($user->get('avatar')); 
 	$lastvisitDate = $user->get('lastvisitDate'); 
 	
 	$NameUser = explode(" ", $NameUser);
@@ -23,35 +24,12 @@ if ( !$user->get('guest') ):
 	else
 		$Nome =  end($NameUser);
 
-  $_db	= JFactory::getDBO();
-  $query = $_db->getQuery(true);
-  $query->select($_db->quoteName('image_pf'));
-  $query->from($_db->quoteName('#__intranet_pf'));
-  $query->where($_db->quoteName('id_user') . '  = ' . $_db->quote( $id_user ) );
-  $_db->setQuery($query);
-  $avatar = $_db->loadResult();	
-
-  if ( !empty( $avatar ) && JFile::exists(JPATH_CDN.DS. 'images' . DS . 'avatar' .DS. $avatar)):
-    $avatarUser = $resize->resize(JPATH_CDN.DS. 'images' . DS . 'avatar' .DS. $avatar, 266, 266, 'cache/tmp_' . $avatar, 'tirarProporcao');
-  else:
-    $avatarUser = $resize->resize(JPATH_IMAGES . DS . 'noimageuser.png', 266, 266, 'cache/tmp_noimageuser.png', 'tirarProporcao');
-  endif;
-
-
-	$query->clear();
-	$query->select($_db->quoteName(array( 'id_pf_update',
-                                        'name_pf_update',
-                                        'status_pf_update',
-                                        'register_pf_update',
-                                        'image_pf'
-                                        )));
-	$query->from($_db->quoteName('#__intranet_pf_update'));
-  $query->leftJoin($_db->quoteName('#__intranet_pf').'ON('.$_db->quoteName('cpf_pf').'='.$_db->quoteName('cpf_pf_update').')');
-	//$query->where($_db->quoteName('status_pf_update') . '  = ' . $_db->quote( '1' ) );
-	$query->order($_db->quoteName('status_pf_update') . ' DESC');
-	$query->order($_db->quoteName('register_pf_update') . ' ASC');
-	$_db->setQuery($query,0,5);
-	$udatesPfs = $_db->loadObjectList();
+	
+	if ( !empty( $avatar )):
+		$avatarUser = $resize->resize(JPATH_MEDIA.DS. 'images' . DS . 'avatar' .DS. $avatar, 266, 266, 'cache/tmp_' . $avatar, 'tirarProporcao');
+	else:
+		$avatarUser = $resize->resize(JPATH_IMAGES . DS . 'noimageuser.png', 266, 266, 'cache/tmp_noimageuser.png', 'tirarProporcao');
+	endif;
 endif;
 
 
@@ -93,7 +71,12 @@ endif;
     <body>
     <?php if( !$user->get('guest')):?>
 
-        	<?php //if (!JRequest::getInt('hidemainmenu')): ?>
+    <div id="overlay" class="animate">
+        <div class="preload-wrap"></div>
+        <img src="/images/favicon.ico" alt="" class="menu-logo" width="129" height="129">
+    </div>
+
+    <?php //if (!JRequest::getInt('hidemainmenu')): ?>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -121,33 +104,90 @@ endif;
               </a>
             </li>
             <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Menu Esportivo</span>
+            </li>
+            <li class="menu-item" style="">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-edit"></i>
+                <div data-i18n="Inscriçôes">Inscriçôes</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="<?php echo JRoute::_('index.php?view=enrollment');?>" class="menu-link">
+                    <div data-i18n="Minhas Inscriçôes">Minhas Inscriçôes</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="<?php echo JRoute::_('index.php?view=enrollmentopen');?>" class="menu-link">
+                    <div data-i18n="Inscriçôes Abertas">Inscriçôes Abertas</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item" style="">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-crosshair"></i>
+                <div data-i18n="Resultados">Resultados</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="<?php echo JRoute::_('index.php?view=results');?>" class="menu-link">
+                    <div data-i18n="Account">Meus Resultdos</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="<?php echo JRoute::_('index.php?view=rankings');?>" class="menu-link">
+                    <div data-i18n="Rankings">Rankings</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item">
+              <a href="<?php echo JRoute::_('index.php?view=calendar');?>" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-calendar"></i>  
+              <div data-i18n="Calendários">Calendários</div>
+              </a>
+            </li>
+
+            <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Cadastro</span>
             </li>
             <li class="menu-item">
-              <a href="<?php echo JRoute::_('index.php?view=associados');?>" class="menu-link">
-                <div data-i18n="Corredors">Associados</div>
+              <a href="<?php echo JRoute::_('index.php?view=profile');?>" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i> 
+                <div data-i18n="Meu Perfil">Meu Perfil</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="<?php echo JRoute::_('index.php?view=conviniados');?>" class="menu-link">
-                <div data-i18n="Corredors">Conveniados</div>
+              <a href="<?php echo JRoute::_('index.php?view=guns');?>" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-target-lock"></i>
+                <div data-i18n="Minhas Armas">Minhas Armas</div>
               </a>
             </li>
+            <li class="menu-item">
+              <a href="<?php echo JRoute::_('index.php?view=access');?>" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
+                <div data-i18n="Dados de Acesso">Dados de Acesso</div>
+              </a>
+            </li>
+
+
             <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Serviços</span>
+              <span class="menu-header-text">Outros Serviços</span>
             </li>
             <li class="menu-item">
-              <a href="<?php echo JRoute::_('index.php?view=updates');?>" class="menu-link">
-                <div data-i18n="Account">Atualizações Cadastrais</div>
+              <a href="<?php echo JRoute::_('index.php?view=payment');?>" class="menu-link">
+                <div data-i18n="Cobranças">Cobranças</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="<?php echo JRoute::_('index.php?view=treinos');?>" class="menu-link">
-                <div data-i18n="Account">Documentos Oficiais</div>
+              <a href="<?php echo JRoute::_('index.php?view=document');?>" class="menu-link">
+                <div data-i18n="Documentos">Documentos</div>
               </a>
             </li>
+            <?php /*
             <li class="menu-item">
-              <a href="<?php echo JRoute::_('index.php?view=treinos');?>" class="menu-link">
+              <a href="<?php echo JRoute::_('index.php?view=classifi');?>" class="menu-link">
                 <div data-i18n="Account">Equipes Adicionais</div>
               </a>
             </li>
@@ -267,18 +307,14 @@ endif;
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Painel de Controle</span>
             </li>
-            <li class="menu-item">
-              <a href="#<?php //echo JRoute::_('index.php?view=');?>" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                <div data-i18n="Account">Acesso</div>
-              </a>
-            </li>
+
             <li class="menu-item">
               <a href="#<?php //echo JRoute::_('index.php?view=);?>" class="menu-link">
               <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div data-i18n="Notifications">Configurações</div>
               </a>
             </li>
+           */  ?>
           </ul>
         </aside>
         <!-- / Menu -->
@@ -303,20 +339,7 @@ endif;
                 <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">   
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <i class="bx bx-bell bx-sm"></i>
-                    <?php 
-                      $noView = 0;
-                      if(count($udatesPfs)>0):
-                          foreach ($udatesPfs as $i => $udatePf)
-                              if($udatePf->status_pf_update == '1')
-                                  $noView++;
-                          if($noView>0):
-                      ?>
-                      <span class="badge bg-danger rounded-pill badge-notifications"><?php echo $noView; ?></span>
-                      <?php 
-                          endif;
-                      endif;
-                      ?>
-                    
+                    <span class="badge bg-danger rounded-pill badge-notifications">5</span>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end py-0">
                     <li class="dropdown-menu-header border-bottom">
@@ -326,61 +349,25 @@ endif;
                       </div>
                     </li>
                     <li class="dropdown-notifications-list scrollable-container ps">
-                      <?php if(count($udatesPfs)>0):?>
                       <ul class="list-group list-group-flush">
-                        <?php foreach ($udatesPfs as $i => $udatePf):?>
-
-                            <li class="list-group-item list-group-item-action dropdown-notifications-item">
-                              <div class="d-flex">
-                                <div class="flex-shrink-0 me-3">
-                                  <div class="avatar">
-                                  <?php if(empty($udatePf->image_pf)): ?>
-                                    <div class="avatar avatar-sm me-3">
-                                        <?php 
-                                            $name = explode(' ', trim($udatePf->name_pf_update));
-                                            $sigla = substr($name[0], 0, 1) . substr(end($name), 0, 1);
-                                        ?>
-                                        <span class="avatar-initial rounded-circle bg-label-danger"><?php echo strtoupper($sigla); ?></span>
-                                    </div>
-                                    <?php else: ?>
-                                    <div class="avatar avatar-sm me-3">
-                                        <img src="<?php echo $resize->resize(JPATH_CDN .DS. 'images' .DS. 'avatar'  .DS. $udatePf->image_pf, 100, 100, 'cache/' . $udatePf->image_pf, 'manterProporcao');?>" alt="Avatar" class="rounded-circle">
-                                    </div>
-                                  <?php endif; ?>
-                                  </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                  <h6 class="mb-1"><?php if($udatePf->status_pf_update == 1){ echo '<strong>';}?> <?php echo strlen($udatePf->name_pf_update)>40 ? substr($udatePf->name_pf_update, 0,40) . '...' : $udatePf->name_pf_update; ?><?php if($udatePf->status_pf_update == 1){ echo '</strong>';}?></h6>
-                                  <p class="mb-0">Accepted your connection</p>
-                                  <small class="text-muted">Registrado em <?php echo JHtml::date(JFactory::getDate($udatePf->register_pf_update, $this->siteOffset)->toISO8601(), 'DATE_FORMAT_DATATIME');?></small>
-                                </div>
-                                <div class="flex-shrink-0 dropdown-notifications-actions">
-                                  <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
-                                  <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
-                                </div>
+                        <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                          <div class="d-flex">
+                            <div class="flex-shrink-0 me-3">
+                              <div class="avatar">
+                                <span class="avatar-initial rounded-circle bg-label-danger">CF</span>
                               </div>
-                            </li>
-                          <?php /*
-                          if(count($udatesPfs)>$i+1):?>
-                          <li class="divider"></li>
-                          <?php endif;
-                          */ ?>
-                          <?php endforeach; ?>
-                        <?php else: ?>
-                          <li class="dropdown-menu-footer border-top">
-                            <span class="dropdown-item d-flex justify-content-center p-3">
-                              Nenhuma notificações encontrada
-                            </span>
-                          </li>
-                        <?php endif; ?>
-
-
-
-
-
-
-
-
+                            </div>
+                            <div class="flex-grow-1">
+                              <h6 class="mb-1">Charles Franklin</h6>
+                              <p class="mb-0">Accepted your connection</p>
+                              <small class="text-muted">12hr ago</small>
+                            </div>
+                            <div class="flex-shrink-0 dropdown-notifications-actions">
+                              <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
+                              <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
+                            </div>
+                          </div>
+                        </li>
                         <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
                           <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
@@ -429,7 +416,7 @@ endif;
                           </div>
                           <div class="flex-grow-1">
                             <span class="fw-semibold d-block"><?php echo $Nome; ?></span>
-                            <small class="text-muted">Admin</small>
+                            <small class="text-muted">Portal</small>
                           </div>
                         </div>
                       </a>
@@ -438,15 +425,15 @@ endif;
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="<?php echo JRoute::_('index.php?view=profile');?>">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">Perfil</span>
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="<?php echo JRoute::_('index.php?view=access');?>">
                         <i class="bx bx-lock me-2"></i>
-                        <span class="align-middle">Segurança</span>
+                        <span class="align-middle">Dados de Acesso</span>
                       </a>
                     </li>
                     <?php /*
@@ -573,9 +560,39 @@ endif;
     <script src="/assets/js/custom.js"></script>
     <script src="/assets/js/sweetalert.js"></script>
 		<jdoc:include type="footer" />
+    <script type="text/javascript">
+      $(document).ready(function(){
+        jQuery('a[data-bs-toggle="tab"]').on('show.bs.tab', function(e) {
+            localStorage.setItem('activeTab', jQuery(e.target).attr('href'));
+        });
+        var activeTab = localStorage.getItem('activeTab');
+        if(activeTab){
+            //bootstrap.Tab.getInstance($('.nav-pills li a[href="' + activeTab + '"]')).show()
+            
+            //activaTab(activeTab);
+            //$('.nav-pills li a[href="' + activeTab + '"]').addClass('active');
+            $('.nav-pills a[href="' + activeTab + '"]').tab('show');
+            //alert('.nav-pills li a[href="' + activeTab + '"]');
+        }
+
+       // jQuery('#overlay').css('opacity', '0');
+       // jQuery('#overlay').css('visibility', 'hidden');
+
+        window.addEventListener('load', function() {
+          overlay.style.opacity = '0';
+          overlay.style.visibility = 'hidden';
+        });
+        
+       jQuery('a[href^="/"]').on('click', function(){
+            jQuery('#overlay').removeClass('animate');
+            jQuery('#overlay').css('opacity', 1);
+            jQuery('#overlay').css('visibility', 'visible');
+        });
 
 
 
+      });
+    </script> 
 
 <?php 
 /*
