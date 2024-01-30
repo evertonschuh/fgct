@@ -87,6 +87,7 @@ class EASistemasModelEnrollmentOpens extends JModelList
 													 'insc_beg_etapa',
 													 'insc_end_etapa',
 													 'id_prova',
+													 'name_prova',
 													
 													
 													)));
@@ -133,14 +134,14 @@ class EASistemasModelEnrollmentOpens extends JModelList
 			$query->where( $this->_db->quoteName('socioar_prova') . ' = ' . $this->_db->quote('1') );
 		endif;
 */
-		$query->group('id_campeonato');
+		$query->group('id_prova');
         $query->group('id_etapa');
 		return $query;
 
     }
 
-	//public function getItems()
-	//{
+	public function getItems()
+	{
 
 
 
@@ -188,13 +189,13 @@ class EASistemasModelEnrollmentOpens extends JModelList
 
 
 
-/*
+
 		// Get a storage key.
 		$store = $this->getStoreId();
 
 		// Try to load the data from internal storage.
 		if (empty($this->cache[$store]))
-		{/*
+		{
 			
 			$items = parent::getItems();
 
@@ -217,24 +218,21 @@ class EASistemasModelEnrollmentOpens extends JModelList
 
 			$query = $this->_db->getQuery(true);
 
-			$query->select('id_clube')
+			$query->select('id_clube, id_prova')
 				->from('#__ranking_etapa_clube_map')
-				->innerJoin( '#__ranking_etapa_clube_map USING(id_clube)' )
+				->innerJoin('#__ranking_prova_clube_map  USING(id_clube)' )
 				->where('id_etapa IN ('.implode(',', $id_etapa ).')')
 				->where('id_prova IN ('.implode(',', $id_prova ).')')
-				->group('id_clube');
+				->group('id_prova');
 				// Join over the user groups table.
 				//->join('LEFT', '#__usergroups AS g2 ON g2.id = map.group_id');
 
 			$this->_db->setQuery($query);
 
-			$clubeGroups = $this->_db->loadObjectList('id_clube');
-			
-			print_r($clubeGroups);
+			$clubeGroups = $this->_db->loadObjectList('id_prova');
+
 			$error = $this->_db->getErrorMsg();
 
-			*/
-			/*
 			if ($error)
 			{
 				$this->setError($error);
@@ -243,31 +241,29 @@ class EASistemasModelEnrollmentOpens extends JModelList
 
 			foreach ($items as &$item)
 			{
-				if (isset($comissoesGroups[$item->id_parceiro]))
+				if (isset($clubeGroups[$item->id_prova]))
 				{
-					$item->group_count = $comissoesGroups[$item->id_parceiro]->group_count;
-					$item->comissoes_groups = $this->_getComissoesGroup($item->id_parceiro);
+					//$item->group_count = $comissoesGroups[$item->id_prova]->id_clube;
+					$item->clubes = $this->_getClube($clubeGroups[$item->id_prova]->id_clube);
 					
 				}
-			}*//*
+			}
 			$this->cache[$store] = $items;
 		}
 
-		return $this->cache[$store];*/
-	//}
+		return $this->cache[$store];
+	}
 
 
-	function _getComissoesGroup($id_parceiro = null)
+	function _getClube($id_clube = null)
 	{
 		$query = $this->_db->getQuery(true);	
-		//$query->select($this->_db->quoteName('value_parceiro_comissao'));
-		$query->select( 'CONCAT (IF(ISNULL(' . $this->_db->quoteName('name_evento_tipo') . '),\'Todos\',' . $this->_db->quoteName('name_evento_tipo') . '), \' \',' . $this->_db->quoteName('value_parceiro_comissao') . ', \'%\') AS name_campeonato' );	
-		$query->from($this->_db->quoteName('#__parceiro_comissao'));
-		$query->leftJoin($this->_db->quoteName('#__evento_tipo') . ' ON(' . $this->_db->quoteName('id_evento_tipo'). '=' .$this->_db->quoteName('id_plano_produto_tipo'). ')');
-		$query->where($this->_db->quoteName('id_parceiro') . ' = ' .  $this->_db->quote( $id_parceiro ));
+		$query->select($this->_db->quoteName(array('logo_pj','name')));
+		$query->from($this->_db->quoteName('#__users'));
+		$query->leftJoin($this->_db->quoteName('#__intranet_pj') . ' ON(' . $this->_db->quoteName('id_user'). '=' .$this->_db->quoteName('id'). ')');
+		$query->where($this->_db->quoteName('id') . ' = ' .  $this->_db->quote( $id_clube ));
 		$this->_db->setQuery($query);
-		$result =  $this->_db->loadColumn();
-		return implode(' | ',  $result);
+		return $this->_db->loadObjectList();
 	}
 
 

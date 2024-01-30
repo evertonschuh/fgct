@@ -42,7 +42,7 @@ $saveOrder    = $listOrder == 'ordering';
                     <thead>
                         <tr>
                             <th class="sorting sorting_desc"><?php echo JHtml::_('grid.sort',  'Campeonato', 'name_especie', $listDirn, $listOrder); ?></th>
-                            <th class="sorting text-center">Local</th>
+                            <th class="sorting">Local</th>
                             <th class="sorting text-center">Período de Inscrição</th>
                             <th class="sorting text-center"><?php echo JHtml::_('grid.sort', 'Inscritos', 'total_inscritos', $listDirn, $listOrder); ?></th>
                             <th class="sorting_disabled" style="width: 145px;">Ações</th>

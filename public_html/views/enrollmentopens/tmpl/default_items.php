@@ -19,37 +19,43 @@ if (count($this->items)) {
             <div class="avatar-wrapper">
                 <span class="badge bg-label-warning p-3 me-3 ">
                     <?php 
-                        $sigla = substr(trim(str_replace(array('Campeonato','Gaúcho','FGCT','de'), array('','','',''), $item->name_campeonato)), 0, 2);
+                        $name = explode(' ', trim($item->name_prova));
+                        $sigla = substr($name[0], 0, 1) . substr(end($name), 0, 1);
+                        //$sigla = substr(trim(str_replace(array('Campeonato','Gaúcho','FGCT','de'), array('','','',''), $item->name_campeonato)), 0, 2);
                     ?>
                     <span class="avatar-initial rounded-circle bg-label-danger"><?php echo strtoupper($sigla); ?></span>
                 </span>
             </div>
             <div class="d-flex flex-column">
                 <a href="<?php echo JRoute::_('index.php?view=weapon&cid=' . $item->id_campeonato); ?>" class="text-body text-truncate">
-                    <span class="fw-semibold"><?php echo $item->name_campeonato; ?></span>
+                    <span class="fw-semibold"><?php echo  $item->name_etapa . ' - ' .$item->name_prova; ?></span>
                 </a>
-                <small class="text-muted"><?php echo 'Calibre: ' . $item->name_etapa . ' (' . JHtml::date(JFactory::getDate($item->data_beg_etapa, $siteOffset)->toISO8601(), 'DATE_FORMAT') . ')' ?></small>
+                <small class="text-muted"><?php echo  ' (' . JHtml::date(JFactory::getDate($item->data_beg_etapa, $siteOffset)->toISO8601(), 'DATE_FORMAT') . ')' ?></small>
             </div>
         </div>
     </td>
-    <td>
-        <div class="d-flex align-items-center avatar-group">
-            <div class="avatar pull-up" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" aria-label="Vinnie Mostowy" data-bs-original-title="Vinnie Mostowy">
-                <img src="../../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle">
-            </div>
-            <div class="avatar pull-up" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" aria-label="Marrie Patty" data-bs-original-title="Marrie Patty">
-                <img src="../../assets/img/avatars/12.png" alt="Avatar" class="rounded-circle">
-            </div>
-            <div class="avatar pull-up" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" aria-label="Jimmy Jackson" data-bs-original-title="Jimmy Jackson">
-                <img src="../../assets/img/avatars/9.png" alt="Avatar" class="rounded-circle">
-            </div>
-            <div class="avatar pull-up" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" aria-label="Kristine Gill" data-bs-original-title="Kristine Gill">
-                <img src="../../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle">
-            </div>
-            <div class="avatar pull-up" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" aria-label="Nelson Wilson" data-bs-original-title="Nelson Wilson">
-                <img src="../../assets/img/avatars/14.png" alt="Avatar" class="rounded-circle">
-            </div>
-        </div>
+    <td class="text-center">
+        <?php if(count($item->clubes) > 0):?>
+            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <?php foreach($item->clubes as $clube):?>
+                <?php if(empty($clube->logo_pj)): ?>
+                <?php 
+                    $name = explode(' ', trim($clube->name));
+                    $sigla = substr($name[0], 0, 1) . substr(end($name), 0, 1);
+                ?>
+                <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-md pull-up" style="width:52px;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
+                    <span class="avatar-initial rounded bg-label-danger"><?php echo strtoupper($sigla); ?></span>
+                </li>
+                <?php else: ?>
+                <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar pull-up" style="width:auto;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
+                    <img style="border: 1px solid #CCC" src="<?php echo $resize->resize(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj, 180, 100, 'cache/' . $clube->logo_pj, 'manterProporcao');?>" alt="<?php echo $clube->name;?>" alt="<?php echo $clube->name;?>" class="rounded">
+                </li>
+                <?php endif; ?>
+            <?php endforeach; ?> 
+            </ul>
+        <?php else: ?>
+            <span class="badge bg-label-danger me-1">Clube não informado</span>
+        <?php endif; ?>
     </td>
     <td class="text-center">
 
