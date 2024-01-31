@@ -27,9 +27,9 @@ if (count($this->items)) {
                 </span>
             </div>
             <div class="d-flex flex-column">
-                <a href="<?php echo JRoute::_('index.php?view=weapon&cid=' . $item->id_campeonato); ?>" class="text-body text-truncate">
+                <span class="text-body text-truncate">
                     <span class="fw-semibold"><?php echo  $item->name_etapa . ' - ' .$item->name_prova; ?></span>
-                </a>
+                </span>
                 <small class="text-muted"><?php echo  ' (' . JHtml::date(JFactory::getDate($item->data_beg_etapa, $siteOffset)->toISO8601(), 'DATE_FORMAT') . ')' ?></small>
             </div>
         </div>
@@ -111,9 +111,15 @@ if (count($this->items)) {
             </div>
             */ ?>
     </td>
-
+    
     <td class="text-right">
-        <button class="btn btn-sm btn-primary">Inscreva-se</button>
+        <button 
+            <?php echo $item->state_etapa != '1' ? 'disabled="disabled"' :''; ?> 
+            class="btn btn-sm btn-primary"
+            type="button"
+        >
+        <?php echo $item->state_etapa == '1' ? 'Inscreva-se' : ( $item->state_etapa == '2' ? 'Cancelada' : 'Suspensa'); ?>
+        </button>
     </td> 
     <?php /*
     <td class="text-center"><?php echo $item->numero_arma; ?></td>

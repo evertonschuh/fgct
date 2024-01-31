@@ -88,7 +88,7 @@ class EASistemasModelEnrollmentOpens extends JModelList
 													 'insc_end_etapa',
 													 'id_prova',
 													 'name_prova',
-													
+													 'state_etapa'
 													
 													)));
 		//$query->select( 'CONCAT (' . $this->_db->quoteName('ano_campeonato') . ', \' - \',' . $this->_db->quoteName('name_campeonato') . ') AS name_campeonato' );
@@ -218,9 +218,9 @@ class EASistemasModelEnrollmentOpens extends JModelList
 
 			$query = $this->_db->getQuery(true);
 
-			$query->select('id_clube, id_prova')
-				->from('#__ranking_etapa_clube_map')
-				->innerJoin('#__ranking_prova_clube_map  USING(id_clube)' )
+			$query->select('GROUP_CONCAT(id_clube) AS clubes, id_prova')
+				->from('#__ranking_prova_clube_map')
+				->innerJoin('#__ranking_etapa_clube_map  USING(id_clube)' )
 				->where('id_etapa IN ('.implode(',', $id_etapa ).')')
 				->where('id_prova IN ('.implode(',', $id_prova ).')')
 				->group('id_prova');
@@ -230,7 +230,7 @@ class EASistemasModelEnrollmentOpens extends JModelList
 			$this->_db->setQuery($query);
 
 			$clubeGroups = $this->_db->loadObjectList('id_prova');
-
+			print_r($clubeGroups);
 			$error = $this->_db->getErrorMsg();
 
 			if ($error)
