@@ -53,7 +53,7 @@ class JResize
 		{
 			case 1: $im = imagecreatefromgif($img); break;
 			case 2: $im = imagecreatefromjpeg($img);  break;
-			case 3: $im = imagecreatefrompng($img); break;
+			case 3: $im = @imagecreatefrompng($img); break;
 			default:  trigger_error('Formato não suportado!', E_USER_WARNING);  break;
 		}
 		//Se a imagem e pequena não redimensiona

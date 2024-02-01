@@ -35,22 +35,34 @@ if (count($this->items)) {
         </div>
     </td>
     <td class="text-center">
-        <?php if(count($item->clubes) > 0):?>
+        <?php if(isset($item->clubes) && count($item->clubes) > 0):?>
             <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+            <?php $x=0; ?>
             <?php foreach($item->clubes as $clube):?>
-                <?php if(empty($clube->logo_pj)): ?>
-                <?php 
+                <?php if(!empty($clube->logo_pj) && file_exists(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj)): ?>
+                <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar pull-up" style="width:auto;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
+                    <img style="border: 1px solid #CCC" src="<?php echo $resize->resize(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj, 180, 100, 'cache/' . $clube->logo_pj, 'manterProporcao');?>" alt="<?php echo $clube->name;?>" alt="<?php echo $clube->name;?>" class="rounded">
+                </li>
+                <?php else: ?>
+                    <?php 
                     $name = explode(' ', trim($clube->name));
                     $sigla = substr($name[0], 0, 1) . substr(end($name), 0, 1);
                 ?>
                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-md pull-up" style="width:52px;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
                     <span class="avatar-initial rounded bg-label-danger"><?php echo strtoupper($sigla); ?></span>
                 </li>
-                <?php else: ?>
-                <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar pull-up" style="width:auto;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
-                    <img style="border: 1px solid #CCC" src="<?php echo $resize->resize(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj, 180, 100, 'cache/' . $clube->logo_pj, 'manterProporcao');?>" alt="<?php echo $clube->name;?>" alt="<?php echo $clube->name;?>" class="rounded">
-                </li>
                 <?php endif; ?>
+                <?php 
+                    $x++;
+                    if($x==6){
+                        $x = 0;
+                ?>
+            </ul>
+            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                <?php
+                    }
+                        
+                ?>
             <?php endforeach; ?> 
             </ul>
         <?php else: ?>

@@ -143,53 +143,6 @@ class EASistemasModelEnrollmentOpens extends JModelList
 	public function getItems()
 	{
 
-
-
-/*
-
-		$query = $this->_db->getQuery(true);
-		$query->select( $this->_db->quoteName(array( '#__users.name',
-													 'id_campeonato',
-													 'id_etapa',
-													 'id_clube',
-													 'logo_pj',
-													 'name_cidade',
-													 'sigla_estado'									 
-													)));
-
-		$query->from( $this->_db->quoteName('#__users') );
-		$query->innerJoin( $this->_db->quoteName('#__intranet_pj') . 'ON('. $this->_db->quoteName('id').'='. $this->_db->quoteName('id_user').')' );
-		$query->innerJoin( $this->_db->quoteName('#__intranet_cidade') . 'USING('. $this->_db->quoteName('id_cidade').','. $this->_db->quoteName('id_estado').')' );
-		$query->innerJoin( $this->_db->quoteName('#__intranet_estado') . 'USING('. $this->_db->quoteName('id_estado').')' );		
-		$query->innerJoin( $this->_db->quoteName('#__ranking_prova_clube_map') . 'ON('. $this->_db->quoteName('id').'='. $this->_db->quoteName('id_clube').')' );	
-		$query->innerJoin( $this->_db->quoteName('#__ranking_etapa_clube_map') . 'USING('. $this->_db->quoteName('id_clube').')' );	
-		
-		$query->innerJoin( $this->_db->quoteName('#__ranking_etapa') . 'USING('. $this->_db->quoteName('id_etapa').')' );	
-		$query->innerJoin( $this->_db->quoteName('#__ranking_campeonato') . 'USING('. $this->_db->quoteName('id_campeonato').')' );
-		$query->innerJoin( $this->_db->quoteName('#__ranking_prova') . 'USING('. $this->_db->quoteName('id_prova').','. $this->_db->quoteName('id_campeonato').')' );
-		$query->innerJoin( $this->_db->quoteName('#__ranking_modalidade') . 'USING('. $this->_db->quoteName('id_modalidade').')' );
-		
-
-
-
-		/*
-		if($this->_config->type_category_config ==1):
-			$query->leftJoin( $this->_db->quoteName('#__categories') . 'ON('. $this->_db->quoteName('#__categories.id'). ' = '. $this->_db->quoteName('#__ranking_profile.category').')' );
-		elseif($this->_config->type_category_config ==2):
-			$query->select( $this->_db->quoteName('#__k2_categories.image'));
-			$query->leftJoin( $this->_db->quoteName('#__k2_categories') . 'ON('. $this->_db->quoteName('#__ranking_profile.category').' = '. $this->_db->quoteName('#__k2_categories.id').')' );
-		endif;
-		*//*
-		$query->where($this->_db->quoteName('id_campeonato') . ' = ' . $this->_db->quote( $this->_id[0] ));		
-		$query->where($this->_db->quoteName('id_etapa') . ' = ' . $this->_db->quote( $this->_id[1] ));	
-
-*/
-
-
-
-
-
-
 		// Get a storage key.
 		$store = $this->getStoreId();
 
@@ -219,18 +172,20 @@ class EASistemasModelEnrollmentOpens extends JModelList
 			$query = $this->_db->getQuery(true);
 
 			$query->select('GROUP_CONCAT(id_clube) AS clubes, id_prova')
-				->from('#__ranking_prova_clube_map')
-				->innerJoin('#__ranking_etapa_clube_map  USING(id_clube)' )
+
+				->from('#__ranking_etapa_clube_map')
+				->innerJoin('#__ranking_prova_clube_map  USING(id_clube)' )
 				->where('id_etapa IN ('.implode(',', $id_etapa ).')')
-				->where('id_prova IN ('.implode(',', $id_prova ).')')
-				->group('id_prova');
+				//->where('id_prova IN ('.implode(',', $id_prova ).')')
+				->group('id_prova')
+				->group('id_etapa');
 				// Join over the user groups table.
 				//->join('LEFT', '#__usergroups AS g2 ON g2.id = map.group_id');
-
+				
 			$this->_db->setQuery($query);
 
 			$clubeGroups = $this->_db->loadObjectList('id_prova');
-			print_r($clubeGroups);
+
 			$error = $this->_db->getErrorMsg();
 
 			if ($error)
@@ -244,7 +199,7 @@ class EASistemasModelEnrollmentOpens extends JModelList
 				if (isset($clubeGroups[$item->id_prova]))
 				{
 					//$item->group_count = $comissoesGroups[$item->id_prova]->id_clube;
-					$item->clubes = $this->_getClube($clubeGroups[$item->id_prova]->id_clube);
+					$item->clubes = $this->_getClube($clubeGroups[$item->id_prova]->clubes);
 					
 				}
 			}
@@ -261,7 +216,7 @@ class EASistemasModelEnrollmentOpens extends JModelList
 		$query->select($this->_db->quoteName(array('logo_pj','name')));
 		$query->from($this->_db->quoteName('#__users'));
 		$query->leftJoin($this->_db->quoteName('#__intranet_pj') . ' ON(' . $this->_db->quoteName('id_user'). '=' .$this->_db->quoteName('id'). ')');
-		$query->where($this->_db->quoteName('id') . ' = ' .  $this->_db->quote( $id_clube ));
+		$query->where($this->_db->quoteName('id') . 'IN( ' .  $id_clube . ')');
 		$this->_db->setQuery($query);
 		return $this->_db->loadObjectList();
 	}
