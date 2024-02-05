@@ -125,10 +125,12 @@ if (count($this->items)) {
     </td>
     
     <td class="text-right">
+    
         <button 
             <?php echo $item->state_etapa != '1' ? 'disabled="disabled"' :''; ?> 
             class="btn btn-sm btn-primary"
             type="button"
+            
         >
         <?php echo $item->state_etapa == '1' ? 'Inscreva-se' : ( $item->state_etapa == '2' ? 'Cancelada' : 'Suspensa'); ?>
         </button>
