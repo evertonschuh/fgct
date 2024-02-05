@@ -139,7 +139,7 @@ class EASistemasModelEnrollmentOpens extends JModelList
 		return $query;
 
     }
-
+/*
 	public function getItems()
 	{
 
@@ -222,7 +222,7 @@ class EASistemasModelEnrollmentOpens extends JModelList
 	}
 
 
-
+*/
 
 
 

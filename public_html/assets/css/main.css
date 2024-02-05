@@ -82,8 +82,9 @@
 
 
 .has-error .form-control,
-
-.has-error .select2-container--default .select2-selection  {
+.error.form-control,
+.has-error .select2-container--default .select2-selection,
+.error .select2-container--default .select2-selection {
   border-color: #ff3e1d;
 } 
 

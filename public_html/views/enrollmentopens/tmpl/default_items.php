@@ -128,14 +128,24 @@ if (count($this->items)) {
     
         <button 
             <?php echo $item->state_etapa != '1' ? 'disabled="disabled"' :''; ?> 
-            class="btn btn-sm btn-primary"
+            class="btn btn-sm btn-primary register"
             type="button"
+            data-etapa="<?php echo $item->id_etapa; ?>"
+            data-prova="<?php echo $item->id_prova; ?>"
             
         >
-        <?php echo $item->state_etapa == '1' ? 'Inscreva-se' : ( $item->state_etapa == '2' ? 'Cancelada' : 'Suspensa'); ?>
+        <?php echo $item->state_etapa == '1' ? 'Inscreva-se<i class="ms-1 bx bx-xs bx-chevron-right"></i>' : ( $item->state_etapa == '2' ? 'Cancelada' : 'Suspensa'); ?>
+
         </button>
     </td> 
     <?php /*
+
+
+
+            <i class="ms-1 spinner-border spinner-border-sm text-secondary"></i>
+            <i class='bx bx-checkbox-checked'></i>
+
+
     <td class="text-center"><?php echo $item->numero_arma; ?></td>
     <td class="text-center"><?php echo $item->name_marca; ?></td>
     <td class="text-center"><?php echo $item->name_acervo; ?></td>
