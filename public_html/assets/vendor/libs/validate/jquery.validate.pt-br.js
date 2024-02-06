@@ -26,4 +26,11 @@ jQuery.validator.addMethod("fullname", function(value, element) {
     };
   }, 'Por favor, forne&ccedil;a o seu nome completo.');
 
-  
+  jQuery.validator.addMethod('requireone', function(value, element) {
+    alert('est');
+    if (element.is(':checked')) {
+        return true;
+    } else {
+        return true;
+    }
+}, 'Selecione pelo menos uma das opções.');

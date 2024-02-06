@@ -139,21 +139,21 @@ class EASistemasDynamicSignUp {
 				$this->_htmlResponse .= '<div class="row mb-3">';
 					$this->_htmlResponse .= '<label class="col-sm-2 col-form-label">Gênero:</label>';
 					$this->_htmlResponse .= '<div class="col-sm-10">';
-						$this->_htmlResponse .= '<input type="text" disabled class="form-control"  value="' . (!empty($this->_data->name_genero) ? $this->_data->name_genero : $gencatclass->name_genero) . '">';
+						$this->_htmlResponse .= '<input type="text" name="name_genero" disabled class="form-control"  value="' . (!empty($this->_data->name_genero) ? $this->_data->name_genero : $gencatclass->name_genero) . '">';
 					$this->_htmlResponse .= '</div>';
 				$this->_htmlResponse .= '</div>';
 
 				$this->_htmlResponse .= '<div class="row mb-3">';
 					$this->_htmlResponse .= '<label class="col-sm-2 col-form-label">Categoria:</label>';
 					$this->_htmlResponse .= '<div class="col-sm-10">';
-						$this->_htmlResponse .= '<input type="text" disabled class="form-control"  value="' . (!empty($this->_data->name_categoria) ? $this->_data->name_categoria : $gencatclass->name_categoria ). '">';
+						$this->_htmlResponse .= '<input type="text" name="name_categoria"  disabled class="form-control"  value="' . (!empty($this->_data->name_categoria) ? $this->_data->name_categoria : $gencatclass->name_categoria ). '">';
 					$this->_htmlResponse .= '</div>';
 				$this->_htmlResponse .= '</div>';    
 
 				$this->_htmlResponse .= '<div class="row mb-3">';
 					$this->_htmlResponse .= '<label class="col-sm-2 col-form-label">Classe:</label>';
 					$this->_htmlResponse .= '<div class="col-sm-10">';
-						$this->_htmlResponse .= '<input type="text" disabled class="form-control disabled"  value="' .(!empty($this->_data->name_classe) ? $this->_data->name_classe : $gencatclass->name_classe).'">';
+						$this->_htmlResponse .= '<input type="text" name="name_classe"  disabled class="form-control disabled"  value="' .(!empty($this->_data->name_classe) ? $this->_data->name_classe : $gencatclass->name_classe).'">';
 					$this->_htmlResponse .= '</div>';
 				$this->_htmlResponse .= '</div>'; 
 
@@ -166,7 +166,7 @@ class EASistemasDynamicSignUp {
 							$this->_htmlResponse .= '<input type="text" disabled class="form-control disabled"  value="' . $this->_data->name_equipe . '">'; 
 							$this->_htmlResponse .= '<input type="hidden" id="id_equipe" name="id_equipe" value="' . $this->_data->id_equipe . '">';
 						else:
-							$this->_htmlResponse .= '<select id="id_equipe"  name="id_equipe" class="form-control required">';
+							$this->_htmlResponse .= '<select id="id_equipe" name="id_equipe" class="form-control required">';
 							$this->_htmlResponse .= '<option disabled selected class="default" value="">- Selecione a Equipe -</option>';
 							$this->_htmlResponse .= JHTML::_('select.options',  $equipes, 'value', 'text');
 							$this->_htmlResponse .= '</select>';
@@ -212,6 +212,8 @@ class EASistemasDynamicSignUp {
 		  $this->_htmlResponse .= '<div id="local" class="content pt-3 pt-lg-0 active dstepper-block">';
 		  	$this->_htmlResponse .= '<h5>Escolha o Local</h5>';
 		  	$this->_htmlResponse .= '<div class="row">';
+			  $this->_htmlResponse .= '<input name = "radio_btns" value = "five" type = "radio"/>5';
+			  $this->_htmlResponse .= '<input name = "radio_btns" value = "eight" type = "radio"/>8';
 			if( count($clubes)>0):
 				foreach($clubes as $i => $clube):
 
@@ -219,7 +221,7 @@ class EASistemasDynamicSignUp {
 					$image = '';
 					if(!empty($clube->logo_pj) && file_exists(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj)):
 						
-						$image = $resize->resize(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj, 180, 100, 'cache/' . $clube->logo_pj, 'manterProporcao');
+						$image = $resize->resize(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj, 70, 50,  '../cache/' . $clube->logo_pj);
 						
 						/*
 						<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar pull-up" style="width:auto;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
@@ -238,15 +240,16 @@ class EASistemasDynamicSignUp {
 
 
 
-
-					$this->_htmlResponse .= '<div class="col-md-2 mb-2 mx-0">';
-						$this->_htmlResponse .= '<div class="form-check custom-option custom-option-image custom-option-image-radio">';
-							$this->_htmlResponse .= '<label class="form-check-label custom-option-content" for="customRadioImg1">';
+					
+					$this->_htmlResponse .= '<div class="col-md-3 mb-1 mx-0">';
+						$this->_htmlResponse .= '<div class="form-check custom-option custom-option-image custom-option-image-radio" >';
+							$this->_htmlResponse .= '<label class="form-check-label custom-option-content" for="id_local' . $i .'" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"  aria-label="" data-bs-original-title="' . $clube->name . '">';
 								$this->_htmlResponse .= '<span class="custom-option-body">';
-									$this->_htmlResponse .= '<img src="'.$image.'" alt="radioImg">';
+									$this->_htmlResponse .= '<img src="'.$image.'" alt="'.$clube->id_clube.'" class="img-fluid">';
 								$this->_htmlResponse .= '</span>';
+								
+							$this->_htmlResponse .= '<input name="id_local" class="form-check-input" type="radio" value="'.$clube->id_clube.'" id="id_local' . $i .'">';
 							$this->_htmlResponse .= '</label>';
-							$this->_htmlResponse .= '<input name="customRadioImage" class="form-check-input" type="radio" value="customRadioImg1" id="customRadioImg' . $i .'" checked="">';
 						$this->_htmlResponse .= '</div>';
 					$this->_htmlResponse .= '</div>';
 

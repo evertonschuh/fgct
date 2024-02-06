@@ -4,27 +4,16 @@ $(function(){
 
     var $validator = $('.bs-stepper-content form').validate({
         rules: {
-            firstname: {
-                required: true,
-                minlength: 3
-            },
-            fullname_survey: {
-                required: true,
-                fullname: true,
-            },
             id_equipe: {
                 required: true
             },
-            exampleInputEmail1: {
+            id_local: {
+                requireone: true
+            },
+            radio_btns: {
                 required: true
             },
-            age_survey: {
-                required: true
-            },
-            company_survey: {
-                required: true
-            },
-
+            
         },
     });
 
@@ -54,8 +43,13 @@ $(function(){
     function l(){
         var $valid = $('.bs-stepper-content form').valid();
 
+        $('.bs-stepper-content form input').each(function( index ) {
+            alert($( this ).attr('name') );
+          });
+      //  alert(  $valid)
+       // alert($('input[name="id_local"]:checked').val());
         if(!$valid) {
-            //$validator.focusInvalid();
+            $validator.focusInvalid();
             return false;
         }
         return true;
@@ -82,7 +76,15 @@ $(function(){
 
                         jQuery('#wizard-create-app').html(valor);
                         jQuery('#createApp').modal('show');
-
+                        window.Helpers.initCustomOptionCheck();
+                        jQuery.validator.addMethod('requireone', function(value, element) {
+                            alert('est');
+                            if (element.is(':checked')) {
+                                return true;
+                            } else {
+                                return true;
+                            }
+                        }, 'Selecione pelo menos uma das opções.');
 						//jQuery('#id_cidade').html(valor);
 						//jQuery('#id_cidade').next('label').remove();
 						//jQuery('#id_cidade').parent('div').removeClass('has-error');

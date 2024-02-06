@@ -28,6 +28,7 @@ class EASistemasViewEnrollmentOpens extends JView
 
 
 		$document->addScript('/assets/js-custom/enrollmentopens.js');
+
 		//$document->addScriptDeclaration('
 		//jQuery("#wizard-create-app").steps("remove", 2);
 		//');
