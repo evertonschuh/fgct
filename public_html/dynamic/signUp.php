@@ -75,206 +75,202 @@ class EASistemasDynamicSignUp {
 		$classe = (!empty($this->_data->id_classe) ? $this->_data->id_classe : $gencatclass->id_classe );
         
 		$this->_htmlResponse = '<div class="bs-stepper-header border-0 p-1">';
-		$this->_htmlResponse .= '<div class="step" data-target="#details">';
-		$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false">';
-		$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-file fs-5"></i></span>';
-		$this->_htmlResponse .= '<span class="bs-stepper-label">';
-		$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Equipe</span>';
-		$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Escolha da Equipe</span>';
-		$this->_htmlResponse .= '</span>';
-		$this->_htmlResponse .= '</button>';
-		$this->_htmlResponse .= '</div>';
-		$this->_htmlResponse .= '<div class="line"></div>';
-		$this->_htmlResponse .= '<div class="step" data-target="#local">';
-		$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="true">';
-		$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-box fs-5"></i></span>';
-		$this->_htmlResponse .= '<span class="bs-stepper-label">';
-		$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Local</span>';
-		$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Escolha o Clube</span>';
-		$this->_htmlResponse .= '</span>';
-		$this->_htmlResponse .= '</button>';
-		$this->_htmlResponse .= '</div>';
-		$this->_htmlResponse .= '<div class="line"></div>';
-		$this->_htmlResponse .= '<div class="step" data-target="#database">';
-		$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false">';
-		$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-data fs-5"></i></span>';
-		$this->_htmlResponse .= '<span class="bs-stepper-label">';
-		$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Database</span>';
-		$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Select Database</span>';
-		$this->_htmlResponse .= '</span>';
-		$this->_htmlResponse .= '</button>';
-		$this->_htmlResponse .= '</div>';
-		$this->_htmlResponse .= '<div class="line"></div>';
-		$this->_htmlResponse .= '<div class="step" data-target="#billing">';
-		$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false">';
-		$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-credit-card fs-5"></i></span>';
-		$this->_htmlResponse .= '<span class="bs-stepper-label">';
-		$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Reserva</span>';
-		$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Reserve seu Horário</span>';
-		$this->_htmlResponse .= '</span>';
-		$this->_htmlResponse .= '</button>';
-		$this->_htmlResponse .= '</div>';
-		$this->_htmlResponse .= '<div class="line"></div>';
-		$this->_htmlResponse .= '<div class="step" data-target="#submit">';
-		$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false">';
-		$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-check fs-5"></i></span>';
-		$this->_htmlResponse .= '<span class="bs-stepper-label">';
-		$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Finalizar</span>';
-		$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Finalizar</span>';
-		$this->_htmlResponse .= '</span>';
-		$this->_htmlResponse .= '</button>';
-		$this->_htmlResponse .= '</div>';
-		$this->_htmlResponse .= '</div>';
-		$this->_htmlResponse .= '<div class="bs-stepper-content p-1">';
-		$this->_htmlResponse .= '<form  onsubmit="return false">';
-
-		$this->_htmlResponse .= '<!-- Details -->';
-		$this->_htmlResponse .= '<div id="details" class="content pt-3 pt-lg-0 dstepper-block">';
-			$this->_htmlResponse .= '<div class="mb-3">';
-				$this->_htmlResponse .= '<h5>Dados da Inscrição</h5>';
-				$this->_htmlResponse .= '<input type="hidden" id="id_classe" name="id_classe"  value="' . $classe .'">';
-				$this->_htmlResponse .= '<input type="hidden" id="id_categoria" name="id_categoria"  value="' . $categoria.'">';
-				$this->_htmlResponse .= '<input type="hidden" id="id_genero" name="id_genero" value="' .  $genero .'">';
-
-				$this->_htmlResponse .= '<div class="row mb-3">';
-					$this->_htmlResponse .= '<label class="col-sm-2 col-form-label">Gênero:</label>';
-					$this->_htmlResponse .= '<div class="col-sm-10">';
-						$this->_htmlResponse .= '<input type="text" name="name_genero" disabled class="form-control"  value="' . (!empty($this->_data->name_genero) ? $this->_data->name_genero : $gencatclass->name_genero) . '">';
-					$this->_htmlResponse .= '</div>';
-				$this->_htmlResponse .= '</div>';
-
-				$this->_htmlResponse .= '<div class="row mb-3">';
-					$this->_htmlResponse .= '<label class="col-sm-2 col-form-label">Categoria:</label>';
-					$this->_htmlResponse .= '<div class="col-sm-10">';
-						$this->_htmlResponse .= '<input type="text" name="name_categoria"  disabled class="form-control"  value="' . (!empty($this->_data->name_categoria) ? $this->_data->name_categoria : $gencatclass->name_categoria ). '">';
-					$this->_htmlResponse .= '</div>';
-				$this->_htmlResponse .= '</div>';    
-
-				$this->_htmlResponse .= '<div class="row mb-3">';
-					$this->_htmlResponse .= '<label class="col-sm-2 col-form-label">Classe:</label>';
-					$this->_htmlResponse .= '<div class="col-sm-10">';
-						$this->_htmlResponse .= '<input type="text" name="name_classe"  disabled class="form-control disabled"  value="' .(!empty($this->_data->name_classe) ? $this->_data->name_classe : $gencatclass->name_classe).'">';
-					$this->_htmlResponse .= '</div>';
-				$this->_htmlResponse .= '</div>'; 
-
-				if( $this->_data->equipe_prova>0):
-					if( $this->_data->equipe_prova==1 || $this->_data->equipe_prova==4):
-						$this->_htmlResponse .= '<div class="row mb-3">'; 
-						$this->_htmlResponse .= '<label class="col-sm-2 col-form-label">Equipe:</label>'; 
-						$this->_htmlResponse .= '<div class="col-sm-10">'; 
-						if(isset($this->_data->id_equipe)):
-							$this->_htmlResponse .= '<input type="text" disabled class="form-control disabled"  value="' . $this->_data->name_equipe . '">'; 
-							$this->_htmlResponse .= '<input type="hidden" id="id_equipe" name="id_equipe" value="' . $this->_data->id_equipe . '">';
-						else:
-							$this->_htmlResponse .= '<select id="id_equipe" name="id_equipe" class="form-control required">';
-							$this->_htmlResponse .= '<option disabled selected class="default" value="">- Selecione a Equipe -</option>';
-							$this->_htmlResponse .= JHTML::_('select.options',  $equipes, 'value', 'text');
-							$this->_htmlResponse .= '</select>';
-						endif;
-						$this->_htmlResponse .= '</div>';
-						$this->_htmlResponse .= '</div>';
-					endif;
-					if($this->_data->equipe_prova==3 || $this->_data->equipe_prova==4 || $this->_data->equipe_prova==5):
-						$this->_htmlResponse .= '<div class="form-group">';
-						$this->_htmlResponse .= '<label class="col-sm-3 control-label">Equipe:</label>';
-						$this->_htmlResponse .= '<div class="col-sm-9">';
-						if($this->_data->id_estado):
-							$this->_htmlResponse .= '<input type="text" disabled class="form-control form-control-plaintext"  value="' . $this->_data->name_estado . '">';
-							$this->_htmlResponse .= '<input type="hidden" id="id_estado" name="id_estado" value="' . $this->_data->id_estado . '">';
-						else:
-							$this->_htmlResponse .= '<select id="id_estado" name="id_estado" class="form-control">';
-							$this->_htmlResponse .= '<option disabled selected class="default" value="">- Selecione o Estado -</option>';
-							$this->_htmlResponse .= JHTML::_('select.options',  $this->estados, 'value', 'text', $this->_data->id_estado ); 
-							$this->_htmlResponse .= '</select>';
-						endif;
-						$this->_htmlResponse .= '</div>';
-						$this->_htmlResponse .= '</div>';
-					endif;
-				endif;
-				$this->_htmlResponse .= '</div>';
-		  		$this->_htmlResponse .= '<div class="col-12 d-flex justify-content-between mt-4">';
-		  			$this->_htmlResponse .= '<button class="btn btn-label-secondary btn-prev" disabled=""> <i class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i>';
-		  				$this->_htmlResponse .= '<span class="align-middle d-sm-inline-block d-none">Voltar</span>';
-		  			$this->_htmlResponse .= '</button>';
-		  			$this->_htmlResponse .= '<button class="btn btn-primary btn-next"> <span class="align-middle d-sm-inline-block d-none me-sm-1">Avançar</span> <i class="bx bx-right-arrow-alt bx-xs"></i></button>';
-		  		$this->_htmlResponse .= '</div>';
-		  $this->_htmlResponse .= '</div>';
-
-
-
-
-
-
-		  jimport('joomla.image.resize');
-		  $resize = new JResize();
-
-		  $this->_htmlResponse .= '<!-- Local -->';
-		  $this->_htmlResponse .= '<div id="local" class="content pt-3 pt-lg-0 active dstepper-block">';
-		  	$this->_htmlResponse .= '<h5>Escolha o Local</h5>';
-		  	$this->_htmlResponse .= '<div class="row">';
-			  $this->_htmlResponse .= '<input name = "radio_btns" value = "five" type = "radio"/>5';
-			  $this->_htmlResponse .= '<input name = "radio_btns" value = "eight" type = "radio"/>8';
-			if( count($clubes)>0):
-				foreach($clubes as $i => $clube):
-
-
-					$image = '';
-					if(!empty($clube->logo_pj) && file_exists(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj)):
-						
-						$image = $resize->resize(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj, 70, 50,  '../cache/' . $clube->logo_pj);
-						
-						/*
-						<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar pull-up" style="width:auto;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
-							<img style="border: 1px solid #CCC" src="<?php echo $resize->resize(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj, 180, 100, 'cache/' . $clube->logo_pj, 'manterProporcao');?>" alt="<?php echo $clube->name;?>" alt="<?php echo $clube->name;?>" class="rounded">
-						</li>*/
-					else:
-
-							$name = explode(' ', trim($clube->name));
-							$sigla = substr($name[0], 0, 1) . substr(end($name), 0, 1);
-					/*
-						<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-md pull-up" style="width:52px;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
-							<span class="avatar-initial rounded bg-label-danger"><?php echo strtoupper($sigla); ?></span>
-						</li>
-						*/
-					endif;
-
-
-
-					
-					$this->_htmlResponse .= '<div class="col-md-3 mb-1 mx-0">';
-						$this->_htmlResponse .= '<div class="form-check custom-option custom-option-image custom-option-image-radio" >';
-							$this->_htmlResponse .= '<label class="form-check-label custom-option-content" for="id_local' . $i .'" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"  aria-label="" data-bs-original-title="' . $clube->name . '">';
-								$this->_htmlResponse .= '<span class="custom-option-body">';
-									$this->_htmlResponse .= '<img src="'.$image.'" alt="'.$clube->id_clube.'" class="img-fluid">';
-								$this->_htmlResponse .= '</span>';
-								
-							$this->_htmlResponse .= '<input name="id_local" class="form-check-input" type="radio" value="'.$clube->id_clube.'" id="id_local' . $i .'">';
-							$this->_htmlResponse .= '</label>';
-						$this->_htmlResponse .= '</div>';
-					$this->_htmlResponse .= '</div>';
-
-
-				/*
-				$this->_htmlResponse .= '<div class="col-md mb-md-0 mb-2">';
-					$this->_htmlResponse .= '<div class="form-check custom-option custom-option-icon">';
-						$this->_htmlResponse .= '<label class="form-check-label custom-option-content" for="customRadioSvg1">';
-							$this->_htmlResponse .= '<span class="custom-option-body">';
-								$this->_htmlResponse .= '<img src="../../assets/img/icons/unicons/paypal.png" class="w-px-40 mb-2" alt="paypal">';
-								$this->_htmlResponse .= '<span class="custom-option-title"> Design </span>';
-								$this->_htmlResponse .= '<small>Cake sugar plum fruitcake I love sweet roll jelly-o.</small>';
-							$this->_htmlResponse .= '</span>';
-							$this->_htmlResponse .= '<input name="customRadioSvg" class="form-check-input" type="radio" value="" id="customRadioSvg1" checked="">';
-						$this->_htmlResponse .= '</label>';
-					$this->_htmlResponse .= '</div>';
-				$this->_htmlResponse .= '</div>';
-				*/
-				endforeach;
-			endif;
-			$this->_htmlResponse .= '<div class="col-12 d-flex justify-content-between mt-4">';
-				$this->_htmlResponse .= '<button class="btn btn-label-secondary btn-prev"> <i class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i> <span class="align-middle d-sm-inline-block d-none">Previous</span> </button>';
-				$this->_htmlResponse .= '<button class="btn btn-primary btn-next"> <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span> <i class="bx bx-right-arrow-alt bx-xs"></i></button>';
+			$this->_htmlResponse .= '<div class="step" data-target="#details">';
+				$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false">';
+					$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-file fs-5"></i></span>';
+					$this->_htmlResponse .= '<span class="bs-stepper-label">';
+						$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Equipe</span>';
+						$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Escolha da Equipe</span>';
+					$this->_htmlResponse .= '</span>';
+				$this->_htmlResponse .= '</button>';
+			$this->_htmlResponse .= '</div>';
+			$this->_htmlResponse .= '<div class="line"></div>';
+			$this->_htmlResponse .= '<div class="step" data-target="#local">';
+				$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false" disabled>';
+					$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-box fs-5"></i></span>';
+					$this->_htmlResponse .= '<span class="bs-stepper-label">';
+						$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Local</span>';
+						$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Escolha o Clube</span>';
+					$this->_htmlResponse .= '</span>';
+				$this->_htmlResponse .= '</button>';
+			$this->_htmlResponse .= '</div>';
+			$this->_htmlResponse .= '<div class="line"></div>';
+			$this->_htmlResponse .= '<div class="step" data-target="#database">';
+				$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false">';
+					$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-data fs-5"></i></span>';
+					$this->_htmlResponse .= '<span class="bs-stepper-label">';
+						$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Database</span>';
+						$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Select Database</span>';
+					$this->_htmlResponse .= '</span>';
+				$this->_htmlResponse .= '</button>';
+			$this->_htmlResponse .= '</div>';
+			$this->_htmlResponse .= '<div class="line"></div>';
+			$this->_htmlResponse .= '<div class="step" data-target="#billing">';
+				$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false">';
+					$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-credit-card fs-5"></i></span>';
+					$this->_htmlResponse .= '<span class="bs-stepper-label">';
+						$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Reserva</span>';
+						$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Reserve seu Horário</span>';
+					$this->_htmlResponse .= '</span>';
+				$this->_htmlResponse .= '</button>';
+			$this->_htmlResponse .= '</div>';
+			$this->_htmlResponse .= '<div class="line"></div>';
+			$this->_htmlResponse .= '<div class="step" data-target="#submit">';
+				$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false">';
+					$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-check fs-5"></i></span>';
+					$this->_htmlResponse .= '<span class="bs-stepper-label">';
+						$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Finalizar</span>';
+						$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Finalizar</span>';
+					$this->_htmlResponse .= '</span>';
+				$this->_htmlResponse .= '</button>';
 			$this->_htmlResponse .= '</div>';
 		$this->_htmlResponse .= '</div>';
+
+		$this->_htmlResponse .= '<div class="bs-stepper-content p-1">';
+			$this->_htmlResponse .= '<form  onsubmit="return false">';
+
+				$this->_htmlResponse .= '<!-- Details -->';
+				$this->_htmlResponse .= '<div id="details" class="content pt-3 pt-lg-0 dstepper-block">';
+					$this->_htmlResponse .= '<div class="mb-3">';
+						$this->_htmlResponse .= '<h5>Dados da Inscrição</h5>';
+						$this->_htmlResponse .= '<input type="hidden" id="id_classe" name="id_classe"  value="' . $classe .'">';
+						$this->_htmlResponse .= '<input type="hidden" id="id_categoria" name="id_categoria"  value="' . $categoria.'">';
+						$this->_htmlResponse .= '<input type="hidden" id="id_genero" name="id_genero" value="' .  $genero .'">';
+
+						$this->_htmlResponse .= '<div class="row mb-3">';
+							$this->_htmlResponse .= '<label class="col-sm-2 col-form-label">Gênero:</label>';
+							$this->_htmlResponse .= '<div class="col-sm-10">';
+								$this->_htmlResponse .= '<input type="text" name="name_genero" disabled class="form-control"  value="' . (!empty($this->_data->name_genero) ? $this->_data->name_genero : $gencatclass->name_genero) . '">';
+							$this->_htmlResponse .= '</div>';
+						$this->_htmlResponse .= '</div>';
+
+						$this->_htmlResponse .= '<div class="row mb-3">';
+							$this->_htmlResponse .= '<label class="col-sm-2 col-form-label">Categoria:</label>';
+							$this->_htmlResponse .= '<div class="col-sm-10">';
+								$this->_htmlResponse .= '<input type="text" name="name_categoria"  disabled class="form-control"  value="' . (!empty($this->_data->name_categoria) ? $this->_data->name_categoria : $gencatclass->name_categoria ). '">';
+							$this->_htmlResponse .= '</div>';
+						$this->_htmlResponse .= '</div>';    
+
+						$this->_htmlResponse .= '<div class="row mb-3">';
+							$this->_htmlResponse .= '<label class="col-sm-2 col-form-label">Classe:</label>';
+							$this->_htmlResponse .= '<div class="col-sm-10">';
+								$this->_htmlResponse .= '<input type="text" name="name_classe"  disabled class="form-control disabled"  value="' .(!empty($this->_data->name_classe) ? $this->_data->name_classe : $gencatclass->name_classe).'">';
+							$this->_htmlResponse .= '</div>';
+						$this->_htmlResponse .= '</div>'; 
+
+						if( $this->_data->equipe_prova>0):
+						if( $this->_data->equipe_prova==1 || $this->_data->equipe_prova==4):
+						$this->_htmlResponse .= '<div class="row mb-3">'; 
+							$this->_htmlResponse .= '<label class="col-sm-2 col-form-label">Equipe:</label>'; 
+							$this->_htmlResponse .= '<div class="col-sm-10">'; 
+								if(isset($this->_data->id_equipe)):
+								$this->_htmlResponse .= '<input type="text" disabled class="form-control disabled"  value="' . $this->_data->name_equipe . '">'; 
+								$this->_htmlResponse .= '<input type="hidden" id="id_equipe" name="id_equipe" value="' . $this->_data->id_equipe . '">';
+								else:
+								$this->_htmlResponse .= '<select id="id_equipe" name="id_equipe" class="form-control required">';
+									$this->_htmlResponse .= '<option disabled selected class="default" value="">- Selecione a Equipe -</option>';
+									$this->_htmlResponse .= JHTML::_('select.options',  $equipes, 'value', 'text');
+								$this->_htmlResponse .= '</select>';
+								endif;
+							$this->_htmlResponse .= '</div>';
+						$this->_htmlResponse .= '</div>';
+						endif;
+						if($this->_data->equipe_prova==3 || $this->_data->equipe_prova==4 || $this->_data->equipe_prova==5):
+						$this->_htmlResponse .= '<div class="form-group">';
+							$this->_htmlResponse .= '<label class="col-sm-3 control-label">Equipe:</label>';
+							$this->_htmlResponse .= '<div class="col-sm-9">';
+								if($this->_data->id_estado):
+								$this->_htmlResponse .= '<input type="text" disabled class="form-control form-control-plaintext"  value="' . $this->_data->name_estado . '">';
+								$this->_htmlResponse .= '<input type="hidden" id="id_estado" name="id_estado" value="' . $this->_data->id_estado . '">';
+								else:
+								$this->_htmlResponse .= '<select id="id_estado" name="id_estado" class="form-control">';
+									$this->_htmlResponse .= '<option disabled selected class="default" value="">- Selecione o Estado -</option>';
+									$this->_htmlResponse .= JHTML::_('select.options',  $this->estados, 'value', 'text', $this->_data->id_estado ); 
+								$this->_htmlResponse .= '</select>';
+								endif;
+							$this->_htmlResponse .= '</div>';
+						$this->_htmlResponse .= '</div>';
+						endif;
+						endif;
+					$this->_htmlResponse .= '</div>';
+					$this->_htmlResponse .= '<div class="col-12 d-flex justify-content-between mt-4">';
+						$this->_htmlResponse .= '<button class="btn btn-label-secondary btn-prev" disabled=""> <i class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i>';
+							$this->_htmlResponse .= '<span class="align-middle d-sm-inline-block d-none">Voltar</span>';
+						$this->_htmlResponse .= '</button>';
+						$this->_htmlResponse .= '<button class="btn btn-primary btn-next"> <span class="align-middle d-sm-inline-block d-none me-sm-1">Avançar</span> <i class="bx bx-right-arrow-alt bx-xs"></i></button>';
+					$this->_htmlResponse .= '</div>';
+				$this->_htmlResponse .= '</div>';
+
+
+
+				$this->_htmlResponse .= '<!-- Local -->';
+
+				jimport('joomla.image.resize');
+				$resize = new JResize();
+				
+				$this->_htmlResponse .= '<div id="local" class="content pt-3 pt-lg-0 active dstepper-block">';
+					$this->_htmlResponse .= '<h5>Escolha o Local</h5>';
+					$this->_htmlResponse .= '<div class="mb-3 row">';
+					if( count($clubes)>0):
+						foreach($clubes as $i => $clube):
+							$image = '';
+							if(!empty($clube->logo_pj) && file_exists(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj)):
+							
+								$image = $resize->resize(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj, 70, 50,  '../cache/' . $clube->logo_pj);
+								
+								/*
+								<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar pull-up" style="width:auto;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
+									<img style="border: 1px solid #CCC" src="<?php echo $resize->resize(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj, 180, 100, 'cache/' . $clube->logo_pj, 'manterProporcao');?>" alt="<?php echo $clube->name;?>" alt="<?php echo $clube->name;?>" class="rounded">
+								</li>*/
+							else:
+
+									$name = explode(' ', trim($clube->name));
+									$sigla = substr($name[0], 0, 1) . substr(end($name), 0, 1);
+							/*
+								<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-md pull-up" style="width:52px;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
+									<span class="avatar-initial rounded bg-label-danger"><?php echo strtoupper($sigla); ?></span>
+								</li>
+								*/
+							endif;
+
+
+
+							
+						$this->_htmlResponse .= '<div class="col-md-3 mb-1 mx-0">';
+							$this->_htmlResponse .= '<div class="form-check custom-option custom-option-image custom-option-image-radio" >';
+								$this->_htmlResponse .= '<label class="form-check-label custom-option-content" for="id_local' . $i .'" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"  aria-label="" data-bs-original-title="' . $clube->name . '">';
+									$this->_htmlResponse .= '<span class="custom-option-body">';
+										$this->_htmlResponse .= '<img src="'.$image.'" alt="'.$clube->id_clube.'" class="img-fluid">';
+									$this->_htmlResponse .= '</span>';
+									
+								$this->_htmlResponse .= '<input name="id_local" class="form-check-input" type="radio" value="'.$clube->id_clube.'" id="id_local' . $i .'">';
+								$this->_htmlResponse .= '</label>';
+							$this->_htmlResponse .= '</div>';
+						$this->_htmlResponse .= '</div>';
+
+
+						/*
+						$this->_htmlResponse .= '<div class="col-md mb-md-0 mb-2">';
+							$this->_htmlResponse .= '<div class="form-check custom-option custom-option-icon">';
+								$this->_htmlResponse .= '<label class="form-check-label custom-option-content" for="customRadioSvg1">';
+									$this->_htmlResponse .= '<span class="custom-option-body">';
+										$this->_htmlResponse .= '<img src="../../assets/img/icons/unicons/paypal.png" class="w-px-40 mb-2" alt="paypal">';
+										$this->_htmlResponse .= '<span class="custom-option-title"> Design </span>';
+										$this->_htmlResponse .= '<small>Cake sugar plum fruitcake I love sweet roll jelly-o.</small>';
+									$this->_htmlResponse .= '</span>';
+									$this->_htmlResponse .= '<input name="customRadioSvg" class="form-check-input" type="radio" value="" id="customRadioSvg1" checked="">';
+								$this->_htmlResponse .= '</label>';
+							$this->_htmlResponse .= '</div>';
+						$this->_htmlResponse .= '</div>';
+						*/
+						endforeach;
+					endif;
+					$this->_htmlResponse .= '</div>';
+					$this->_htmlResponse .= '<div class="col-12 d-flex justify-content-between mt-4">';
+						$this->_htmlResponse .= '<button class="btn btn-label-secondary btn-prev"> <i class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i> <span class="align-middle d-sm-inline-block d-none">Previous</span> </button>';
+						$this->_htmlResponse .= '<button class="btn btn-primary btn-next"> <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span> <i class="bx bx-right-arrow-alt bx-xs"></i></button>';
+					$this->_htmlResponse .= '</div>';
+				$this->_htmlResponse .= '</div>';
 
 
 
@@ -295,7 +291,7 @@ class EASistemasDynamicSignUp {
 		  $this->_htmlResponse .= '</div>';
 		  $this->_htmlResponse .= '<div class="d-flex align-items-center">';
 		  $this->_htmlResponse .= '<div class="form-check form-check-inline">';
-		  $this->_htmlResponse .= '<input name="database-radio" class="form-check-input" type="radio" value="">';
+		  $this->_htmlResponse .= '<input name="databaseradio" class="form-check-input required" type="radio" value="">';
 		  $this->_htmlResponse .= '</div>';
 		  $this->_htmlResponse .= '</div>';
 		  $this->_htmlResponse .= '</div>';
@@ -309,7 +305,7 @@ class EASistemasDynamicSignUp {
 		  $this->_htmlResponse .= '</div>';
 		  $this->_htmlResponse .= '<div class="d-flex align-items-center">';
 		  $this->_htmlResponse .= '<div class="form-check form-check-inline">';
-		  $this->_htmlResponse .= '<input name="database-radio" class="form-check-input" type="radio" value="" checked="">';
+		  $this->_htmlResponse .= '<input name="databaseradio" class="form-check-input required" type="radio" value="" checked="">';
 		  $this->_htmlResponse .= '</div>';
 		  $this->_htmlResponse .= '</div>';
 		  $this->_htmlResponse .= '</div>';
@@ -323,7 +319,7 @@ class EASistemasDynamicSignUp {
 		  $this->_htmlResponse .= '</div>';
 		  $this->_htmlResponse .= '<div class="d-flex align-items-center">';
 		  $this->_htmlResponse .= '<div class="form-check form-check-inline">';
-		  $this->_htmlResponse .= '<input name="database-radio" class="form-check-input" type="radio" value="">';
+		  $this->_htmlResponse .= '<input name="databaseradio" class="form-check-input required" type="radio" value="">';
 		  $this->_htmlResponse .= '</div>';
 		  $this->_htmlResponse .= '</div>';
 		  $this->_htmlResponse .= '</div>';

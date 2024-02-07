@@ -10,7 +10,7 @@ $(function(){
             id_local: {
                 requireone: true
             },
-            radio_btns: {
+            databaseradio: {
                 required: true
             },
             
@@ -43,9 +43,9 @@ $(function(){
     function l(){
         var $valid = $('.bs-stepper-content form').valid();
 
-        $('.bs-stepper-content form input').each(function( index ) {
+        /*$('.bs-stepper-content form input').each(function( index ) {
             alert($( this ).attr('name') );
-          });
+          });*/
       //  alert(  $valid)
        // alert($('input[name="id_local"]:checked').val());
         if(!$valid) {
