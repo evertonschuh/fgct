@@ -8,6 +8,90 @@ $listDirn    = $this->state->get('list.direction');
 
 $saveOrder    = $listOrder == 'ordering';
 ?>
+<style>
+    /**===== bars3 =====*/
+    
+#bars3 {
+  display: block;
+  position: relative;
+
+}
+
+#bars3 span {
+ display: inline-flex;
+ width: 15px;
+ height: 25px;
+ margin: 1px;
+  background: rgba(127, 188, 73, 0.25);
+  -webkit-animation: bars3 1s  infinite ease-in;
+          animation: bars3 1s  infinite ease-in;
+}
+
+#bars3 span:nth-child(2) {
+  left: 11px;
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s;
+}
+
+#bars3 span:nth-child(3) {
+  left: 22px;
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s;
+}
+
+#bars3 span:nth-child(4) {
+  left: 33px;
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s;
+}
+
+#bars3 span:nth-child(5) {
+  left: 44px;
+  -webkit-animation-delay: 0.4s;
+          animation-delay: 0.4s;
+}
+
+@keyframes bars3 {
+  0% {
+    background: rgba(127, 188, 73, 0.25);
+  }
+  25% {
+    background: rgba(127, 188, 73, 1);
+  }
+  50% {
+    background: rgba(127, 188, 73, 0.25);
+  }
+  100% {
+    background: rgba(127, 188, 73, 0.25);
+  }
+}
+@-webkit-keyframes bars3 {
+  0% {
+    background: rgba(127, 188, 73, 0.25);
+  }
+  25% {
+    background: rgba(127, 188, 73, 1);
+  }
+  50% {
+    background: rgba(127, 188, 73, 0.25);
+  }
+  100% {
+    background: rgba(127, 188, 73, 0.25);
+  }
+}
+/** END of bars3 */
+
+
+.custom-radio-squad input:disabled + .radio-btn-option {
+    border: 2px solid red;
+    cursor: default;
+    background-color: #e6e6e6;
+}
+.descriptiom p{
+    margin-bottom: 0.1rem;
+}
+
+</style>
 
 <form method="post" name="adminForm">
 

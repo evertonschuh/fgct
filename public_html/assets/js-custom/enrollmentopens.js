@@ -68,62 +68,57 @@ $(function(){
        // var CEP = Control.parent().find('.cep').val();
 
 		jQuery.post('/dynamic/signUp.php', 
-			  {id_etapa:id_etapa, id_prova:id_prova, execute:'show-modal'},
-			  function(valor){
+		{   
+            id_etapa:id_etapa, id_prova:id_prova, execute:'show-modal'},
+			function(valor)
+            {
+				 if(valor != 'error')
+                 {
+                    jQuery('#wizard-create-app').html(valor);
+                    jQuery('#createApp').modal('show');
 
-				 if(valor != 'error'){
-						//var obj = jQuery.parseJSON( valor )
+                    jQuery('.select2').select2({dropdownParent: $("#createApp")});
 
-                        jQuery('#wizard-create-app').html(valor);
-                        jQuery('#createApp').modal('show');
-                        window.Helpers.initCustomOptionCheck();
-                        jQuery.validator.addMethod('requireone', function(value, element) {
-                            alert('est');
-                            if (element.is(':checked')) {
-                                return true;
-                            } else {
-                                return true;
+                    window.Helpers.initCustomOptionCheck();
+
+                    var $validator = jQuery('.bs-stepper-content form').validate({
+                        errorPlacement: function (error, element) {
+                            if (element.parent('.input-group').length) { 
+                                error.insertAfter(element.parent());      // radio/checkbox?
+                            } else if (element.hasClass('select2-hidden-accessible')) {     
+                                error.insertAfter(element.next('span'));  // select2
+                                element.next('span').addClass('error').removeClass('valid');
+                            } else {                                      
+                                error.insertAfter(element);               // default
                             }
-                        }, 'Selecione pelo menos uma das opções.');
-						//jQuery('#id_cidade').html(valor);
-						//jQuery('#id_cidade').next('label').remove();
-						//jQuery('#id_cidade').parent('div').removeClass('has-error');
-						
-						//Control.parent().parent().next().find('.logradouro').val(obj.logradouro );	
-						//jQuery('#logradouro').next('label').remove();
-						//jQuery('#logradouro').parent('div').removeClass('has-error');
-						
-						//Control.parent().parent().next().next().next().next().find('.bairro').val(obj.bairro);	
-						//jQuery('#bairro').next('label').remove();
-						//jQuery('#bairro').parent('div').removeClass('has-error');
-						
-						//Control.parent().parent().next().next().next().next().next().find('.estado').val(obj.id_estado).trigger('change');
-						//Control.parent().parent().next().next().next().next().next().find('.estado').html('<option value="0">'+Joomla.JText._('EASISTEMAS_SCRIPT_SELET_LOADING')+'</option>');					
-						//jQuery('#id_estado').next('label').remove();
-						//jQuery('#id_estado').parent('div').removeClass('has-error');
-						/*
-						Control.parent().parent().next().next().next().next().next().next().find('.cidade').html('<option value="0">'+Joomla.JText._('EASISTEMAS_SCRIPT_SELET_LOADING')+'</option>');					
-						jQuery.post('/dynamic/select.php', 
-							{id_estado:obj.id_estado},
-							function(valor){
-								Control.parent().parent().next().next().next().next().next().next().find('.cidade').html(valor);
-								Control.parent().parent().next().next().next().next().next().next().find('.cidade').val(obj.id_cidade).trigger('change');
-								Control.attr('disabled',false).html('<i class="bx bx-search"></i>');
-							}
-						)*/
-                        
+                        },
+                    });
+
+                    jQuery('.select2-hidden-accessible').on('change', function() {
+                        if($(this).valid()) {
+                            $(this).next('span').removeClass('error').addClass('valid');
+                        }
+                    });
+
+                    jQuery.validator.addMethod('requireone', function(value, element) {
+                        alert('est');
+                        if (element.is(':checked')) {
+                            return true;
+                        } else {
+                            return true;
+                        }
+                    }, 'Selecione pelo menos uma das opções.');
+
 					Control.attr('disabled',false).html('Inscreva-se<i class="ms-1 bx bx-xs bx-chevron-right"></i>');
-				
 				}
 				else {
 					Control.attr('disabled',false).html('Inscreva-se<i class="ms-1 bx bx-xs bx-chevron-right"></i>');
 					Swal.fire({title:'CEP não encontrado',html:'O CEP ' + CEP + ' não foi localizado no site dos correios. Verifique se você preencheu corretamente e corrija caso necessário.', icon:'info'});
 			  	}	
-			}
-		).fail(function() {					
+			}).fail(function() {					
 			Control.attr('disabled',false).html('Inscreva-se<i class="ms-1 bx bx-xs bx-chevron-right"></i>');
 			Swal.fire({title:'CEP não encontrado',html:'O CEP ' + CEP + ' não foi localizado no site dos correios. Verifique se você preencheu corretamente e corrija caso necessário.', icon:'info'});
-		  });
+		});
 	});
 
 

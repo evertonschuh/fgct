@@ -17,8 +17,11 @@ class EASistemasViewEnrollmentOpens extends JView
 		$document = JFactory::getDocument();
 		$document->addStyleSheet('/assets/vendor/libs/bs-stepper/bs-stepper.css');
 		$document->addScript('/assets/vendor/libs/bs-stepper/bs-stepper.js');
-		//$document->addScript('/assets/vendor/libs/cleavejs/cleave.js');
-		//$document->addScript('/assets/vendor/libs/cleavejs/cleave-phone.js');
+
+		$document->addStyleSheet('/assets/vendor/libs/select2/select2.css');
+		$document->addScript('/assets/vendor/libs/select2/select2.js');
+
+		$document->addStyleSheet('/assets/css-custom/signup.css');
 
 		//$document->addScript('/assets/vendor/libs/stepper/jquery.bootstrap.wizard.js');
 		$document->addScript('/assets/vendor/libs/validate/jquery.validate.min.js');

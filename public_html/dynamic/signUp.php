@@ -80,8 +80,8 @@ class EASistemasDynamicSignUp {
 				$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false">';
 					$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-file fs-5"></i></span>';
 					$this->_htmlResponse .= '<span class="bs-stepper-label">';
-						$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Equipe</span>';
-						$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Escolha da Equipe</span>';
+						$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Como</span>';
+						$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Defina sua participação</span>';
 					$this->_htmlResponse .= '</span>';
 				$this->_htmlResponse .= '</button>';
 			$this->_htmlResponse .= '</div>';
@@ -90,8 +90,18 @@ class EASistemasDynamicSignUp {
 				$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false" disabled>';
 					$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-box fs-5"></i></span>';
 					$this->_htmlResponse .= '<span class="bs-stepper-label">';
-						$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Local</span>';
-						$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Escolha o Clube</span>';
+						$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Onde</span>';
+						$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Escolha o Local</span>';
+					$this->_htmlResponse .= '</span>';
+				$this->_htmlResponse .= '</button>';
+			$this->_htmlResponse .= '</div>';
+			$this->_htmlResponse .= '<div class="line"></div>';
+			$this->_htmlResponse .= '<div class="step" data-target="#reserve">';
+				$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false">';
+					$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-data fs-5"></i></span>';
+					$this->_htmlResponse .= '<span class="bs-stepper-label">';
+						$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Quando</span>';
+						$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Agende seu dia de Atirar</span>';
 					$this->_htmlResponse .= '</span>';
 				$this->_htmlResponse .= '</button>';
 			$this->_htmlResponse .= '</div>';
@@ -100,11 +110,15 @@ class EASistemasDynamicSignUp {
 				$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false">';
 					$this->_htmlResponse .= '<span class="bs-stepper-circle"><i class="bx bx-data fs-5"></i></span>';
 					$this->_htmlResponse .= '<span class="bs-stepper-label">';
-						$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">Database</span>';
-						$this->_htmlResponse .= '<span class="bs-stepper-subtitle">Select Database</span>';
+						$this->_htmlResponse .= '<span class="bs-stepper-title text-uppercase">xxx</span>';
+						$this->_htmlResponse .= '<span class="bs-stepper-subtitle">xxx</span>';
 					$this->_htmlResponse .= '</span>';
 				$this->_htmlResponse .= '</button>';
 			$this->_htmlResponse .= '</div>';
+
+
+
+			
 			$this->_htmlResponse .= '<div class="line"></div>';
 			$this->_htmlResponse .= '<div class="step" data-target="#billing">';
 				$this->_htmlResponse .= '<button type="button" class="step-trigger" aria-selected="false">';
@@ -168,7 +182,7 @@ class EASistemasDynamicSignUp {
 								$this->_htmlResponse .= '<input type="text" disabled class="form-control disabled"  value="' . $this->_data->name_equipe . '">'; 
 								$this->_htmlResponse .= '<input type="hidden" id="id_equipe" name="id_equipe" value="' . $this->_data->id_equipe . '">';
 								else:
-								$this->_htmlResponse .= '<select id="id_equipe" name="id_equipe" class="form-control required">';
+								$this->_htmlResponse .= '<select id="id_equipe" name="id_equipe" class="form-control select2 required">';
 									$this->_htmlResponse .= '<option disabled selected class="default" value="">- Selecione a Equipe -</option>';
 									$this->_htmlResponse .= JHTML::_('select.options',  $equipes, 'value', 'text');
 								$this->_htmlResponse .= '</select>';
@@ -177,14 +191,14 @@ class EASistemasDynamicSignUp {
 						$this->_htmlResponse .= '</div>';
 						endif;
 						if($this->_data->equipe_prova==3 || $this->_data->equipe_prova==4 || $this->_data->equipe_prova==5):
-						$this->_htmlResponse .= '<div class="form-group">';
-							$this->_htmlResponse .= '<label class="col-sm-3 control-label">Equipe:</label>';
-							$this->_htmlResponse .= '<div class="col-sm-9">';
+						$this->_htmlResponse .= '<div class="row mb-3">';
+							$this->_htmlResponse .= '<label class="col-sm-2 col-form-label">Equipe:</label>';
+							$this->_htmlResponse .= '<div class="col-sm-10">';
 								if($this->_data->id_estado):
 								$this->_htmlResponse .= '<input type="text" disabled class="form-control form-control-plaintext"  value="' . $this->_data->name_estado . '">';
 								$this->_htmlResponse .= '<input type="hidden" id="id_estado" name="id_estado" value="' . $this->_data->id_estado . '">';
 								else:
-								$this->_htmlResponse .= '<select id="id_estado" name="id_estado" class="form-control">';
+								$this->_htmlResponse .= '<select id="id_estado" name="id_estado" class="form-control required">';
 									$this->_htmlResponse .= '<option disabled selected class="default" value="">- Selecione o Estado -</option>';
 									$this->_htmlResponse .= JHTML::_('select.options',  $this->estados, 'value', 'text', $this->_data->id_estado ); 
 								$this->_htmlResponse .= '</select>';
@@ -193,6 +207,20 @@ class EASistemasDynamicSignUp {
 						$this->_htmlResponse .= '</div>';
 						endif;
 						endif;
+						$this->_htmlResponse .= '<div class="row mb-3">';
+							$this->_htmlResponse .= '<label class="col-sm-2 col-form-label">Arma:</label>';
+							$this->_htmlResponse .= '<div class="col-sm-10">';
+								if(count($armas)>0):
+									$this->_htmlResponse .= '<select id="id_arma" name="id_arma" class="form-control required">';
+										$this->_htmlResponse .= '<option class="default" value="">- Escolha a Arma -</option>';
+										$this->_htmlResponse .= JHTML::_('select.options',  $armas, 'value', 'text' ); 
+									$this->_htmlResponse .= '</select>';
+								else:
+									$this->_htmlResponse .= '<input type="text" disabled class="form-control form-control-plaintext"  value="Não há armas em seu acero compativel com esta prova">';
+								endif;
+							$this->_htmlResponse .= '</div>';
+						$this->_htmlResponse .= '</div>';
+
 					$this->_htmlResponse .= '</div>';
 					$this->_htmlResponse .= '<div class="col-12 d-flex justify-content-between mt-4">';
 						$this->_htmlResponse .= '<button class="btn btn-label-secondary btn-prev" disabled=""> <i class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i>';
@@ -220,16 +248,16 @@ class EASistemasDynamicSignUp {
 								$image = $resize->resize(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj, 70, 50,  '../cache/' . $clube->logo_pj);
 								
 								/*
-								<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar pull-up" style="width:auto;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
-									<img style="border: 1px solid #CCC" src="<?php echo $resize->resize(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj, 180, 100, 'cache/' . $clube->logo_pj, 'manterProporcao');?>" alt="<?php echo $clube->name;?>" alt="<?php echo $clube->name;?>" class="rounded">
+								<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar pull-up" style="width:auto;" aria-label="<?php echo $clube->name . '" data-bs-original-title="<?php echo $clube->name . '">
+									<img style="border: 1px solid #CCC" src="<?php echo $resize->resize(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj, 180, 100, 'cache/' . $clube->logo_pj, 'manterProporcao') . '" alt="<?php echo $clube->name . '" alt="<?php echo $clube->name . '" class="rounded">
 								</li>*/
 							else:
 
 									$name = explode(' ', trim($clube->name));
 									$sigla = substr($name[0], 0, 1) . substr(end($name), 0, 1);
 							/*
-								<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-md pull-up" style="width:52px;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
-									<span class="avatar-initial rounded bg-label-danger"><?php echo strtoupper($sigla); ?></span>
+								<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-md pull-up" style="width:52px;" aria-label="<?php echo $clube->name . '" data-bs-original-title="<?php echo $clube->name . '">
+									<span class="avatar-initial rounded bg-label-danger"><?php echo strtoupper($sigla);. '</span>
 								</li>
 								*/
 							endif;
@@ -275,6 +303,235 @@ class EASistemasDynamicSignUp {
 
 
 
+				//$method_event['amount_method'] = '1';
+
+				//$method_event['name_method'] = 'teste';
+				//$i = '0';
+
+				$myReserve = array();
+
+				$methods_event[0]['amount_method'] = 1;
+				$methods_event[0]['name_method'] = 'Trap 100';
+				
+				$methods_event[1]['amount_method'] = 2;
+				$methods_event[1]['name_method'] = 'Trap 200';
+
+				$methods_event[2]['amount_method'] = 3;
+				$methods_event[2]['name_method'] = 'Trap 200 + Liga';
+
+
+				$test = new stdClass();
+				$test->method['id_method'] = '0';
+				$myReserve[1] = $test;
+
+				$this->_htmlResponse .= '<!-- reserve -->';
+				$this->_htmlResponse .= '<div id="reserve" class="content pt-3 pt-lg-0">';
+					$this->_htmlResponse .= '<div class="mb-3">';
+
+
+					 if(count($methods_event)>1):
+						$this->_htmlResponse .= '<div class="row justify-content-center mt-3">';
+						foreach($methods_event as $i => $method_event):
+							$this->_htmlResponse .= '<div class="col-auto col-button text-center">';
+								$this->_htmlResponse .= '<label class="custom-radio-option" for="method' .  $i. '">';
+									$this->_htmlResponse .= '<input type="radio" class="required" name="method" id="method' .$i. '" data-amount="' . ($method_event['amount_method'] + 0) . '"  value="' .  $i. '" ' .  ($myReserve[1]->method['id_method'] == $i ? 'checked' : ''). ' />';
+									$this->_htmlResponse .= '<span class="radio-btn-option">';
+										$this->_htmlResponse .= '<i class="fas fa-check"></i>';
+										$this->_htmlResponse .= '<div class="hobbies-icon-option">';
+											$this->_htmlResponse .= '<h5>' .  $method_event['name_method'] . '</h5>';
+										$this->_htmlResponse .= '</div>';
+									$this->_htmlResponse .= '</span>';
+								$this->_htmlResponse .= '</label>';
+							$this->_htmlResponse .= '</div>';
+						endforeach; 
+						$this->_htmlResponse .= '</div>';
+						else:
+							$this->_htmlResponse .= '<input type="hidden" name="radio-option" checked name="method" value="' .  ($methods_event[0]['amount_method'] + 0). '"/>';
+						endif;
+						$this->_htmlResponse .= '<!-- Fim Escolha Tipo -->';
+			
+
+
+					$this->_htmlResponse .= '</div>';
+					$this->_htmlResponse .= '<div class="col-12 d-flex justify-content-between mt-4">';
+						$this->_htmlResponse .= '<button class="btn btn-label-secondary btn-prev"> <i class="bx bx-left-arrow-alt bx-xs me-sm-1 me-0"></i> <span class="align-middle d-sm-inline-block d-none">Previous</span> </button>';
+						$this->_htmlResponse .= '<button class="btn btn-primary btn-next"> <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span> <i class="bx bx-right-arrow-alt bx-xs"></i></button>';
+					$this->_htmlResponse .= '</div>';
+				$this->_htmlResponse .= '</div>';
+
+
+
+
+
+			
+			/*
+						$this->_htmlResponse .= '<input type="hidden" id="max_methods" value="' .  $this->item->max_methods. '" />';
+						$this->_htmlResponse .= '<input type="hidden" id="limit_day" value="' .  $this->item->limit_day_event. '" />';
+						if($this->item->max_methods>1):
+							$this->_htmlResponse .= '<h4 class="mt-3 mb-1 text-center">Reservas</h1> ';
+							$this->_htmlResponse .= '<ul id="tabAmounts" role="tablist" class="nav nav-pills flex-row text-center border-0 rounded-nav justify-content-center">';
+							for($i=1; $i <= $this->item->max_methods; $i++):
+								$this->_htmlResponse .= '<li class="nav-item ' .  ($i>1 && $this->myReserve[1]->method['amount_method'] < $i ? 'disabled' : ''). '">';
+								$this->_htmlResponse .= '<a id="reserve-tab' . $i . '" data-toggle="tab" href="#reserve' . $i . '" data-numero="' .  $i. '" role="tab" aria-controls="reserve' .  $i. '" aria-selected="true" class="nav-link border-0 text-uppercase font-weight-bold ' .  ($i == 1 ? 'active' : ''). ' ' .  ($i>1 && $this->myReserve[1]->method['amount_method'] < $i ? 'disabled' : ''). '" >Reserva<br/>' .  $i. '</a>';
+								$this->_htmlResponse .= '</li>';
+							endfor;
+							$this->_htmlResponse .= '</ul>';
+						endif;
+			
+			
+					$this->_htmlResponse .= '<div id="myTabContent" class="tab-content bg-reserve">';
+			
+						for($x=1; $x <= $this->item->max_methods; $x++):
+							$this->_htmlResponse .= '<div id="reserve' . $x. '" role="tabpanel" aria-labelledby="reserve' . $x. '-tab" class="tab-pane fade px-4 py-5 ' . ( $x == 1 ? 'show active' : ''). '">';
+							$this->_htmlResponse .= '<input type="hidden" name="number" value="' .  $x. '" />';
+							
+							$this->_htmlResponse .= '<!-- Datas -->';
+							if(count($this->datasAg)>1):
+								$this->_htmlResponse .= '<div class="row justify-content-center text-center">';
+								$this->_htmlResponse .= '<section class="fieldset mt-3">';
+								$this->_htmlResponse .= '<h5 class="title text-center title-options">Escolha a Data</h5>';
+								$this->_htmlResponse .= '<div class="d-flex flex-wrap justify-content-center" id="date_' .  $x. '">';
+									foreach($this->datasAg as $i => $dataAg):
+										$this->_htmlResponse .= '<div class="col-auto col-button text-center ">';
+										$this->_htmlResponse .= '<label class="custom-radio-date" for="date' .  ($i + ($x*count($this->datasAg)-count($this->datasAg))). '" >';
+										$this->_htmlResponse .= '<input type="radio" ' . (isset($this->intervals[$x-1]->days) && $this->intervals[$x-1]->days > $i  ? 'disabled="disabled"' : '') . ' class="required agenda-data" data-numero="' . $x . '" name="date[' . $x . ']" id="date' .  ($i + ($x*count($this->datasAg)-count($this->datasAg))) . '" value="' . $dataAg->value . '" ' . ($this->myReserve[$x]->date == $dataAg->value ? 'checked' : '') . ' ' .  ($dataAg->remaining <= 0 ? 'disabled' : ''). ' />';
+										$this->_htmlResponse .= '<span class="radio-btn-date" >';
+										$this->_htmlResponse .= '<i class="fas fa-check"></i>';
+										$this->_htmlResponse .= '<div class="hobbies-icon-date">';
+										$this->_htmlResponse .= '<h3>' .  $dataAg->text . '</h3>';
+										$this->_htmlResponse .= '<h5>' .  $dataAg->legend . '</h5>';
+										$this->_htmlResponse .= '</div>';
+										$this->_htmlResponse .= '</span>';
+										$this->_htmlResponse .= '</label>';
+										$this->_htmlResponse .= '</div>';
+									endforeach;
+									$this->_htmlResponse .= '</div>';
+									$this->_htmlResponse .= '</section>';
+									$this->_htmlResponse .= '</div>';
+							else:
+								
+								$this->_htmlResponse .= '<input type="hidden" name="date[' . $x . ']" value="' .  $this->datasAg[0]->value . '"/>';
+							endif;
+							$this->_htmlResponse .= '<!-- Fim Datas -->';
+
+
+
+							$this->_htmlResponse .= '<!-- Baterias -->';
+							if($this->item->drums_event>1):
+								$this->_htmlResponse .= '<div class=" row justify-content-center text-center">';
+								$this->_htmlResponse .= '<section class="fieldset mt-5">';
+								$this->_htmlResponse .= '<h5 class="title text-center title-options">Escolha a Bateria</h5>';
+								$this->_htmlResponse .= '<div class="d-flex flex-wrap justify-content-center" id="drums_' . $x . '">';
+									if(isset($this->myReserve[$x]->drums)): // if ele já salvou reserva ou datas for igaul a 1. ' 
+									foreach($this->bateriasAg[$x] as $i => $bateriaAg):
+										$this->_htmlResponse .= '<div class="col-auto col-button text-center">';
+										$this->_htmlResponse .= '<label class="custom-radio" for="drums' .  ($i + ($x*$this->item->drums_event-$this->item->drums_event)) . '">';
+										$this->_htmlResponse .= '<input type="radio" ' . (isset($this->intervals[$x-1]->drums) && $this->intervals[$x-1]->drums > $bateriaAg->value ? 'disabled="disabled"' : '') . '  class="required agenda-bateria" data-numero="' . $x . '" name="drums[' . $x . ']" id="drums' . ( $i + ($x*$this->item->drums_event-$this->item->drums_event)) . '" value="' . $bateriaAg->value . '" ' . ($this->myReserve[$x]->drums == $bateriaAg->value ? 'checked' : '') . ' ' . ($bateriaAg->remaining <= 0 ? 'disabled' : '') . ' />';
+										$this->_htmlResponse .= '<span class="radio-btn">';
+										$this->_htmlResponse .= '<i class="fas fa-check"></i>';                
+										$this->_htmlResponse .= '<div class="hobbies-icon">';
+										$this->_htmlResponse .= '<h3>' . $bateriaAg->text . '</h3>';
+										$this->_htmlResponse .= '<h5>' . $bateriaAg->legend . '</h5>';
+														if(!is_null($this->item->time_drums_event) && !is_null($this->item->duration_drums_event)):
+															$this->_htmlResponse .= '<h6>' .  JHtml::date(JFactory::getDate($this->item->time_drums_event . ($i>1 ? ' + ' . (($i-1)*$this->item->duration_drums_event) . 'min' : ''), $siteOffset)->toISO8601(true), 'DATE_FORMAT_TIME'). '</h6>';
+														endif;
+														$this->_htmlResponse .= '</div>';
+														$this->_htmlResponse .= '</span>';
+														$this->_htmlResponse .= '</label>';
+														$this->_htmlResponse .= '</div>';
+									endforeach;
+									else:
+										$this->_htmlResponse .= 'Aguardando Definir Etapas Anteriores.';
+									endif;
+									$this->_htmlResponse .= '</div>';
+									$this->_htmlResponse .= '</section>';
+								$this->_htmlResponse .= '</div>';
+							else:  
+								$this->_htmlResponse .= '<input type="hidden" name="drums[' . $x . ']" value="1"/>';
+							endif;
+							$this->_htmlResponse .= '<!-- Fim Baterias -->';
+			
+							$this->_htmlResponse .= '<!-- Squads -->';
+							if($this->item->squad_event>1):
+								$this->_htmlResponse .= '<div class=" row justify-content-center text-center">';
+								$this->_htmlResponse .= '<section class="fieldset mt-5">';
+								$this->_htmlResponse .= '<h5 class="title text-center title-options">Escolha ' . ($this->item->type_event == 2 ? 'o Squad ' : 'a Turma ') . '</h5>';
+								$this->_htmlResponse .= '<div class="d-flex flex-wrap justify-content-center" id="squad_' . $x . '">';
+									if(isset($this->myReserve[$x]->squad)): // if ele já salvou reserva ou datas for igaul a 1 
+									foreach($this->turmasAg[$x] as $i => $turmaAg):
+										$this->_htmlResponse .= '<div class="col-auto col-button text-center">';
+										$this->_htmlResponse .= '<label class="custom-radio-squad" for="squad' . $i + ($x*$this->item->squad_event-$this->item->squad_event) . '">';
+										$this->_htmlResponse .= '<input type="radio" ' . (isset($this->intervals[$x-1]->squad) && $this->intervals[$x-1]->squad > $turmaAg->value && ($this->item->limit_break_event == 1 || $this->item->limit_break_event == 0 && isset($this->myReserve[$x-1]->date) && $this->myReserve[$x-1]->date == $this->myReserve[$x]->date && isset($this->myReserve[$x-1]->drums) && $this->myReserve[$x-1]->drums == $this->myReserve[$x]->drums) ? 'disabled="disabled"' : '') . '  class="required agenda-turma" data-numero="' . $x . '" name="squad[' . $x . ']" id="squad' . ($i + ($x*$this->item->squad_event-$this->item->squad_event)) . '" value="' . $turmaAg->value . '"  ' . ($this->myReserve[$x]->squad == $turmaAg->value ? 'checked' : '') . ' ' . ($turmaAg->remaining <= 0 ? 'disabled' : '') . ' />';
+												$this->_htmlResponse .= '<span class="radio-btn-squad">';
+												$this->_htmlResponse .= '<i class="fas fa-check"></i>';
+													$this->_htmlResponse .= '<div class="hobbies-icon-squad">';
+													$this->_htmlResponse .= '<h3>' . $turmaAg->text . '</h3>';
+													$this->_htmlResponse .= '<h5>' . $turmaAg->legend . '</h5>';
+														if(!is_null($this->item->time_squad_event) && !is_null($this->item->duration_squad_event)):
+															$this->_htmlResponse .= '<h6>' .  JHtml::date(JFactory::getDate($this->item->time_squad_event . ($i>0 ? ' + ' . (($i)*$this->item->duration_squad_event) . 'min' : ''), $siteOffset)->toISO8601(true), 'DATE_FORMAT_TIME'). '</h6>';
+														endif;
+														$this->_htmlResponse .= '</div>';
+														$this->_htmlResponse .= '</span>';
+														$this->_htmlResponse .= '</label>';  
+														$this->_htmlResponse .= '</div>';
+									endforeach;
+									else:
+										$this->_htmlResponse .= 'Aguardando Definir Etapas Anteriores.';
+									endif;
+									$this->_htmlResponse .= '</div>';
+									$this->_htmlResponse .= '</section>';
+									$this->_htmlResponse .= '</div>';
+							else:
+								$this->_htmlResponse .= '<input type="hidden" name="squad[' .  $x. ']" value="1"/>';
+							endif;
+							$this->_htmlResponse .= '<!-- Fim Squads -->';
+			
+							$this->_htmlResponse .= '<!-- Posições -->';
+							if($this->item->position_event>1):
+								$this->_htmlResponse .= '<div class="row justify-content-center text-center">';
+								$this->_htmlResponse .= '<section class="fieldset mt-5">';
+								$this->_htmlResponse .= '<h5 class="title text-center title-options">Escolha a Posição</h5>';
+								$this->_htmlResponse .= '<div class="d-flex flex-wrap justify-content-center" id="position_' . $x . '">';
+									if(isset($this->myReserve[$x]->position)): // if ele já salvou reserva ou datas for igaul a 1  
+									foreach($this->postosAg[$x] as $i => $postoAg):
+										$this->_htmlResponse .= '<div class="position col-12 text-center mb-3">';
+										$this->_htmlResponse .= '<label class="custom-radio-position" for="position' . ($i + ($x*$this->item->position_event-$this->item->position_event)) . '">';
+										$this->_htmlResponse .= '<input type="radio" class="required agenda-posto' . ($this->myReserve[$x]->position == $postoAg->value ? ' my-reserve' : '') . ' " data-reserved="0" data-id="' . $this->myReserve[$x]->date . '_' . $this->myReserve[$x]->drums . '_' . $this->myReserve[$x]->squad . '_' . ($i+1) . '" data-numero="' . $x . '" name="position[' . $x . ']" id="position' . ($i + ($x*$this->item->position_event-$this->item->position_event)) . '" value="' . $postoAg->value . '"  ' . ($this->myReserve[$x]->position == $postoAg->value ? 'disabled checked' : ( !empty($postoAg->legend) && $postoAg->legend !='Disponível' ? 'disabled' : '')) . ' />';
+										$this->_htmlResponse .= '<span class="radio-btn-position">';
+										$this->_htmlResponse .= '<div class="hobbies-icon-position">';
+										$this->_htmlResponse .= '<h3>' . $postoAg->text . '</h3>';
+										$this->_htmlResponse .= '<span class="name">' . $postoAg->legend . '</hspan>';
+										$this->_htmlResponse .= '</div>';
+										$this->_htmlResponse .= '</span>';
+										$this->_htmlResponse .= '</label>';  
+										$this->_htmlResponse .= '</div>';
+									endforeach;
+									else:
+										$this->_htmlResponse .= 'Aguardando Definir Etapas Anteriores.';
+									endif;
+									$this->_htmlResponse .= '</div>';
+									$this->_htmlResponse .= '</section>';
+									$this->_htmlResponse .= '</div>';
+							else:
+								$this->_htmlResponse .= '<input type="hidden" name="position[' . $x . ']" value="1"/>';
+							endif;
+							$this->_htmlResponse .= '</div>';
+						endfor;
+						$this->_htmlResponse .= '</div>';
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
 
 		  $this->_htmlResponse .= '<!-- Database -->';
 		  $this->_htmlResponse .= '<div id="database" class="content pt-3 pt-lg-0">';
@@ -311,6 +568,9 @@ class EASistemasDynamicSignUp {
 		  $this->_htmlResponse .= '</div>';
 		  $this->_htmlResponse .= '</div>';
 		  $this->_htmlResponse .= '</li>';
+
+
+
 		  $this->_htmlResponse .= '<li class="d-flex align-items-start">';
 		  $this->_htmlResponse .= '<div class="badge bg-label-info p-2 me-3 rounded"><i class="bx bx-data bx-sm"></i></div>';
 		  $this->_htmlResponse .= '<div class="d-flex justify-content-between w-100 flex-wrap gap-2">';
@@ -819,7 +1079,7 @@ class EASistemasDynamicSignUp {
 	{
 		$query = $this->_db->getQuery(true);
 		$query->select('id_arma as value,
-						CONCAT(name_especie, \' \', name_calibre, \' \', name_varca, \' \', numero_arma) as text');	
+						CONCAT(numero_arma, \' | \', sigla_especie, \' | \', name_calibre, \' | \', name_marca) as text');	
 		$query->from( $this->_db->quoteName('#__users') );
 		$query->innerJoin( $this->_db->quoteName('#__intranet_arma') . 'ON('. $this->_db->quoteName('id').'='. $this->_db->quoteName('id_user').')' );
 		$query->leftJoin( $this->_db->quoteName('#__intranet_especie') . 'USING('. $this->_db->quoteName('id_especie').')' );
@@ -829,7 +1089,7 @@ class EASistemasDynamicSignUp {
 		$query->where( $this->_db->quoteName('id') .  '=' . $this->_db->quote( $this->_user->get('id') ) );		
 		$query->where( $this->_db->quoteName('id_prova') .  '=' . $this->_db->quote( $this->_value['id_prova'] ) );	
 		$this->_db->setQuery($query);
-		return $this->_db->loadObject();
+		return $this->_db->loadObjectList();
 	}
 
 	function getClubes()

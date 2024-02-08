@@ -1,0 +1,574 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+.fieldset .title-options {
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1;
+    background: transparent;
+    font-size: 15px;
+    border-radius: 10px;
+    padding: 3px 13px;
+}
+
+/* Header Title */
+.header-bg {
+    background-image: linear-gradient(to left, #7fbc49 , #275c0f);   
+    margin-bottom: 20px;
+    border-bottom-right-radius: 60px;
+    border-bottom-left-radius: 60px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-title {
+    font-size: 24px;
+    width: 100%;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.subtitle {
+    max-width: 500px;
+    text-align: center;
+    font-size: 13px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Fim Header Title */
+
+/* Dados */
+.dados {
+    margin-top: 5px;
+}
+
+.label-name {
+    font-size: 14px;
+}
+
+.text-name {
+    margin-left: 8px;
+    font-weight: 700;
+}
+/* Fim Dados */
+
+/* Escolha Tipo */
+.custom-radio-option input {
+    display: none;
+}
+
+.myreserve {
+    border: 2px solid #ffa500;
+}
+.radio-btn-option {
+    margin: 10px;
+    border: 2px solid #e9e9e9;
+    display: inline-block;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 0 10px #c3c3c367;
+    cursor: pointer;
+    padding: 20px 15px 10px 15px;
+    background: #FFF;
+}
+
+.radio-btn-option > i {
+    color: #ffffff;
+    background-color: #7fbc49;
+    font-size: 20px;
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%) scale(4);
+    border-radius: 50px;
+    padding: 3px;
+    transition: 0.2s;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.radio-btn-option .hobbies-icon-option h5 {
+    font-size: 12px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.radio-btn-option .hobbies-icon-option h6 {
+    font-size: 10px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+.custom-radio-option input:checked + .radio-btn-option {
+    border: 2px solid #7fbc49;
+}
+
+.custom-radio-option input:checked + .radio-btn-option .hobbies-icon-option h5 {
+    font-weight: 800;
+}
+
+.custom-radio-option input:checked + .radio-btn-option > i {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10%) scale(.8);
+    border: 2px solid #7fbc49;
+}
+/* Fim Escolha Tipo */
+
+/* Datas */
+.custom-radio-date input {
+    display: none;
+}
+
+
+.radio-btn-date {
+    margin: 10px;
+    border: 2px solid #e9e9e9;
+    display: inline-block;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 0 10px #c3c3c367;
+    cursor: pointer;
+    padding: 12px 15px 5px 15px;
+    background: #FFF;
+}
+
+.radio-btn-date > i {
+    color: #ffffff;
+    background-color: #7fbc49;
+    font-size: 20px;
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%) scale(4);
+    border-radius: 50px;
+    padding: 3px;
+    transition: 0.2s;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.radio-btn-date .hobbies-icon-date h3 {
+    color: #222222;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.radio-btn-date .hobbies-icon-date h5 {
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.radio-btn-date .hobbies-icon-date h6 {
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+.custom-radio-date input:checked + .radio-btn-date {
+    border: 2px solid #7fbc49;
+}
+
+.custom-radio-date input:checked + .radio-btn-date .hobbies-icon-date h3 {
+    font-weight: 900;
+}
+
+.custom-radio-date input:checked + .radio-btn-date .hobbies-icon-date h5 {
+    font-weight: 900;
+}
+
+
+.custom-radio-date input:checked + .radio-btn-date > i {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10%) scale(.8);
+    border: 2px solid #7fbc49;
+}
+
+
+.custom-radio-date input:disabled  + .radio-btn-date {
+    border: 2px solid red;
+    cursor: default;
+    background-color: #e6e6e6;
+}
+
+.custom-radio-date input:disabled + .radio-btn-date h3 {
+    color: rgb(53, 53, 53);
+    font-weight: normal;
+    text-decoration: 2px rgba(255, 0, 0, 0.473) line-through;
+}
+
+.custom-radio-date input:disabled + .radio-btn-date h5 {
+    color: rgba(255, 0, 0, 0.473);
+    font-weight: 900;
+}
+
+/* Fim Datas */
+
+/* Baterias */
+.custom-radio input {
+    display: none;
+}
+
+.radio-btn {
+    margin: 10px;
+    border: 2px solid #e9e9e9;
+    display: inline-block;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 0 10px #c3c3c367;
+    cursor: pointer;
+    padding: 12px 15px 5px 15px;
+    background: #FFF;
+}
+
+.radio-btn> i {
+    color: #ffffff;
+    background-color: #7fbc49;
+    font-size: 20px;
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%) scale(4);
+    border-radius: 50px;
+    padding: 3px;
+    transition: 0.2s;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.radio-btn .hobbies-icon h3 {
+    color: #222222;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.radio-btn .hobbies-icon h5 {
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.radio-btn .hobbies-icon h6 {
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.custom-radio input:checked + .radio-btn {
+    border: 2px solid #7fbc49;
+}
+
+.custom-radio input:checked + .radio-btn .hobbies-icon h3 {
+    font-weight: 900;
+}
+
+.custom-radio input:checked + .radio-btn .hobbies-icon h5 {
+    font-weight: 900;
+}
+
+
+.custom-radio input:checked + .radio-btn > i {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10%) scale(.8);
+    border: 2px solid #7fbc49;
+}
+
+
+.custom-radio input:disabled  + .radio-btn {
+    border: 2px solid red;
+    cursor: default;
+    background-color: #e6e6e6;
+}
+
+.custom-radio input:disabled + .radio-btn h3 {
+    color: rgb(53, 53, 53);
+    font-weight: normal;
+    text-decoration: 2px rgba(255, 0, 0, 0.473) line-through;
+}
+
+.custom-radio input:disabled + .radio-btn h5 {
+    color: rgba(255, 0, 0, 0.473);
+    font-weight: 900;
+}
+
+/* Fim Baterias */
+
+/* Squads */
+
+.custom-radio-squad {
+    min-width: 140px;
+
+}
+.custom-radio-squad input {
+    display: none;
+}
+
+.radio-btn-squad {
+    margin: 10px;
+    border: 2px solid #e9e9e9;
+    display: inline-block;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 0 10px #c3c3c367;
+    cursor: pointer;
+    padding: 12px 15px 5px 15px;
+    background: #FFF;
+}
+
+.radio-btn-squad > i {
+    color: #ffffff;
+    background-color: #7fbc49;
+    font-size: 20px;
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%) scale(4);
+    border-radius: 50px;
+    padding: 3px;
+    transition: 0.2s;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.radio-btn-squad .hobbies-icon-squad h3 {
+    color: #222222;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.radio-btn-squad .hobbies-icon-squad h5 {
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.radio-btn-squad .hobbies-icon-squad h6 {
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+
+.custom-radio-squad input:checked + .radio-btn-squad {
+    border: 2px solid #7fbc49;
+}
+
+.custom-radio-squad input:checked + .radio-btn-squad .hobbies-icon-squad h3 {
+    font-weight: 900;
+}
+
+.custom-radio-squad input:checked + .radio-btn-squad .hobbies-icon-squad h5 {
+    font-weight: 900;
+}
+
+
+.custom-radio-squad input:checked + .radio-btn-squad > i {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10%) scale(.8);
+    border: 2px solid #7fbc49;
+}
+
+
+.custom-radio-squad input:disabled  + .radio-btn-squad {
+    border: 2px solid red;
+    cursor: default;
+    background-color: #e6e6e6;
+}
+
+.custom-radio-squad input:disabled + .radio-btn-squad h3 {
+    color: rgb(53, 53, 53);
+    font-weight: normal;
+    text-decoration: 2px rgba(255, 0, 0, 0.473) line-through;
+}
+
+.custom-radio-squad input:disabled + .radio-btn-squad h5 {
+    color: rgba(255, 0, 0, 0.473);
+    font-weight: 900;
+}
+/* Fim Squads */
+
+/* Posições */
+.custom-radio-position input {
+    display: none;
+}
+
+.custom-radio-position {
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 40px;
+    background: #FFF;
+}
+
+.radio-btn-position > i {
+    color: #ffffff;
+    background-color: #7fbc49;
+    font-size: 20px;
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%) scale(4);
+    border-radius: 50px;
+    padding: 3px;
+    transition: 0.2s;
+    pointer-events: none;
+    opacity: 0;
+}
+
+
+.hobbies-icon-position {
+    display: flex;
+    box-shadow: 0 0 10px #c3c3c367;
+}
+
+.hobbies-icon-position h3 {
+    width: 5%;
+    border: 1px solid #ccc;
+    background-color: none;
+    margin: -1px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    padding-top: 5px;
+    width: 40px;
+    height: 40px;
+    padding-top: 11px;
+}
+
+.hobbies-icon-position span {
+    width: 95%;
+    text-align: justify;
+    padding-left: 8px;
+    height: 38px;
+    padding-top: 8px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    font-size: 14px;
+}
+
+.custom-radio-position input:checked + .radio-btn-position .hobbies-icon-position span {
+    /* background-color: #7fbc494d;
+    border: 1px solid #7fbc494d;*/    
+    color: #222222;
+    font-size: 14px;
+    font-weight: 600;
+}
+.custom-radio-position input:checked + .radio-btn-position .hobbies-icon-position h3 {
+    color:#ffffff;
+    background-color: #7fbc49;
+    font-size: 14px;
+    font-weight: 600;
+}
+  
+.custom-radio-position input:disabled + .radio-btn-position .hobbies-icon-position span {
+    background-color: #e6e6e6;
+    border: 1px solid #e6e6e6;
+}
+.custom-radio-position input:disabled + .radio-btn-position .hobbies-icon-position h3 {
+    color:#ffffff;
+    background-color: #c43838;
+    font-size: 14px;
+    font-weight: 600;
+}
+.custom-radio-position input.my-reserve:disabled + .radio-btn-position .hobbies-icon-position h3 {
+    background-color: #39c0ed;
+}
+.custom-radio-position input.my-reserve:disabled + .radio-btn-position .hobbies-icon-position span {
+    background-color: #ffffff;
+    border: 1px solid #39c0ed;
+}
+.custom-radio-position input.reserved:disabled + .radio-btn-position .hobbies-icon-position h3 {
+
+    background-color: #ff9800;
+
+}
+.nav-pills .nav-link {
+    background: #e8f7dc
+}
+.nav-item.disabled {
+    cursor: not-allowed;
+}
+.nav-item.disabled a {
+    text-decoration: 2px rgba(255, 0, 0, 0.473) line-through;  
+    background-color: #e6e6e6;
+    border: 2px solid red !important;
+}
+
+.nav-pills .nav-link {
+
+    margin: 10px;
+    border: 2px solid #e9e9e9;
+    display: inline-block;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 0 10px #c3c3c367;
+    cursor: pointer;
+    padding: 15px 15px 0;
+    line-height: 18px;
+    height: 60px;
+
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background:#7fbc49 !important;
+}
+.bg-reserve{
+    background-color: rgb(116 224 66 / 4%)!important;
+    border-radius: 25px;
+
+}
+
+.nav-pills .nav-link.active.active::after {
+    content: '';
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #7fbc49;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+}
+.col-button{
+    padding: 0;
+}
