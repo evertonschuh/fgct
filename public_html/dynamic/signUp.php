@@ -69,6 +69,7 @@ class EASistemasDynamicSignUp {
 
 		$clubes = $this->getClubes( $this->_data->id_campeonato );
 
+		$armas = $this->getArmas();
 
 		$genero = (!empty($this->_data->id_genero) ? $this->_data->id_genero : $gencatclass->id_genero );
 		$categoria = (!empty($this->_data->id_categoria) ? $this->_data->id_categoria : $gencatclass->id_categoria );
@@ -814,9 +815,22 @@ class EASistemasDynamicSignUp {
 		return false;
 	}
 
-
-
-
+	function getArmas()
+	{
+		$query = $this->_db->getQuery(true);
+		$query->select('id_arma as value,
+						CONCAT(name_especie, \' \', name_calibre, \' \', name_varca, \' \', numero_arma) as text');	
+		$query->from( $this->_db->quoteName('#__users') );
+		$query->innerJoin( $this->_db->quoteName('#__intranet_arma') . 'ON('. $this->_db->quoteName('id').'='. $this->_db->quoteName('id_user').')' );
+		$query->leftJoin( $this->_db->quoteName('#__intranet_especie') . 'USING('. $this->_db->quoteName('id_especie').')' );
+		$query->leftJoin( $this->_db->quoteName('#__intranet_calibre') . 'USING('. $this->_db->quoteName('id_calibre').')' );
+		$query->leftJoin( $this->_db->quoteName('#__intranet_marca') . 'USING('. $this->_db->quoteName('id_marca').')' );
+		$query->leftJoin( $this->_db->quoteName('#__ranking_prova_calibre_map') . 'USING('. $this->_db->quoteName('id_calibre').')' );
+		$query->where( $this->_db->quoteName('id') .  '=' . $this->_db->quote( $this->_user->get('id') ) );		
+		$query->where( $this->_db->quoteName('id_prova') .  '=' . $this->_db->quote( $this->_value['id_prova'] ) );	
+		$this->_db->setQuery($query);
+		return $this->_db->loadObject();
+	}
 
 	function getClubes()
 	{
