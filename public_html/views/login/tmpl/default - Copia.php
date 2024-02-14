@@ -3,83 +3,7 @@ defined('_JEXEC') or die('Restricted access');
 $uri = JFactory::getURI();
 
 ?>
-<style>
-
-  .cover {
-    background-image: url(/images/login/atirador00<?php echo rand(1,8); ?>.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    object-fit: cover;
-    }
-</style>
 <form method="post" name="adminForm" class="form-validate">
-  <div class="authentication-wrapper authentication-cover">
-    <div class="authentication-inner row m-0">
-      <!-- /Left Text -->
-      <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center cover">
-      <?php /*
-      <div class="w-100 d-flex justify-content-center">
-          <img src="images/login/atirador001.jpg" class="img-fluid cover" alt="Login image" >
-        </div>
-        */ ?>
-      </div>
-      <!-- /Left Text -->
-      <!-- Login -->
-      <div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
-        <div class="w-px-400 mx-auto">
-          <!-- Logo -->
-          <div class="app-brand justify-content-center mb-5"></div>
-          <!-- /Logo -->
-          <h4 class="mb-2">Bem-vindo ao Portal do Atleta 👋</h4>
-          <p class="mb-4">Por favor, insira seus dados de acesso para continuar</p>
-
-          <div class="mb-3 fv-plugins-icon-container">
-            <label for="email" class="form-label">E-mail</label>
-            <input type="text" class="form-control required" id="username" name="username" placeholder="Escreva seu e-mail" autofocus />
-          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
-          
-          <div class="mb-3 form-password-toggle">
-            <div class="d-flex justify-content-between">
-              <label class="form-label" for="password">Password</label>
-              <a href="auth-forgot-password-basic.html">
-                <small>Esqueceu sua senha?</small>
-              </a>
-            </div>
-            <div class="input-group input-group-merge">
-              <input
-                type="password"
-                id="password"
-                class="form-control required"
-                name="password"
-                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                aria-describedby="password"
-              />
-              <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <button class="btn btn-primary d-grid w-100" type="submit">Acessar</button>
-          </div>
-        </div>
-      </div>
-      <!-- /Login -->
-    </div>
-  </div>
-
-  <input type="hidden" name="task" value="login" />
-  <input type="hidden" name="controller" value="login" />			
-  <input type="hidden" name="view" value="login" />
-  <input type="hidden" name="return" value="<?php echo base64_encode( $uri->toString() ); ?>" />
-  <?php echo JHTML::_('form.token'); ?>	
-</form>
-
-
-
-
-<?php /*
-
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
@@ -123,7 +47,7 @@ $uri = JFactory::getURI();
                     <label class="form-check-label" for="remember-me"> Remember Me </label>
                   </div>
                 </div>
-                */ /*?>
+                */ ?>
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">Acessar</button>
                 </div>
@@ -134,14 +58,14 @@ $uri = JFactory::getURI();
                   <span>Create an account</span>
                 </a>
               </p>
-               */ /*?>
+              */ ?>
             </div>
           </div>
           <!-- /Register -->
         </div>
       </div>
     </div>
- */ /*?>
+
 
 <?php /*
     <!-- Outer Row -->
@@ -177,3 +101,9 @@ $uri = JFactory::getURI();
 
     */
     ?>
+    <input type="hidden" name="task" value="login" />
+    <input type="hidden" name="controller" value="login" />			
+    <input type="hidden" name="view" value="login" />
+    <input type="hidden" name="return" value="<?php echo base64_encode( $uri->toString() ); ?>" />
+    <?php echo JHTML::_('form.token'); ?>	
+</form>

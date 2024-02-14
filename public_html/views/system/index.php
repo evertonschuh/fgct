@@ -548,11 +548,14 @@ endif;
 
 
 <?php else: ?>
-        <div class="container">
+
         	<jdoc:include type="message" />
           <jdoc:include type="component" />
-        </div>
+        
 
+
+
+        
 <?php endif; ?>
 
     <script src="/assets/vendor/libs/jquery/jquery.js"></script>

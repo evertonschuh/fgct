@@ -35,7 +35,9 @@
 .authentication-wrapper.authentication-basic .authentication-inner .card {
   z-index: 1;
 }
-.authentication-wrapper.authentication-basic .authentication-inner .card .app-brand {
+.authentication-wrapper.authentication-basic .authentication-inner .card .app-brand ,
+.app-brand
+{
   margin-bottom: 1rem;
   background-image: url('/images/logo.png');
   background-repeat: no-repeat;
@@ -58,3 +60,5 @@
 .light-style .authentication-wrapper .authentication-bg {
   background-color: #fff;
 }
+
+
