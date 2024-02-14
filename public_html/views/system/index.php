@@ -188,7 +188,7 @@ endif;
               <span class="menu-header-text">Outros Serviços</span>
             </li>
             <li class="menu-item">
-              <a href="<?php echo JRoute::_('index.php?view=payment');?>" class="menu-link">
+              <a href="<?php echo JRoute::_('index.php?view=payments');?>" class="menu-link">
                 <div data-i18n="Cobranças">Cobranças</div>
               </a>
             </li>
@@ -591,6 +591,7 @@ endif;
         });
         
        jQuery('a[href^="/"]').on('click', function(){
+            localStorage.clear();
             jQuery('#overlay').removeClass('animate');
             jQuery('#overlay').css('opacity', 1);
             jQuery('#overlay').css('visibility', 'visible');
