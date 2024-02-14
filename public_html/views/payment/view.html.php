@@ -8,10 +8,12 @@ jimport('joomla.application.component.view');
 class EASistemasViewPayment extends JView 
 {
 	public function display($tpl = null)
-	{	
+	{		
 		
+
 		JRequest::setVar('tmpl','blank');
-		$cobranca = $this->get( 'Cobranca' );
+		JRequest::setVar('format','pdf');
+		$this->cobranca = $this->get( 'Cobranca' );
 	
 		/*
 		$layout	= $this->getLayout();

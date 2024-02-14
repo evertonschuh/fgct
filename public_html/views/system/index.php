@@ -193,7 +193,7 @@ endif;
               </a>
             </li>
             <li class="menu-item">
-              <a href="<?php echo JRoute::_('index.php?view=document');?>" class="menu-link">
+              <a href="<?php echo JRoute::_('index.php?view=documents');?>" class="menu-link">
                 <div data-i18n="Documentos">Documentos</div>
               </a>
             </li>
