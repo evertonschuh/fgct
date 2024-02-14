@@ -73,8 +73,8 @@ $listDirn	= $this->state->get('list.direction');
             </div>
         </div> 
     </div>
-    <input type="hidden" name="controller" value="docassociados" />
-    <input type="hidden" name="view" value="docassociados" />
+    <input type="hidden" name="controller" value="documents" />
+    <input type="hidden" name="view" value="documents" />
     <input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
     <input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />  
     <input type="hidden" name="boxchecked" value="0" />	

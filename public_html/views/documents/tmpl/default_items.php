@@ -14,7 +14,7 @@ if(count($this->items))
     <tr>
     	<td><?php echo JHtml::_('grid.id', $i, $item->id_documento_numero); ?></td>
         <td >
-        	<a class="table-link" target="_blank" href="<?php echo JRoute::_('index.php?view=docassociado&format=pdf&cid=' . $item->id_documento_numero); ?>">
+        	<a class="table-link" target="_blank" href="<?php echo JRoute::_('index.php?view=document&format=pdf&cid=' . $item->id_documento_numero); ?>">
             <?php echo  $item->name; ?>
             </a>
         </td>
