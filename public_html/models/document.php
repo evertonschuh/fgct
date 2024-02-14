@@ -23,7 +23,6 @@ class EASistemasModelDocument extends JModel {
 		$this->_app	 = JFactory::getApplication(); 
 		$this->_user = JFactory::getUser();
 		$this->_id_user = $this->_user->get('id');
-		//$this->_trataImagem = new IntranetIncludesImages();
 
 		$this->_siteOffset = $this->_app->getCfg('offset');
 
@@ -31,9 +30,7 @@ class EASistemasModelDocument extends JModel {
 
 		JRequest::setVar( 'cid', $array[0] );
 		$this->setId( (int) $array[0] );
-	
 
-		
 	}
 	
 	function setId( $id) 
