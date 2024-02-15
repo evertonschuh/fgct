@@ -36,7 +36,8 @@ if ( !$user->get('guest') ):
 	else
 		$Nome =  end($NameUser);
 
-	
+	echo JPATH_CDN;
+  
 	if ( !empty( $avatar )):
 		$avatarUser = $resize->resize(JPATH_CDN.DS. 'images' . DS . 'avatar' .DS. $avatar, 266, 266, 'cache/tmp_' . $avatar, 'tirarProporcao');
 	else:
@@ -577,7 +578,7 @@ endif;
 		<jdoc:include type="footer" />
 
 
-    
+
     <?php if( !$user->get('guest')): ?>
     <script type="text/javascript">
       $(document).ready(function(){
