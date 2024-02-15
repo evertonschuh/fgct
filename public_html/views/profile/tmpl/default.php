@@ -41,11 +41,11 @@ endif;
                 <div class="card-header sticky-element  d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
                     <div class="row">
                         <div class="col-md-12">
-                            <h5 class="card-title mb-sm-0 me-2">Meu Perfil</h5>
+                            <h5 class="card-title mb-sm-0 me-2">Meu Perfil  (as alterações de cadastro estão desativado temporariamente)</h5>
                         </div>
                     </div>
                     <div class="action-btns">
-                        <button type="button" onclick="Joomla.submitbutton('save')" class="btn btn-primary">Salvar Alteraçôes</button>
+                        <button type="button" disabled <?php /*onclick="Joomla.submitbutton('save')" ; */ ?> class="btn btn-primary">Salvar Alteraçôes</button>
                     </div>
                 </div>
                 <hr class="my-0" />
@@ -65,7 +65,7 @@ endif;
                                         <input type="hidden" name="image_pf" value="<?php echo $this->item->image_pf; ?>" />
                                         <input type="hidden" id="imgSRC" value="<?php echo $imageUser; ?>" />
                                         <div class="button-wrapper">
-                                            <label for="upload" class="btn btn-primary me-2 mb-3 upload-image" tabindex="0">
+                                            <label for="upload"  disabled class=" disabled btn btn-primary me-2 mb-3 upload-image" tabindex="0">
                                                 <span class="d-none d-sm-block">Enviar Imagem
                                                 <i class="bx bx-upload d-block d-sm-none"></i>
                                                 <input

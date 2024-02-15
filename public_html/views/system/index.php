@@ -36,8 +36,7 @@ if ( !$user->get('guest') ):
 	else
 		$Nome =  end($NameUser);
 
-	echo JPATH_CDN;
-  
+
 	if ( !empty( $avatar )):
 		$avatarUser = $resize->resize(JPATH_CDN.DS. 'images' . DS . 'avatar' .DS. $avatar, 266, 266, 'cache/tmp_' . $avatar, 'tirarProporcao');
 	else:
@@ -144,19 +143,25 @@ endif;
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="<?php echo JRoute::_('index.php?view=results');?>" class="menu-link">
+                  <a href="javascript:void(0);<?php //echo JRoute::_('index.php?view=results');?>" 
+                  onclick="Swal.fire({title:'Atenção',html:'Este portal está em desenvolvimento.<br/>Em breve mais recursos estarão disponíveis.',icon:'info',confirmButtonColor: '#595cd9',confirmButtonText: 'Entendi'})"
+                  class="menu-link">
                     <div data-i18n="Account">Meus Resultdos</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="<?php echo JRoute::_('index.php?view=rankings');?>" class="menu-link">
+                  <a href="javascript:void(0);<?php //echo JRoute::_('index.php?view=rankings');?>" 
+                  onclick="Swal.fire({title:'Atenção',html:'Este portal está em desenvolvimento.<br/>Em breve mais recursos estarão disponíveis.',icon:'info',confirmButtonColor: '#595cd9',confirmButtonText: 'Entendi'})"
+                  class="menu-link">
                     <div data-i18n="Rankings">Rankings</div>
                   </a>
                 </li>
               </ul>
             </li>
             <li class="menu-item">
-              <a href="<?php echo JRoute::_('index.php?view=calendar');?>" class="menu-link">
+              <a href="javascript:void(0);<?php // echo JRoute::_('index.php?view=calendar');?>"
+              onclick="Swal.fire({title:'Atenção',html:'Este portal está em desenvolvimento.<br/>Em breve mais recursos estarão disponíveis.',icon:'info',confirmButtonColor: '#595cd9',confirmButtonText: 'Entendi'})"
+              class="menu-link">
               <i class="menu-icon tf-icons bx bx-calendar"></i>  
               <div data-i18n="Calendários">Calendários</div>
               </a>
@@ -177,13 +182,14 @@ endif;
                 <div data-i18n="Minhas Armas">Minhas Armas</div>
               </a>
             </li>
+            <?php /*
             <li class="menu-item">
               <a href="<?php echo JRoute::_('index.php?view=access');?>" class="menu-link">
               <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div data-i18n="Dados de Acesso">Dados de Acesso</div>
               </a>
             </li>
-
+            */?>
 
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Outros Serviços</span>
@@ -352,15 +358,21 @@ endif;
                 <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">   
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <i class="bx bx-bell bx-sm"></i>
-                    <span class="badge bg-danger rounded-pill badge-notifications">5</span>
+                    <?php /*<span class="badge bg-danger rounded-pill badge-notifications">5</span> */ ?>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end py-0">
                     <li class="dropdown-menu-header border-bottom">
                       <div class="dropdown-header d-flex align-items-center py-3">
                         <h5 class="text-body mb-0 me-auto">Notificações</h5>
-                        <a href="javascript:void(0)" class="dropdown-notifications-all text-body" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Mark all as read" data-bs-original-title="Mark all as read"><i class="bx fs-4 bx-envelope-open"></i></a>
+                        <a href="javascript:void(0)" class="dropdown-notifications-all text-body" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Marcar todas como lida" data-bs-original-title="Marcar todas como lida"><i class="bx fs-4 bx-envelope-open"></i></a>
                       </div>
                     </li>
+                    <li class="dropdown-notifications-list scrollable-container ps">
+                      <span class=" d-flex justify-content-center p-3">
+                       <em> Nenhuma notificação </em>
+                      </span>
+                    </li>
+                    <?php /*
                     <li class="dropdown-notifications-list scrollable-container ps">
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item list-group-item-action dropdown-notifications-item">
@@ -407,6 +419,8 @@ endif;
                         Ver todas notificações
                       </a>
                     </li>
+                    */ ?>
+
                   </ul>
                 </li>
                 <!--/ Notification -->
@@ -443,12 +457,14 @@ endif;
                         <span class="align-middle">Perfil</span>
                       </a>
                     </li>
+                    <?php /*
                     <li>
                       <a class="dropdown-item" href="<?php echo JRoute::_('index.php?view=access');?>">
                         <i class="bx bx-lock me-2"></i>
                         <span class="align-middle">Dados de Acesso</span>
                       </a>
                     </li>
+                    */?>
                     <?php /*
                     <li>
                       <a class="dropdown-item" href="#">
@@ -491,7 +507,7 @@ endif;
             <!-- / Content -->
 
             <!-- Footer -->
-            <footer class="content-footer footer bg-footer-theme">
+            <footer class="content-footer footer bg-footer-theme mt-5">
               <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
                 <div class="mb-2 mb-md-0">
                   ©

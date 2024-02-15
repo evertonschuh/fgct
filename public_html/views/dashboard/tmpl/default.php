@@ -5,6 +5,20 @@ $this->_siteOffset = $this->_app->getCfg('offset');
 
 ?>
 
+
+
+<div class="misc-wrapper">
+    <h2 class="mb-2 mx-2">Sistema em desenvolvimento</h2>
+    <p class="mb-4 mx-2">Olá. Estamos trabalhando para ajustar tudo por aqui.</p>
+    <div class="mt-3">
+      <img src="/images/manutencao.png" alt="page-misc-error-light" width="500" class="img-fluid" data-app-dark-img="../../images/manutencao.png" data-app-light-img="../../images/manutencao.png">
+    </div>
+  </div>
+
+
+
+<?php /*
+
 <!-- Content Row -->
 <div class="row">
     <!-- Earnings (Monthly) Card Example -->
@@ -159,5 +173,6 @@ $this->_siteOffset = $this->_app->getCfg('offset');
         </div>
     </div>
 </div>
-*/ ?>
+
 </div>
+*/ ?>
