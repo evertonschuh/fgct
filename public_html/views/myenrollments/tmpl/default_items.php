@@ -30,47 +30,12 @@ if (count($this->items)) {
                 <span class="text-body text-truncate">
                     <span class="fw-semibold"><?php echo  $item->name_etapa . ' - ' .$item->name_prova; ?></span>
                 </span>
-                <small class="text-muted"><?php echo  ' (' . JHtml::date(JFactory::getDate($item->data_beg_etapa, $siteOffset)->toISO8601(), 'DATE_FORMAT') . ')' ?></small>
+                <small class="text-muted"><?php echo  'Etapa Inicia em ' . JHtml::date(JFactory::getDate($item->data_beg_etapa, $siteOffset)->toISO8601(), 'DATE_FORMAT'); ?></small>
             </div>
         </div>
     </td>
+    <td class="text-center"> <?php echo  JHtml::date(JFactory::getDate($item->date_register_inscricao_etapa, $siteOffset)->toISO8601(), 'DATE_FORMAT_DATATIME'); ?></td>
     <td class="text-center">
-        <?php if(isset($item->clubes) && count($item->clubes) > 0):?>
-            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-            <?php $x=0; ?>
-            <?php foreach($item->clubes as $clube):?>
-                <?php if(!empty($clube->logo_pj) && file_exists(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj)): ?>
-                <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar pull-up" style="width:auto;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
-                    <img style="border: 1px solid #CCC" src="<?php echo $resize->resize(JPATH_CDN .DS. 'images' .DS. 'logos'  .DS. $clube->logo_pj, 180, 100, 'cache/' . $clube->logo_pj, 'manterProporcao');?>" alt="<?php echo $clube->name;?>" alt="<?php echo $clube->name;?>" class="rounded">
-                </li>
-                <?php else: ?>
-                    <?php 
-                    $name = explode(' ', trim($clube->name));
-                    $sigla = substr($name[0], 0, 1) . substr(end($name), 0, 1);
-                ?>
-                <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-md pull-up" style="width:52px;" aria-label="<?php echo $clube->name;?>" data-bs-original-title="<?php echo $clube->name;?>">
-                    <span class="avatar-initial rounded bg-label-danger"><?php echo strtoupper($sigla); ?></span>
-                </li>
-                <?php endif; ?>
-                <?php 
-                    $x++;
-                    if($x==6){
-                        $x = 0;
-                ?>
-            </ul>
-            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                <?php
-                    }
-                        
-                ?>
-            <?php endforeach; ?> 
-            </ul>
-        <?php else: ?>
-            <span class="badge bg-label-danger me-1">Clube não informado</span>
-        <?php endif; ?>
-    </td>
-    <td class="text-center">
-
     <?php
         $data_ia = JFactory::getDate($item->insc_beg_etapa, $siteOffset)->toISO8601(true);
         $data_fa = JFactory::getDate($item->insc_end_etapa, $siteOffset)->toISO8601(true);
@@ -112,59 +77,23 @@ if (count($this->items)) {
         </small>
     </td>
     <td class="text-center">
-                <i class="bx bx-user bx-xs me-2 text-primary"></i>14
-            
-            <?php /*
-            <div class="w-px-50 d-flex align-items-center">
-                <i class="bx bx-book-open bx-xs me-2 text-info"></i>48
-            </div>
-            <div class="w-px-50 d-flex align-items-center">
-                <i class="bx bx-video bx-xs me-2 text-danger"></i>43
-            </div>
-            */ ?>
+        <small class="text-body text-truncate">
+            <?php echo 'Categoria: ' . $item->name_categoria . '<br/> Classe: ' . $item->name_classe; ?>
+        </small>
+        <br/>
+        <small class="text-muted"><?php echo  $item->name_genero; ?></small>
     </td>
     
-    <td class="text-right">
-    
-        <button 
-            <?php echo $item->state_etapa != '1' ? 'disabled="disabled"' :''; ?> 
-            class="btn btn-sm btn-primary register"
-            type="button"
-            data-etapa="<?php echo $item->id_etapa; ?>"
-            data-prova="<?php echo $item->id_prova; ?>"
-            
-        >
-        <?php echo $item->state_etapa == '1' ? 'Inscreva-se<i class="ms-1 bx bx-xs bx-chevron-right"></i>' : ( $item->state_etapa == '2' ? 'Cancelada' : 'Suspensa'); ?>
-
-        </button>
+    <td class="text-center">
+        <span class="text-body text-truncate">
+            <?php echo  $item->name_especie . ' ' . $item->name_calibre; ?>
+        </span>
+        <br/>
+        <small class="text-muted text-center"><?php echo  $item->name_marca; ?></small>
     </td> 
-    <?php /*
-
-
-
-            <i class="ms-1 spinner-border spinner-border-sm text-secondary"></i>
-            <i class='bx bx-checkbox-checked'></i>
-
-
-    <td class="text-center"><?php echo $item->numero_arma; ?></td>
-    <td class="text-center"><?php echo $item->name_marca; ?></td>
-    <td class="text-center"><?php echo $item->name_acervo; ?></td>
-    <td>
-        <div class="d-inline-block text-nowrap">
-            <input type="checkbox" style="display:none" id="cb<?php echo $i; ?>" name="cid[]" value="<?php echo $item->id_arma; ?>" >
-            <a href="<?php echo JRoute::_('index.php?view=weapon&cid=' . $item->id_arma); ?>" class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></a>
-            <button type="button" class="btn btn-sm btn-icon delete-record" onclick="Swal.fire({title:'Atenção',html:'Você tem certeza que deseja remover esta arma do seu cadastro?<br/><strong><?php echo $item->name_especie . ' número ' .$item->numero_arma; ?></strong>',icon:'warning',showCancelButton: true,confirmButtonColor: '#595cd9',cancelButtonColor: '#ff3e1d',cancelButtonText: 'Desistir',confirmButtonText: 'Confirmar!'}).then((result) => {if (result.isConfirmed) { return listItemTask('cb<?php echo $i; ?>','remove');}});"><i class="bx bx-trash"></i></button>
-            
-            <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-            <div class="dropdown-menu dropdown-menu-end m-0">
-                <a href="app-user-view-account.html" class="dropdown-item">Visualizar</a>
-                <a href="javascript:;" class="dropdown-item">Suspender</a>
-            </div>
-           
-        </div>
-    </td> 
-    */
-     ?>
+    <td class="text-center">
+        <a href="<?php echo JRoute::_('index.php?view=myenrollment&format=pdf&cid=' . $item->id_inscricao_etapa); ?>" class="btn btn-sm btn-icon" target="_blank"><i class='bx bx-printer'></i></a>
+    </td>
 </tr>
 
 <?php

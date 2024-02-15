@@ -12,6 +12,17 @@ class EASistemasViewMyEnrollment extends JView
 	
 		$this->item = $this->get('Item');
 
+		
+		$inscricaoPrint = $this->get('InscricaoPrint');
+		$this->assignRef( 'inscricaoPrint', $inscricaoPrint);
+
+		$agendamentosPrint = $this->get('AgendamentosPrint');
+		$this->assignRef('agendamentosPrint' , $agendamentosPrint  );	
+		
+		
+		$additionalPrint = $this->get('AdditionalPrint');
+		$this->assignRef( 'additionalPrint', $additionalPrint);
+
 		parent::display($tpl);
 
 

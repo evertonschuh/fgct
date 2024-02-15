@@ -76,15 +76,20 @@ class EASistemasModelMyEnrollments extends JModelList
 		$query->select( $this->_db->quoteName(array( 'id_inscricao_etapa',
 													 'name_campeonato',
 													 'ano_campeonato',
-													 //'id_etapa',
+													 'name_genero',
+													 'name_categoria',
+													 'name_classe',
 													 'name_etapa',
 													 'name_modalidade',
 													 'data_beg_etapa',
 													 'insc_beg_etapa',
 													 'insc_end_etapa',
-													 //'id_prova',
+													 'date_register_inscricao_etapa',
 													 'name_prova',
-													 'state_etapa'
+													 'state_etapa',
+													 'name_especie',	
+													 'name_calibre',	
+													 'name_marca',	
 													)));
 		//$query->select( 'CONCAT (' . $this->_db->quoteName('ano_campeonato') . ', \' - \',' . $this->_db->quoteName('name_campeonato') . ') AS name_campeonato' );
 		//$query->select( 'CONCAT (' . $this->_db->quoteName('name_etapa') . ', \' - \',' . $this->_db->quoteName('name_campeonato') . ', \' - \',' . $this->_db->quoteName('ano_campeonato') . ') AS name_campeonato' );
@@ -97,7 +102,13 @@ class EASistemasModelMyEnrollments extends JModelList
 
 		$query->innerJoin( $this->_db->quoteName('#__ranking_campeonato') . 'USING('. $this->_db->quoteName('id_campeonato').')' );
 		$query->innerJoin( $this->_db->quoteName('#__ranking_modalidade') . 'USING('. $this->_db->quoteName('id_modalidade').')' );
-
+		$query->innerJoin( $this->_db->quoteName('#__ranking_genero') . 'USING('. $this->_db->quoteName('id_genero').','. $this->_db->quoteName('id_prova').')' );
+		$query->innerJoin( $this->_db->quoteName('#__ranking_categoria') . 'USING('. $this->_db->quoteName('id_genero').','. $this->_db->quoteName('id_categoria').')' );
+		$query->innerJoin( $this->_db->quoteName('#__ranking_classe') . 'USING('. $this->_db->quoteName('id_categoria') .','. $this->_db->quoteName('id_classe').')' );
+		$query->innerJoin( $this->_db->quoteName('#__intranet_arma') . 'USING('. $this->_db->quoteName('id_user').','. $this->_db->quoteName('id_arma').')'  );
+		$query->innerJoin( $this->_db->quoteName('#__intranet_especie').' USING ('.$this->_db->quoteName('id_especie').')');
+		$query->innerJoin( $this->_db->quoteName('#__intranet_calibre').' USING ('.$this->_db->quoteName('id_calibre').')');
+		$query->innerJoin( $this->_db->quoteName('#__intranet_marca').' USING ('.$this->_db->quoteName('id_marca').')');
 
 
 		$query->where( $this->_db->quoteName('status_modalidade') . ' = ' . $this->_db->quote('1') );	

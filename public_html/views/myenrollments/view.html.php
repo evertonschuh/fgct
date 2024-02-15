@@ -15,6 +15,7 @@ class EASistemasViewMyEnrollments extends JView
 	{	
 				
 		$document = JFactory::getDocument();
+		/*
 		$document->addStyleSheet('/assets/vendor/libs/bs-stepper/bs-stepper.css');
 		$document->addScript('/assets/vendor/libs/bs-stepper/bs-stepper.js');
 
@@ -31,7 +32,7 @@ class EASistemasViewMyEnrollments extends JView
 
 
 		$document->addScript('/assets/js-custom/enrollmentopens.js');
-
+*/
 		//$document->addScriptDeclaration('
 		//jQuery("#wizard-create-app").steps("remove", 2);
 		//');
@@ -40,7 +41,7 @@ class EASistemasViewMyEnrollments extends JView
 		$this->pagination	= $this->get('Pagination');		
 		$this->total		= $this->get('Total');	
 
-		$this->pagination->setAdditionalUrlParam('view','enrollmentopens');
+		$this->pagination->setAdditionalUrlParam('view','myenrollments');
 				
 		JToolBarHelper::title('<span class="text-muted fw-light">MENU ESPORTIVO / Inscrições</span> / Minhas Inscrições ');
 
