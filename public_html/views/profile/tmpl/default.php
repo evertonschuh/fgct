@@ -31,17 +31,20 @@ endif;
                         <i class="bx bx-map me-1"></i> Endereços e Contatos
                     </a>
                 </li>
+                <?php /*
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" id="athlete-tab" data-bs-toggle="tab" href="#athlete"  data-bs-target="#athlete" role="tab" aria-controls="athlete" aria-selected="false">
                         <i class="bx bx-user-pin me-1"></i> Dados do Atleta
                     </a>
                 </li>
+                */ ?>
             </ul>
             <div class="card" >
                 <div class="card-header sticky-element  d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
                     <div class="row">
                         <div class="col-md-12">
-                            <h5 class="card-title mb-sm-0 me-2">Meu Perfil  (as alterações de cadastro estão desativado temporariamente)</h5>
+                            <h5 class="card-title mb-sm-0 me-2">Meu Perfil</h5>
+                            <span class="d-none d-sm-block">A opção de salvar alterações está desativada temporariamente</span>
                         </div>
                     </div>
                     <div class="action-btns">

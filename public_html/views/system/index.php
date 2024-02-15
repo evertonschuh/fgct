@@ -125,7 +125,7 @@ endif;
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="<?php echo JRoute::_('index.php?view=myenrollment');?>" class="menu-link">
+                  <a href="<?php echo JRoute::_('index.php?view=myenrollments');?>" class="menu-link">
                     <div data-i18n="Minhas Inscriçôes">Minhas Inscriçôes</div>
                   </a>
                 </li>
