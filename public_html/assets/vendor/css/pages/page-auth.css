@@ -35,16 +35,7 @@
 .authentication-wrapper.authentication-basic .authentication-inner .card {
   z-index: 1;
 }
-.authentication-wrapper.authentication-basic .authentication-inner .card .app-brand ,
-.app-brand
-{
-  margin-bottom: 1rem;
-  background-image: url('/images/logo.png');
-  background-repeat: no-repeat;
-  background-size: auto 100px;
-  background-position: center;
-  height: 100px;
-}
+
 .authentication-wrapper .auth-input-wrapper .auth-input {
   max-width: 50px;
   padding-left: 0.4rem;

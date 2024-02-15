@@ -590,7 +590,7 @@ endif;
           overlay.style.visibility = 'hidden';
         });
         
-       jQuery('a[href^="/"]').on('click', function(){
+       jQuery('a[href^="/"]:not(a[target="_blank"]) ').on('click', function(){
             localStorage.clear();
             jQuery('#overlay').removeClass('animate');
             jQuery('#overlay').css('opacity', 1);
