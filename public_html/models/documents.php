@@ -65,30 +65,15 @@ class EASistemasModelDocuments extends JModelList
 		
 		$query = $this->_db->getQuery(true);	
 		
-		$query->select($this->_db->quoteName(  array('id_documento_numero',													 
-													 'name',
-													 //'numero_documento_numero',
+		$query->select($this->_db->quoteName(  array('id_documento_numero',		
 													 'ano_documento_numero',
                                                      'name_documento',
-													// 'status_documento',
-													 //'situacao_documento',													 
-													 //'update_documento',	
 													 'register_documento_numero',						
 													 )));	
 		$query->select('CONCAT(ano_documento_numero, "/", numero_documento_numero) AS numero_documento_numero');
 
 		$query->from($this->_db->quoteName('#__intranet_documento_numero'));
-		//$query->innerJoin($this->_db->quoteName('#__situacao').' USING ('.$this->_db->quoteName('id_situacao').')');
-		$query->innerJoin($this->_db->quoteName('#__users').' A ON ('.$this->_db->quoteName('id').'='.$this->_db->quoteName('id_user').')');
-		//$query->leftJoin($this->_db->quoteName('#__users').' B ON ('.$this->_db->quoteName('B.id').'='.$this->_db->quoteName('user_update_documento').')');
-		
-
-		//$status = $this->getState('filter.status');
-        //if ($status!='')
-		//	 $query->where( $this->_db->quoteName('status_documento') . '=' . $this->_db->escape( $status ) );
-		
-			 
-			 
+		$query->where( $this->_db->quoteName('id_user') . '=' . $this->_db->quote( $this->_user->get('id') ) );	 
 	
 		$search = $this->getState('filter.search');
         if ($search!='') {	 
@@ -101,7 +86,6 @@ class EASistemasModelDocuments extends JModelList
 			$searches[]	= 'name_documento LIKE '.$token;
 			$searches[]	= 'ano_documento_numero LIKE '.$token;
 			$searches[]	= 'numero_documento_numero LIKE '.$token;
-			$searches[]	= 'name LIKE '.$token;
 			$searches[]	= 'texto_documento_numero LIKE '.$token;
 			
 			$query->where('('.implode(' OR ', $searches).')');

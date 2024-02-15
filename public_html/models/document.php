@@ -63,6 +63,8 @@ class EASistemasModelDocument extends JModel {
 			
 			$query->where($this->_db->quoteName('id_documento_numero') . ' = ' . $this->_db->quote($this->_id));	
 
+			$query->where( $this->_db->quoteName('id_user') . '=' . $this->_db->quote( $this->_user->get('id') ) );
+
 			$this->_db->setQuery($query);
 
 			$this->_data =  $this->_db->loadObject();

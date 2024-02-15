@@ -575,6 +575,9 @@ endif;
     <script src="/assets/js/custom.js"></script>
     <script src="/assets/js/sweetalert.js"></script>
 		<jdoc:include type="footer" />
+
+
+    
     <?php if( !$user->get('guest')): ?>
     <script type="text/javascript">
       $(document).ready(function(){

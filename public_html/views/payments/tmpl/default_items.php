@@ -16,11 +16,7 @@ if (count($this->items)) {
     <td class="text-center"><?php echo $item->produto; ?></td>
     <td class="text-center"><?php echo JHtml::date(JFactory::getDate($item->vencimento_pagamento, $siteOffset)->toISO8601(), 'DATE_FORMAT', true); ?></td>
     <td class="text-center"><?php echo number_format($item->valor_pagamento, 2, ',', '.'); ?></td>
-    <td class="text-center">
-
-
-
-    
+    <td class="text-center">  
         <?php 
 
         $status = '<span class="badge bg-label-success">Pago</span>';
@@ -45,7 +41,7 @@ if (count($this->items)) {
     <td>
         <div class="d-inline-block text-nowrap">
             <?php if(!$pago): ?>
-            <a href="<?php echo JRoute::_('index.php?view=payment&cid=' . $item->id_pagamento); ?>" class="btn btn-sm btn-icon"><i class='bx bx-printer'></i></a>
+            <a href="<?php echo JRoute::_('index.php?view=payment&cid=' . $item->id_pagamento); ?>" class="btn btn-sm btn-icon" target="_blank"><i class='bx bx-printer'></i></a>
             <?php endif; ?>
         </div>
     </td>
