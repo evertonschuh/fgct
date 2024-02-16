@@ -8,77 +8,56 @@ let isRtl = window.Helpers.isRtl(), isDarkStyle = window.Helpers.isDarkStyle(), 
 document.getElementById("layout-menu") && (isHorizontalLayout = document.getElementById("layout-menu").classList.contains("menu-horizontal")),
 (function () {
   // Initialize menu
-  //-----------------
+
+
+
   document.querySelectorAll("#layout-menu").forEach(function(e) {
     menu = new Menu(e,{
-        orientation: "vertical",
+        orientation: isHorizontalLayout ? "horizontal" : "vertical",
         closeChildren: !!isHorizontalLayout,
-        showDropdownOnHover: localStorage.getItem("templateCustomizer-" + templateName + "--ShowDropdownOnHover") ? "true" === localStorage.getItem("templateCustomizer---ShowDropdownOnHover") : void 0 === window.templateCustomizer || window.templateCustomizer.settings.defaultShowDropdownOnHover
+        showDropdownOnHover: localStorage.getItem("templateCustomizer-" + templateName + "--ShowDropdownOnHover") ? "true" === localStorage.getItem("templateCustomizer-" + templateName + "--ShowDropdownOnHover") : void 0 === window.templateCustomizer || window.templateCustomizer.settings.defaultShowDropdownOnHover
     }),
     window.Helpers.scrollToActive(animate = !1),
     window.Helpers.mainMenu = menu
-  });
-  document.querySelectorAll(".layout-menu-toggle").forEach(e=>{
-      e.addEventListener("click", e=>{
-          if (e.preventDefault(),
-          window.Helpers.toggleCollapsed(),
-          config.enableMenuLocalStorage && !window.Helpers.isSmallScreen())
-              try {
-                  localStorage.setItem("templateCustomizer-" + templateName + "--LayoutCollapsed", String(window.Helpers.isCollapsed()))
-              } catch (e) {}
-      }
-      )
-  }
-  );
-  let layoutMenuEl = document.querySelectorAll('#layout-menu');
-  layoutMenuEl.forEach(function (element) {
-    menu = new Menu(element, {
-      orientation: 'vertical',
-      closeChildren: false
-    });
-    // Change parameter to true if you want scroll animation
-    window.Helpers.scrollToActive((animate = false));
-    window.Helpers.mainMenu = menu;
-  });
+});
+document.querySelectorAll(".layout-menu-toggle").forEach(e=>{
+    e.addEventListener("click", e=>{
+        if (e.preventDefault(),
+        window.Helpers.toggleCollapsed(),
+        config.enableMenuLocalStorage && !window.Helpers.isSmallScreen())
+            try {
+                localStorage.setItem("templateCustomizer-" + templateName + "--LayoutCollapsed", String(window.Helpers.isCollapsed()));
+                var t, o = document.querySelector(".template-customizer-layouts-options");
+                o && (t = window.Helpers.isCollapsed() ? "collapsed" : "expanded",
+                o.querySelector(`input[value="${t}"]`).click())
+            } catch (e) {}
+    }
+    )
+}
+);
 
-  // Initialize menu togglers and bind click on each
-  let menuToggler = document.querySelectorAll('.layout-menu-toggle');
-  menuToggler.forEach(item => {
-    item.addEventListener('click', event => {
-      event.preventDefault();
-      window.Helpers.toggleCollapsed();
-    });
-  });
 
-  // Display menu toggle (layout-menu-toggle) on hover with delay
-  let delay = function (elem, callback) {
-    let timeout = null;
-    elem.onmouseenter = function () {
-      // Set timeout to be a timer which will invoke callback after 300ms (not for small screen)
-      if (!Helpers.isSmallScreen()) {
-        timeout = setTimeout(callback, 300);
-      } else {
-        timeout = setTimeout(callback, 0);
-      }
+  if (document.getElementById("layout-menu")) {
+    var zz = document.getElementById("layout-menu");
+    var o = function() {
+        Helpers.isSmallScreen() || document.querySelector(".layout-menu-toggle").classList.add("d-block")
     };
-
-    elem.onmouseleave = function () {
-      // Clear any timers set to timeout
-      document.querySelector('.layout-menu-toggle').classList.remove('d-block');
-      clearTimeout(timeout);
-    };
-  };
-  if (document.getElementById('layout-menu')) {
-    delay(document.getElementById('layout-menu'), function () {
-      // not for small screen
-      if (!Helpers.isSmallScreen()) {
-        document.querySelector('.layout-menu-toggle').classList.add('d-block');
-      }
-    });
+    let e = null;
+    zz.onmouseenter = function() {
+        e = Helpers.isSmallScreen() ? setTimeout(o, 0) : setTimeout(o, 300)
+    }
+    ,
+    zz.onmouseleave = function() {
+        document.querySelector(".layout-menu-toggle").classList.remove("d-block"),
+        clearTimeout(e)
+    }
   }
+
 
 
   let t = document.querySelector('.style-switcher-toggle');
+
+
 
   function s(n) {
       [].slice.call(document.querySelectorAll("[data-app-" + n + "-img]")).map(function(e) {
