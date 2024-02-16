@@ -14,8 +14,8 @@ $saveOrder    = $listOrder == 'ordering';
         <div class="card-datatable table-responsive">
             <div class="dataTables_wrapper dt-bootstrap5 no-footer ">
                 <div class="row mx-2 py-3">
-                    <div class="col-md-2">
-                        <div class="me-3">
+                    <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-3 mb-3">
+                        <div class="me-2">
                             <div class="dataTables_length" id="DataTables_Table_0_length">
                                 <label>
                                     <?php echo $this->pagination->getLimitBox(); ?>
@@ -23,7 +23,7 @@ $saveOrder    = $listOrder == 'ordering';
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-12 col-md-6">
                         <div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                             <div class="dataTables_filter mx-3">
                                 <div class="input-group">

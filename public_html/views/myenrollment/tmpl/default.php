@@ -303,8 +303,6 @@ table tr.title { }
         </table> 
 
 
-
-
         <?php if(count($this->agendamentosPrint)>0): ?>  
 
         <table width="680px" cellspacing="0" cellpadding="0" style="margin-top:25px">
