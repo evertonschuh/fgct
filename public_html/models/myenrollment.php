@@ -14,6 +14,8 @@ class EASistemasModelMyEnrollment extends JModel {
 	var $_app = null;	
 	var $_isRoot = null;
 	var $_user = null;
+	var $_class_modalidade = null;
+	
 	
 	function __construct()
 	{
@@ -43,7 +45,32 @@ class EASistemasModelMyEnrollment extends JModel {
 	{
 		if (empty($this->_data))
 		{			
-		
+			$queryClube = $this->_db->getQuery(true);
+			$queryClube->select( $this->_db->quoteName(array( 'name_etapa',
+															  'id_etapa',
+															  'id_campeonato',
+															  'id_clube',
+															  'logradouro_pj',
+															  'numero_pj',
+															  'name_cidade',
+															  'sigla_estado'
+															)));
+																
+			$queryClube->select( $this->_db->quoteName('id_clube') . ' AS id_local' );
+			$queryClube->select( $this->_db->quoteName('name') . ' AS name_clube' );
+			$queryClube->select( 'CONCAT (' . $this->_db->quoteName('ano_campeonato') . ', \' - \',' . $this->_db->quoteName('name_campeonato') . ') AS name_campeonato' );
+			$queryClube->from( $this->_db->quoteName('#__users') );
+			$queryClube->innerJoin( $this->_db->quoteName('#__intranet_pj') . 'ON('. $this->_db->quoteName('id'). ' = '. $this->_db->quoteName('id_user').')' );
+			$queryClube->innerJoin( $this->_db->quoteName('#__intranet_estado') . 'USING('. $this->_db->quoteName('id_estado').')' );	
+			$queryClube->innerJoin( $this->_db->quoteName('#__intranet_cidade') . 'USING('. $this->_db->quoteName('id_cidade').','. $this->_db->quoteName('id_estado').')' );	
+			$queryClube->innerJoin( $this->_db->quoteName('#__ranking_prova_clube_map') . 'ON('. $this->_db->quoteName('id').'='. $this->_db->quoteName('id_clube').')' );	
+			$queryClube->innerJoin( $this->_db->quoteName('#__ranking_etapa_clube_map') . 'USING('. $this->_db->quoteName('id_clube').')' );	
+			$queryClube->innerJoin( $this->_db->quoteName('#__ranking_etapa') . 'USING('. $this->_db->quoteName('id_etapa').')' );	
+			$queryClube->innerJoin( $this->_db->quoteName('#__ranking_campeonato') . 'USING('. $this->_db->quoteName('id_campeonato').')' );
+			$queryClube->innerJoin( $this->_db->quoteName('#__ranking_modalidade') . 'USING('. $this->_db->quoteName('id_modalidade').')' );
+			$queryClube->where($this->_db->quoteName('finalized_campeonato') . ' = ' . $this->_db->quote( '0' ));		
+
+			
 			$query = $this->_db->getQuery(true);
 			$query->select( $this->_db->quoteName(array( 'id_prova',
 														 'name_prova',
@@ -56,83 +83,48 @@ class EASistemasModelMyEnrollment extends JModel {
 														 'date_register_inscricao_etapa',
 														 'inscricao_bateria_prova',
 														 'inscricao_turma_prova',
+
+														 'name_especie',
+														 'name_calibre',
+														 'name_marca',
+														 'numero_arma',
+
+
+														 'Etapa.name_etapa',
+														 'Etapa.id_etapa',
+														 'Etapa.id_campeonato',
+														 'Etapa.name_campeonato',
+														 'Etapa.id_clube',
+														 'Etapa.name_clube',
+														 'Etapa.logradouro_pj',
+														 'Etapa.numero_pj',
+														 'Etapa.name_cidade',
+														 'Etapa.sigla_estado'
 														)));
+
 			$query->select('Atleta.name AS name_atleta');
 			$query->select('IF(ISNULL(id_addequipe), IF(ISNULL(id_equipe), Estado.name_estado, IF( Equipe.id = 7617, \'AVULSO\', Equipe.name)), name_addequipe) AS name_equipe');	
-			$query->select( 'CONCAT (' . $this->_db->quoteName('ano_campeonato') . ', \' - \',' . $this->_db->quoteName('name_campeonato') . ') AS name_campeonato' );
 
 			$query->from( $this->_db->quoteName('#__ranking_inscricao') );
 			$query->innerJoin( $this->_db->quoteName('#__ranking_genero') . 'USING('. $this->_db->quoteName('id_genero').','. $this->_db->quoteName('id_prova').')' );
 			$query->innerJoin( $this->_db->quoteName('#__ranking_categoria') . 'USING('. $this->_db->quoteName('id_genero').','. $this->_db->quoteName('id_categoria').')' );
 			$query->innerJoin( $this->_db->quoteName('#__ranking_classe') . 'USING('. $this->_db->quoteName('id_categoria') .','. $this->_db->quoteName('id_classe').')' );
 			$query->innerJoin( $this->_db->quoteName('#__ranking_prova') . 'USING('. $this->_db->quoteName('id_prova') .','. $this->_db->quoteName('id_campeonato').')' );
-			$query->innerJoin( $this->_db->quoteName('#__ranking_campeonato') . 'USING('. $this->_db->quoteName('id_campeonato').')' );
+			$query->innerJoin( $this->_db->quoteName('#__ranking_inscricao_etapa')  . 'USING('. $this->_db->quoteName('id_inscricao') . ')' );												   
+			$query->innerJoin( '(' . $queryClube . ') AS Etapa USING('. $this->_db->quoteName('id_etapa').','. $this->_db->quoteName('id_campeonato').','. $this->_db->quoteName('id_local').')' );
+			$query->innerJoin( $this->_db->quoteName('#__users') . ' AS Atleta ON('. $this->_db->quoteName('#__ranking_inscricao.id_user') .'='. $this->_db->quoteName('Atleta.id'). ')' );
 			
-			$query->leftJoin($this->_db->quoteName('#__intranet_estado') . ' AS Estado USING( ' . $this->_db->quoteName('id_estado') . ')' );		
-			$query->leftJoin( $this->_db->quoteName('#__ranking_inscricao_etapa')  . 'USING('. $this->_db->quoteName('id_inscricao') . ')' );
-			
-																						   
-			$query->leftJoin( $this->_db->quoteName('#__users') . ' AS Atleta ON('. $this->_db->quoteName('#__ranking_inscricao.id_user') .'='. $this->_db->quoteName('Atleta.id'). ')' );
 			$query->leftJoin( $this->_db->quoteName('#__users') . ' AS Equipe ON('. $this->_db->quoteName('#__ranking_inscricao.id_equipe') .'='. $this->_db->quoteName('Equipe.id'). ')' );
+			$query->leftJoin($this->_db->quoteName('#__intranet_estado') . ' AS Estado USING( ' . $this->_db->quoteName('id_estado') . ')' );			
 			$query->leftJoin( $this->_db->quoteName('#__intranet_addequipe') . ' AS AddEquipe USING('. $this->_db->quoteName('id_addequipe') . ')' );
+			$query->leftJoin( $this->_db->quoteName('#__intranet_arma') . 'USING('. $this->_db->quoteName('id_arma').')' );
+			$query->leftJoin( $this->_db->quoteName('#__intranet_especie') . 'USING('. $this->_db->quoteName('id_especie').')' );
+			$query->leftJoin( $this->_db->quoteName('#__intranet_calibre') . 'USING('. $this->_db->quoteName('id_calibre').')' );
+			$query->leftJoin( $this->_db->quoteName('#__intranet_marca') . 'USING('. $this->_db->quoteName('id_marca').')' );
+	
+
 			$query->where($this->_db->quoteName('id_inscricao_etapa') . ' = ' . $this->_db->quote( $this->_id ));
 
-
-
-
-			$this->_db->setQuery($query);
-
-			$this->_data =  $this->_db->loadObject();
-		
-			print_r($this->_data);
-			exit;
-
-
-
-
-
-
-			$query = $this->_db->getQuery(true);
-			
-			$query->select( $this->_db->quoteName(array( 'name_etapa',
-														 'id_etapa',
-														 'id_campeonato',
-														 'id_clube',
-														 'name',
-														 'logradouro_pj',
-														 'numero_pj',
-														 'name_cidade',
-														 'sigla_estado'
-														)));
-			$query->select( 'CONCAT (' . $this->_db->quoteName('ano_campeonato') . ', \' - \',' . $this->_db->quoteName('name_campeonato') . ') AS name_campeonato' );
-			
-			$query->from( $this->_db->quoteName('#__users') );
-			$query->innerJoin( $this->_db->quoteName('#__intranet_pj') . 'ON('. $this->_db->quoteName('id'). ' = '. $this->_db->quoteName('id_user').')' );
-			$query->innerJoin( $this->_db->quoteName('#__intranet_estado') . 'USING('. $this->_db->quoteName('id_estado').')' );	
-			$query->innerJoin( $this->_db->quoteName('#__intranet_cidade') . 'USING('. $this->_db->quoteName('id_cidade').','. $this->_db->quoteName('id_estado').')' );	
-			
-			$query->innerJoin( $this->_db->quoteName('#__ranking_prova_clube_map') . 'ON('. $this->_db->quoteName('id').'='. $this->_db->quoteName('id_clube').')' );	
-			$query->innerJoin( $this->_db->quoteName('#__ranking_etapa_clube_map') . 'USING('. $this->_db->quoteName('id_clube').')' );	
-			
-			$query->innerJoin( $this->_db->quoteName('#__ranking_etapa') . 'USING('. $this->_db->quoteName('id_etapa').')' );	
-			$query->innerJoin( $this->_db->quoteName('#__ranking_campeonato') . 'USING('. $this->_db->quoteName('id_campeonato').')' );
-			$query->innerJoin( $this->_db->quoteName('#__ranking_modalidade') . 'USING('. $this->_db->quoteName('id_modalidade').')' );
-			
-			$query->where($this->_db->quoteName('id_campeonato') . ' = ' . $this->_db->quote( $this->_id[0] ));		
-			$query->where($this->_db->quoteName('id_etapa') . ' = ' . $this->_db->quote( $this->_id[1] ));	
-			$query->where($this->_db->quoteName('id_clube') . ' = ' . $this->_db->quote( $this->_id[2] ));	
-
-
-
-
-
-
-
-
-
-
-
-			
 			$this->_db->setQuery($query);
 
 			$this->_data =  $this->_db->loadObject();

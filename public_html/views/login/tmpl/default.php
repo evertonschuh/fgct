@@ -35,13 +35,13 @@ $uri = JFactory::getURI();
           <p class="mb-4">Por favor, insira seus dados de acesso para continuar</p>
 
           <div class="mb-3 fv-plugins-icon-container">
-            <label for="email" class="form-label">E-mail</label>
+            <label for="email" class="form-label">Usuário</label>
             <input type="text" class="form-control required" id="username" name="username" placeholder="Escreva seu e-mail" autofocus />
           <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
           
           <div class="mb-3 form-password-toggle">
             <div class="d-flex justify-content-between">
-              <label class="form-label" for="password">Password</label>
+              <label class="form-label" for="password">Senha</label>
               <a href="auth-forgot-password-basic.html">
                 <small>Esqueceu sua senha?</small>
               </a>
