@@ -130,7 +130,9 @@ endif;
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="<?php echo JRoute::_('index.php?view=enrollmentopens');?>" class="menu-link">
+                  <a href="javascript:void(0);<?php //echo JRoute::_('index.php?view=enrollmentopens');?>" 
+                  onclick="Swal.fire({title:'Atenção',html:'Este portal está em desenvolvimento.<br/>Em breve mais recursos estarão disponíveis.',icon:'info',confirmButtonColor: '#595cd9',confirmButtonText: 'Entendi'})"
+                  class="menu-link">
                     <div data-i18n="Inscriçôes Abertas">Inscriçôes Abertas</div>
                   </a>
                 </li>
