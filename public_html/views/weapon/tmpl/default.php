@@ -30,7 +30,7 @@ endif;
                         </div>
                     </div>
                     <div class="action-btns">
-                        <button type="button" onclick="Joomla.submitbutton('save')" class="btn btn-primary">Salvar</button>
+                        <button type="button" onclick="Joomla.submitbutton('save')" class="btn btn-primary me-3">Salvar</button>
                         <button type="button" onclick="Joomla.submitbutton('cancel')" class="btn btn-outline-secondary me-1">Sair</button>
                     </div>
                 </div>

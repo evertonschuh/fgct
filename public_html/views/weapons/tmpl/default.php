@@ -17,16 +17,24 @@ $saveOrder    = $listOrder == 'ordering';
         <div class="card-datatable table-responsive">
             <div class="dataTables_wrapper dt-bootstrap5 no-footer ">
                 <div class="row mx-2 py-3">
-                    <div class="col-md-2">
-                        <div class="me-3">
+                    <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-3 mb-3">
+                        <div class="me-2">
                             <div class="dataTables_length" id="DataTables_Table_0_length">
                                 <label>
                                     <?php echo $this->pagination->getLimitBox(); ?>
                                 </label>
                             </div>
                         </div>
+                        <div class="dt-buttons btn-group flex-wrap">
+                            <a class="btn btn-secondary add-new btn-primary " href="<?php echo JRoute::_('index.php?view=weapon');?>">
+                                <span>
+                                    <i class="bx bx-plus me-0 me-sm-1"></i>
+                                    <span class="d-none d-sm-inline-block">Adicionar Nova Arma</span>
+                                </span>
+                            </a> 
+                        </div>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-12 col-md-6">
                         <div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                             <div class="dataTables_filter mx-3">
                                 <div class="input-group">
@@ -35,25 +43,18 @@ $saveOrder    = $listOrder == 'ordering';
                                     <button class="btn btn-outline-primary" type="button" onclick="document.getElementById('search').value='';this.form.submit();" title="Limpar"><i class="bx bxs-eraser"></i></button>
                                 </div>
                             </div>
-                            <div class="dt-buttons btn-group flex-wrap">
-                                <a class="btn btn-secondary add-new btn-primary " href="<?php echo JRoute::_('index.php?view=weapon');?>">
-                                    <span>
-                                        <i class="bx bx-plus me-0 me-sm-1"></i>
-                                        <span class="d-none d-sm-inline-block">Adicionar Nova Arma</span>
-                                    </span>
-                                </a> 
-                            </div>
+
                         </div>
                     </div>
                 </div>
-                <table class="datatables-users table border-top dataTable no-footer dtr-column">
+                <table class="table border-top dataTable dtr-column">
                     <thead>
                         <tr>
                             <th class="sorting sorting_desc"><?php echo JHtml::_('grid.sort',  'Espécie', 'name_especie', $listDirn, $listOrder); ?></th>
-                            <th class="sorting text-center"><?php echo JHtml::_('grid.sort', 'Número', 'numero_arma', $listDirn, $listOrder); ?></th>
-                            <th class="sorting text-center"><?php echo JHtml::_('grid.sort', 'Marca', 'name_marca', $listDirn, $listOrder); ?></th>
-                            <th class="sorting text-center"><?php echo JHtml::_('grid.sort', 'Acervo', 'name_acervo', $listDirn, $listOrder); ?></th>
-                            <th class="sorting_disabled" style="width: 145px;">Ações</th>
+                            <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Número', 'numero_arma', $listDirn, $listOrder); ?></th>
+                            <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Marca', 'name_marca', $listDirn, $listOrder); ?></th>
+                            <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Acervo', 'name_acervo', $listDirn, $listOrder); ?></th>
+                            <th class="sorting_disabled text-center" width="2%" >Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,7 +62,7 @@ $saveOrder    = $listOrder == 'ordering';
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="7" align="right">
+                            <td colspan="5" align="right">
                                 <strong>Total de Itens <?php echo $this->total; ?></strong>
                             </td>
                         </tr>

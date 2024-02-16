@@ -36,14 +36,14 @@ if (count($this->items)) {
             </div>
         </div>
     </td>
-    <td class="text-center"><?php echo $item->numero_arma; ?></td>
-    <td class="text-center"><?php echo $item->name_marca; ?></td>
-    <td class="text-center"><?php echo $item->name_acervo; ?></td>
-    <td>
+    <td class="text-center d-none d-md-table-cell"><?php echo $item->numero_arma; ?></td>
+    <td class="text-center d-none d-md-table-cell"><?php echo $item->name_marca; ?></td>
+    <td class="text-center d-none d-md-table-cell"><?php echo $item->name_acervo; ?></td>
+    <td class="text-center" width="2%">
         <div class="d-inline-block text-nowrap">
             <input type="checkbox" style="display:none" id="cb<?php echo $i; ?>" name="cid[]" value="<?php echo $item->id_arma; ?>" >
-            <a href="<?php echo JRoute::_('index.php?view=weapon&cid=' . $item->id_arma); ?>" class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></a>
-            <button type="button" class="btn btn-sm btn-icon delete-record" onclick="Swal.fire({title:'Atenção',html:'Você tem certeza que deseja remover esta arma do seu cadastro?<br/><strong><?php echo $item->name_especie . ' número ' .$item->numero_arma; ?></strong>',icon:'warning',showCancelButton: true,confirmButtonColor: '#595cd9',cancelButtonColor: '#ff3e1d',cancelButtonText: 'Desistir',confirmButtonText: 'Confirmar!'}).then((result) => {if (result.isConfirmed) { return listItemTask('cb<?php echo $i; ?>','remove');}});"><i class="bx bx-trash"></i></button>
+            <a href="<?php echo JRoute::_('index.php?view=weapon&cid=' . $item->id_arma); ?>" class="btn btn-sm btn-icon me-2"><i class="bx bx-edit bx-sm"></i></a>
+            <button type="button" class="btn btn-sm btn-icon delete-record" onclick="Swal.fire({title:'Atenção',html:'Você tem certeza que deseja remover esta arma do seu cadastro?<br/><strong><?php echo $item->name_especie . ' número ' .$item->numero_arma; ?></strong>',icon:'warning',showCancelButton: true,confirmButtonColor: '#595cd9',cancelButtonColor: '#ff3e1d',cancelButtonText: 'Desistir',confirmButtonText: 'Confirmar!'}).then((result) => {if (result.isConfirmed) { return listItemTask('cb<?php echo $i; ?>','remove');}});"><i class="bx bx-trash bx-sm"></i></button>
             <?php /*
             <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
             <div class="dropdown-menu dropdown-menu-end m-0">

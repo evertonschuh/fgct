@@ -608,29 +608,8 @@ endif;
             $('.nav-pills a[href="' + activeTab + '"]').tab('show');
 
 
-
-       // var overlay = document.getElementById("overlay");
-        
-        /*window.addEventListener('load', function() {
-          overlay.style.opacity = '0';
-          overlay.style.visibility = 'hidden';
-        });*/
-
-        //if (document.readyState === "complete") {
-        //  overlay.style.opacity = '0';
-       //     overlay.style.visibility = 'hidden';
-        //} else {
-        //    window.addEventListener('load', function() {
-       //     overlay.style.opacity = '0';
-       //     overlay.style.visibility = 'hidden';
-       //   });
-       // }
-
-
-
-
-        jQuery('#overlay').css('opacity', '0');
-        jQuery('#overlay').css('visibility', 'hidden');
+       jQuery('#overlay').css('opacity', '0');
+       jQuery('#overlay').css('visibility', 'hidden');
         
        jQuery('a[href^="/"]:not(a[target="_blank"]) ').on('click', function(){
             localStorage.clear();
