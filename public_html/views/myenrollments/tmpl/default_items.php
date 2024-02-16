@@ -34,8 +34,8 @@ if (count($this->items)) {
             </div>
         </div>
     </td>
-    <td class="text-center"> <?php echo  JHtml::date(JFactory::getDate($item->date_register_inscricao_etapa, $siteOffset)->toISO8601(), 'DATE_FORMAT_DATATIME'); ?></td>
-    <td class="text-center">
+    <td class="text-center d-none d-md-table-cell"> <?php echo  JHtml::date(JFactory::getDate($item->date_register_inscricao_etapa, $siteOffset)->toISO8601(), 'DATE_FORMAT_DATATIME'); ?></td>
+    <td class="text-center d-none d-md-table-cell">
     <?php
         $data_ia = JFactory::getDate($item->insc_beg_etapa, $siteOffset)->toISO8601(true);
         $data_fa = JFactory::getDate($item->insc_end_etapa, $siteOffset)->toISO8601(true);
@@ -76,7 +76,7 @@ if (count($this->items)) {
             ?>
         </small>
     </td>
-    <td class="text-center">
+    <td class="text-center d-none d-md-table-cell">
         <small class="text-body text-truncate">
             <?php echo 'Categoria: ' . $item->name_categoria . '<br/> Classe: ' . $item->name_classe; ?>
         </small>
@@ -84,7 +84,7 @@ if (count($this->items)) {
         <small class="text-muted"><?php echo  $item->name_genero; ?></small>
     </td>
     
-    <td class="text-center">
+    <td class="text-center d-none d-md-table-cell">
         <span class="text-body text-truncate">
             <?php echo  $item->name_especie . ' ' . $item->name_calibre; ?>
         </span>
@@ -92,7 +92,7 @@ if (count($this->items)) {
         <small class="text-muted text-center"><?php echo  $item->name_marca; ?></small>
     </td> 
     <td class="text-center">
-        <a href="<?php echo JRoute::_('index.php?view=myenrollment&format=pdf&cid=' . $item->id_inscricao_etapa); ?>" class="btn btn-sm btn-icon" target="_blank"><i class='bx bx-printer'></i></a>
+        <a href="<?php echo JRoute::_('index.php?view=myenrollment&format=pdf&cid=' . $item->id_inscricao_etapa); ?>" class="btn btn-sm btn-icon" target="_blank"><i class='bx bx-printer bx-sm'></i></a>
     </td>
 </tr>
 

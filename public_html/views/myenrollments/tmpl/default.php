@@ -39,10 +39,10 @@ $saveOrder    = $listOrder == 'ordering';
                     <thead>
                         <tr>
                             <th class="sorting sorting_desc"><?php echo JHtml::_('grid.sort',  'Etapa/Campeonato', 'name_especie', $listDirn, $listOrder); ?></th>
-                            <th class="sorting text-center">Data do Registro</th>
-                            <th class="sorting text-center">Período de Inscrição</th>
-                            <th class="sorting text-center">Categorização</th>
-                            <th class="sorting text-center">Arma</th>
+                            <th class="sorting text-center d-none d-md-table-cell">Data do Registro</th>
+                            <th class="sorting text-center d-none d-md-table-cell">Período de Inscrição</th>
+                            <th class="sorting text-center d-none d-md-table-cell">Categorização</th>
+                            <th class="sorting text-center d-none d-md-table-cell">Arma</th>
                             <th class="sorting_disabled text-center">Ações</th>
                         </tr>
                     </thead>
