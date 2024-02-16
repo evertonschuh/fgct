@@ -28,7 +28,7 @@ if (count($this->items)) {
             </div>
             <div class="d-flex flex-column">
                 <span class="text-body text-truncate">
-                    <span class="fw-semibold" style="font-size:13px"><?php echo  $item->name_etapa; ?></span>
+                    <span class="fw-semibold"><?php echo  $item->name_etapa; ?></span>
                 </span>
                 <small class="text-break" style="font-size:12px"><?php echo  $item->name_prova; ?>.</small>
                 <small class="text-muted" style="font-size:10px"><?php echo  'Etapa Inicia em ' . JHtml::date(JFactory::getDate($item->data_beg_etapa, $siteOffset)->toISO8601(), 'DATE_FORMAT'); ?></small>
