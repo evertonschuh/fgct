@@ -614,9 +614,9 @@ endif;
         
        jQuery('a[href^="/"]:not(a[target="_blank"]) ').on('click', function(){
             localStorage.clear();
-            jQuery('#overlay').removeClass('animate');
-            jQuery('#overlay').css('opacity', 1);
-            jQuery('#overlay').css('visibility', 'visible');
+          //  jQuery('#overlay').removeClass('animate');
+           // jQuery('#overlay').css('opacity', 1);
+           // jQuery('#overlay').css('visibility', 'visible');
         });
 
       });
