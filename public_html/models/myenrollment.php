@@ -138,7 +138,7 @@ class EASistemasModelMyEnrollment extends JModel {
 
 
 			
-			$query->select('IF(registro_tipo_arma = 1, \'Exército (Sigma)\', \'Polícia Federal (Sinarm)\') AS registro_name_arma');	
+			$query->select('IF(registro_tipo_arma = 1, \'Exército (Sigma)\', IF(registro_tipo_arma = 2, \'Polícia Federal (Sinarm)\', \'\')) AS registro_name_arma');	
 			
 			$query->select('IF(ISNULL(id_addequipe), IF(ISNULL(id_equipe), Estado.name_estado, IF( Equipe.id = 7617, \'AVULSO\', Equipe.name)), name_addequipe) AS name_equipe');	
 
