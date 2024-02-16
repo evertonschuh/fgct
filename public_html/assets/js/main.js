@@ -53,11 +53,7 @@ document.querySelectorAll(".layout-menu-toggle").forEach(e=>{
     }
   }
 
-
-
   let t = document.querySelector('.style-switcher-toggle');
-
-
 
   function s(n) {
       [].slice.call(document.querySelectorAll("[data-app-" + n + "-img]")).map(function(e) {
