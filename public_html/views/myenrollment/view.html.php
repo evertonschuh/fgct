@@ -8,16 +8,17 @@ class EASistemasViewMyEnrollment extends JView
 {
 	public function display($tpl = null)
 	{	
-		//// Set the toolbar
-	
+		
+		$document = JFactory::getDocument();
 		$this->item = $this->get('Item');
+
+		$document->setName('FGCT - Inscrição ' . $this->item->id_inscricao_etapa);
+
 
 		$tagLanguage = $this->get('TagLanguage');
 		$this->assignRef('tagLanguage' , $tagLanguage  );	
 
-		//$inscricaoPrint = $this->get('InscricaoPrint');
-		//$this->assignRef( 'inscricaoPrint', $inscricaoPrint);
-		
+
 
 
 		$reload = true;
