@@ -47,6 +47,7 @@ class EASistemasModelPayment extends JModel
 	
 	function getItem()
 	{	
+		
 		if (empty($this->_data))
 		{			
 			//$typesArray = $this->getConteudoTipos();
@@ -57,12 +58,11 @@ class EASistemasModelPayment extends JModel
 			$query->innerJoin($this->_db->quoteName('#__intranet_pagamento_metodo'). ' USING(' . $this->_db->quoteName('id_pagamento_metodo'). ')');
 			$query->innerJoin($this->_db->quoteName('#__users') . ' ON(' . $this->_db->quoteName('id'). '=' . $this->_db->quoteName('id_user'). ')');
 			$query->where( $this->_db->quoteName('id_pagamento') . '=' . $this->_db->escape( $this->_id ) );
+			$query->where( $this->_db->quoteName('id_user') . '=' . $this->_db->escape( $this->_user->get('id') ) );
 			$this->_db->setQuery($query);
 			if( !(boolean) $this->_data = $this->_db->loadObject())
-			{
-				$this->addTablePath(JPATH_ADMINISTRATOR.'/tables');
-	    		$this->_data = $this->getTable('pagamento');
-			}
+				return false;
+			
 		}
 		return $this->_data;
 	}
@@ -107,14 +107,15 @@ class EASistemasModelPayment extends JModel
 		$query->from($this->_db->quoteName('#__intranet_pagamento'));
 		$query->innerJoin($this->_db->quoteName('#__intranet_pagamento_metodo'). ' USING(' . $this->_db->quoteName('id_pagamento_metodo'). ')');
 		$query->where( $this->_db->quoteName('id_pagamento') . '=' . $this->_db->quote( $this->_id ) );
+		$query->where( $this->_db->quoteName('id_user') . '=' . $this->_db->escape( $this->_user->get('id') ) );
 		$this->_db->setQuery($query);
 		$_data = $this->_db->loadObject();
-		
-		
 
-		require_once(JPATH_MODULE .DS. 'mod_' . $_data->module_pagamento_metodo. DS. 'mod_' . $_data->module_pagamento_metodo . '.php');
-		//require_once(JPATH_MODULE .DS. 'mod_bolbradesco' .DS. 'mod_bolbradesco.php');
-		
+		if(file_exists(JPATH_MODULE .DS. 'mod_' . $_data->module_pagamento_metodo. DS. 'mod_' . $_data->module_pagamento_metodo . '.php'))
+			require_once(JPATH_MODULE .DS. 'mod_' . $_data->module_pagamento_metodo. DS. 'mod_' . $_data->module_pagamento_metodo . '.php');
+		else
+			return false;
+
 		$prefix  = 'Intranet';
 		$type = $_data->module_pagamento_metodo. 'Module';
 		$type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
@@ -124,12 +125,8 @@ class EASistemasModelPayment extends JModel
 			return false;
 		
 		
-
-				
-		
 		$_module_pagament = new $modelClass();
 		
-
 		$_module_pagament->setData($this->getValues());
 		//$_module_pagament->setPayment();
 		$_module_pagament->setPayment();

@@ -198,11 +198,13 @@ endif;
             </li>
             <li class="menu-item">
               <a href="<?php echo JRoute::_('index.php?view=payments');?>" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-dollar-circle"></i>
                 <div data-i18n="Cobranças">Cobranças</div>
               </a>
             </li>
             <li class="menu-item">
               <a href="<?php echo JRoute::_('index.php?view=documents');?>" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file" ></i>
                 <div data-i18n="Documentos">Documentos</div>
               </a>
             </li>

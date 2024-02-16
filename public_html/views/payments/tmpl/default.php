@@ -17,8 +17,8 @@ $saveOrder    = $listOrder == 'ordering';
         <div class="card-datatable table-responsive">
             <div class="dataTables_wrapper dt-bootstrap5 no-footer ">
                 <div class="row mx-2 py-3">
-                    <div class="col-md-2">
-                        <div class="me-3">
+                    <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-3 mb-3">
+                        <div class="me-2">
                             <div class="dataTables_length" id="DataTables_Table_0_length">
                                 <label>
                                     <?php echo $this->pagination->getLimitBox(); ?>
@@ -26,9 +26,9 @@ $saveOrder    = $listOrder == 'ordering';
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-12 col-md-6">
                         <div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
-                            <div class="dataTables_filter mx-3">
+                            <div class="dataTables_filter">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="search" id="search" class="form-control small" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" placeholder="<?php echo JText::_('JGLOBAL_FILTER_SEARCH_TITLE') ?>">
                                     <button class="btn btn-outline-primary" type="submit"><i class="bx bx-search-alt-2" ></i></button>
@@ -42,14 +42,14 @@ $saveOrder    = $listOrder == 'ordering';
                     <thead>
                         <tr> 
                             
-                            <th class="sorting sorting_desc"><?php echo JHtml::_('grid.sort',  'Número', 'id_pagamento', $listDirn, $listOrder); ?></th>
-                            <th class="sorting text-center"><?php echo JHtml::_('grid.sort', 'Produto', 'produto', $listDirn, $listOrder); ?></th>
-                            <th class="sorting text-center"><?php echo JHtml::_('grid.sort', 'Vencimento', 'vencimento_pagamento', $listDirn, $listOrder); ?></th>
-                            <th class="sorting text-center"><?php echo JHtml::_('grid.sort', 'Valor', 'valor_pagamento', $listDirn, $listOrder); ?></th>
+                            <th class="sorting sorting_desc d-none d-md-table-cell"><?php echo JHtml::_('grid.sort',  'Número', 'id_pagamento', $listDirn, $listOrder); ?></th>
+                            <th class="sorting sorting_desc"><?php echo JHtml::_('grid.sort', 'Produto', 'produto', $listDirn, $listOrder); ?></th>
+                            <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Vencimento', 'vencimento_pagamento', $listDirn, $listOrder); ?></th>
+                            <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Valor', 'valor_pagamento', $listDirn, $listOrder); ?></th>
                             <th class="sorting text-center">Status</th>
-                            <th class="sorting text-center"><?php echo JHtml::_('grid.sort', 'Pagamento', 'baixa_pagamento', $listDirn, $listOrder); ?></th>
-                            <th class="sorting text-center"><?php echo JHtml::_('grid.sort', 'Método', 'name_pagamento_metodo', $listDirn, $listOrder); ?></th>
-                            <th class="sorting_disabled">Ações</th>
+                            <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Pagamento', 'baixa_pagamento', $listDirn, $listOrder); ?></th>
+                            <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Método', 'name_pagamento_metodo', $listDirn, $listOrder); ?></th>
+                            <th class="sorting_disabled text-center" width="2%" >Ações</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -36,7 +36,7 @@ $saveOrder    = $listOrder == 'ordering';
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
-                            <div class="dataTables_filter mx-3">
+                            <div class="dataTables_filter">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="search" id="search" class="form-control small" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" placeholder="<?php echo JText::_('JGLOBAL_FILTER_SEARCH_TITLE') ?>">
                                     <button class="btn btn-outline-primary" type="submit"><i class="bx bx-search-alt-2" ></i></button>

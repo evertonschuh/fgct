@@ -69,7 +69,7 @@ table tr.title { }
 
 
 <div class="page1 page">
-	<div class="paisagem documento">
+	<div class="documento">
 
         <table width="680px" heigth="100px">
             <tr valign="bottom">
