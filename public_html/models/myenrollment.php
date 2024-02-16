@@ -32,6 +32,9 @@ class EASistemasModelMyEnrollment extends JModel {
 
 		JRequest::setVar( 'cid', $array[0] );
 		$this->setId( (int) $array[0] );
+		
+		
+		JRequest::setVar('tmpl','print');	
 
 	}
 	
@@ -53,7 +56,10 @@ class EASistemasModelMyEnrollment extends JModel {
 															  'logradouro_pj',
 															  'numero_pj',
 															  'name_cidade',
-															  'sigla_estado'
+															  'sigla_estado',
+															  'name_modalidade',
+															  'data_beg_etapa',
+															  'data_end_etapa',
 															)));
 																
 			$queryClube->select( $this->_db->quoteName('id_clube') . ' AS id_local' );
@@ -69,6 +75,22 @@ class EASistemasModelMyEnrollment extends JModel {
 			$queryClube->innerJoin( $this->_db->quoteName('#__ranking_campeonato') . 'USING('. $this->_db->quoteName('id_campeonato').')' );
 			$queryClube->innerJoin( $this->_db->quoteName('#__ranking_modalidade') . 'USING('. $this->_db->quoteName('id_modalidade').')' );
 			$queryClube->where($this->_db->quoteName('finalized_campeonato') . ' = ' . $this->_db->quote( '0' ));		
+
+
+			$queryAtleta = $this->_db->getQuery(true);
+			$queryAtleta->select( $this->_db->quoteName(array( 	'name',
+																'id',
+																'id_associado',
+																'cpf_pf',
+																'compressed_air_pf',
+																'copa_brasil_pf',
+																//'logradouro_pj',
+															)));
+			$queryAtleta->from( $this->_db->quoteName('#__users') );
+			$queryAtleta->innerJoin( $this->_db->quoteName('#__intranet_pf') . 'ON('. $this->_db->quoteName('id'). ' = '. $this->_db->quoteName('id_user').')' );
+			$queryAtleta->innerJoin( $this->_db->quoteName('#__intranet_associado') . 'USING('. $this->_db->quoteName('id_user').')' );	
+			$queryAtleta->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote( $this->_user->get('id') ));
+
 
 			
 			$query = $this->_db->getQuery(true);
@@ -88,6 +110,7 @@ class EASistemasModelMyEnrollment extends JModel {
 														 'name_calibre',
 														 'name_marca',
 														 'numero_arma',
+														 'registro_arma',
 
 
 														 'Etapa.name_etapa',
@@ -99,10 +122,24 @@ class EASistemasModelMyEnrollment extends JModel {
 														 'Etapa.logradouro_pj',
 														 'Etapa.numero_pj',
 														 'Etapa.name_cidade',
-														 'Etapa.sigla_estado'
+														 'Etapa.sigla_estado',
+														 'Etapa.name_modalidade',
+														 'Etapa.data_beg_etapa',
+														 'Etapa.data_end_etapa',
+
+														 
 														)));
 
 			$query->select('Atleta.name AS name_atleta');
+			$query->select('Atleta.cpf_pf AS cpf_atleta');
+			$query->select('Atleta.id_associado AS id_associado');
+			$query->select('Atleta.compressed_air_pf AS compressed_air_pf');
+			$query->select('Atleta.copa_brasil_pf AS copa_brasil_pf');
+
+
+			
+			$query->select('IF(registro_tipo_arma = 1, \'Exército (Sigma)\', \'Polícia Federal (Sinarm)\') AS registro_name_arma');	
+			
 			$query->select('IF(ISNULL(id_addequipe), IF(ISNULL(id_equipe), Estado.name_estado, IF( Equipe.id = 7617, \'AVULSO\', Equipe.name)), name_addequipe) AS name_equipe');	
 
 			$query->from( $this->_db->quoteName('#__ranking_inscricao') );
@@ -112,7 +149,13 @@ class EASistemasModelMyEnrollment extends JModel {
 			$query->innerJoin( $this->_db->quoteName('#__ranking_prova') . 'USING('. $this->_db->quoteName('id_prova') .','. $this->_db->quoteName('id_campeonato').')' );
 			$query->innerJoin( $this->_db->quoteName('#__ranking_inscricao_etapa')  . 'USING('. $this->_db->quoteName('id_inscricao') . ')' );												   
 			$query->innerJoin( '(' . $queryClube . ') AS Etapa USING('. $this->_db->quoteName('id_etapa').','. $this->_db->quoteName('id_campeonato').','. $this->_db->quoteName('id_local').')' );
-			$query->innerJoin( $this->_db->quoteName('#__users') . ' AS Atleta ON('. $this->_db->quoteName('#__ranking_inscricao.id_user') .'='. $this->_db->quoteName('Atleta.id'). ')' );
+			
+			$query->innerJoin( '(' . $queryAtleta . ') AS Atleta ON('. $this->_db->quoteName('#__ranking_inscricao.id_user') .'='. $this->_db->quoteName('Atleta.id'). ')' );;
+
+
+
+			//$query->innerJoin( $this->_db->quoteName('#__users') . ' AS Atleta ON('. $this->_db->quoteName('#__ranking_inscricao.id_user') .'='. $this->_db->quoteName('Atleta.id'). ')' );
+			//$query->innerJoin( $this->_db->quoteName('#__intranet_pf') . ' AS AtletaPF ON('. $this->_db->quoteName('#__ranking_inscricao.id_user') .'='. $this->_db->quoteName('AtletaPF.'). ')' );
 			
 			$query->leftJoin( $this->_db->quoteName('#__users') . ' AS Equipe ON('. $this->_db->quoteName('#__ranking_inscricao.id_equipe') .'='. $this->_db->quoteName('Equipe.id'). ')' );
 			$query->leftJoin($this->_db->quoteName('#__intranet_estado') . ' AS Estado USING( ' . $this->_db->quoteName('id_estado') . ')' );			
@@ -155,7 +198,20 @@ class EASistemasModelMyEnrollment extends JModel {
 		
 	}
 	
-
+	function getTagLanguage()
+	{
+		if($this->_id)
+		{
+			if(!$this->_class_modalidade)
+				$this->_class_modalidade = $this->getClassModalidade();
+							
+			if($this->_class_modalidade){
+				$this->_tagLanguage = $this->_class_modalidade->getTagLanguage();
+				return $this->_tagLanguage;
+			}
+		}	
+		return false;
+	}
 	
 	function getMyInfo()
 	{
@@ -211,8 +267,8 @@ class EASistemasModelMyEnrollment extends JModel {
 			if( !(boolean) $fileModalidade =  $this->_db->loadObject())
 				return false;
 
-			$file =  JPATH_COMPONENT_ADMINISTRATOR .DS. 'classes' .DS. 'core' .DS. $fileModalidade->file_modalidade;
-			
+			$file =  JPATH_LIBRARIES .DS. 'classes' .DS. 'core' .DS. $fileModalidade->file_modalidade;
+
 			if (!file_exists($file))
 				return false;
 

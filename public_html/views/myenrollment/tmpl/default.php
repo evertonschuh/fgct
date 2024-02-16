@@ -63,195 +63,373 @@ strong {
 }
 p{margin: 5px 0;}
 .page {margin: 0; padding:0 ;height:27cm; position:absolute}  
+
+table tr.title { }
 </style>
 
 
 <div class="page1 page">
 	<div class="paisagem documento">
 
-        <table width="680px" border="1">
+        <table width="680px" heigth="100px">
             <tr valign="bottom">
-                <td align="left" rowspan="2">
+                <td align="left" style="line-height: 14px;">
+                    &nbsp;
+                </td>
+                <td align="right" rowspan="3">
                     <?php
                         $path = JPATH_BASE .DS. 'images'.DS.'logo-ficha.png';
                         $type = pathinfo($path, PATHINFO_EXTENSION);
                         $data = file_get_contents($path);
                         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
                     ?>
-                    <img src="<?php echo $base64; ?>" style="margin:0 0 10px 0"/>
-                </td>
-
-                <td align="right">
-                    <h3 style="padding:0;margin:10px 0 0 0">
-                        <strong>FEDERAÇÃO GAÚCHA DE CAÇA E TIRO</strong>
-                    </h3>   
+                    <img src="<?php echo $base64; ?>" style="margin:0 0 5px 0; padding:0"/>
                 </td>
             </tr>
             <tr valign="bottom">
-                <td align="right">
+                <h3 style="padding:0;margin:10px 0 0 0;line-height: 10px;">
+                    <strong>FEDERAÇÃO GAÚCHA DE CAÇA E TIRO</strong>
+                </h3>  
+            </tr>
+            <tr valign="bottom">
+                <td align="left">
                     <em style="font-size:10px;line-height:10px;padding:0;margin:0">
-                        <?php echo 'Registro de Inscrição em: ' . JHTML::_('date', JFactory::getDate($this->item->date_register_inscricao_etapa, $_siteOffset)->toISO8601(true), 'DATE_FORMAT_LC2'); ?>
+                        <?php echo 'Data do Registro de Inscrição: ' . JHTML::_('date', JFactory::getDate($this->item->date_register_inscricao_etapa, $_siteOffset)->toISO8601(true), 'DATE_FORMAT_LC2'); ?>
                     </em>
                 </td>
             </tr>
         </table>
         
         <table width="680px" cellspacing="0" cellpadding="0" bgcolor="#467119" style="color:#FFFFFF;">
-            <tr>
+            <tr valign="center">
                 <td align="center">
-                    <h4 style="line-height: 25px; padding:0;margin:5px 0">
+                    <h4 style="line-height: 18px; padding:0;margin:5px 0">
                         <strong>
                             <?php echo JText::_('COMPROVANTE DE INSCRIÇÃO ONLINE'); ?>
                         </strong>
                     </h4>   
                 </td>
             </tr>
+        </table>  
+        <br/>      
+        <table width="680px" cellspacing="0" cellpadding="0">
+            <tr valign="center">
+                <td align="left">
+                    <h6 style="line-height: 12px; padding:0;margin:0px">
+                        <strong>
+                            Dados da Inscrição
+                        </strong>
+                    </h6>   
+                    <hr/>
+                </td>
+            </tr>
         </table>
-        <div class="divider text-start">
-                        <div class="divider-text">Start</div>
-                      </div>
-        <div class="width-100 retrato" style="border: 1px solid; margin:5px; padding:5px">
-    <div class="width-100 fltlft text-center font-20 margin-top-175 margin-bottom-20">
-    	  <strong><?php echo JText::_('FEDERAÇÃO GAÚCHA DE CAÇA E TIRO'); ?></strong>
-    </div>
-    <img class="img-responsive" src="cache/<?php echo $this->item->id_inscricao_etapa . '-comporvante.png' ?>" />
-    <div class="width-100 fltlft text-center font-18 margin-top-175 margin-bottom-20">
-        <strong><?php echo JText::_('Comprovante de Inscrição Online'); ?></strong>
-    </div>
-    <div class="width-100 fltlft text-center font-16 margin-top-175 margin-bottom-20">
-        <?php echo $this->item->name_campeonato; ?>
-    </div>
-    <div class="width-100 fltlft text-center font-14 margin-top-175 margin-bottom-20">
-        <?php echo $this->item->name_etapa . ' - ' . $this->item->name_clube; ?>
-    </div>  
-    <div class="width-100 fltlft text-center font-14 margin-top-175 margin-bottom-20">
-        <?php echo $this->item->logradouro_pj.', '.$this->item->numero_pj.' - '.$this->item->name_cidade.'/'.$this->item->sigla_estado;?>
-    </div> 
-	<br/>
-    <div class="width-100 fltlft font-14">    
-        <table width="100%" border="0">
-            <tr>
-                <td width="65"><strong>Atleta:</strong></td>
-                <td colspan="5"><?php echo $this->item->name_atleta; ?></td>
-                <td rowspan="4" valign="top">
-                    <?php
-                    if(!JFile::exists(JPATH_BASE . DS . 'cache' . DS .  $this->item->id_inscricao_etapa . '-comporvante.png')){
-                        QRcode::png(  $this->item->id_inscricao_etapa, JPATH_BASE . DS . 'cache' . DS . $this->item->id_inscricao_etapa . '-comporvante.png', 'L', 4, 2);
-                        echo JPATH_BASE . DS . 'cache' . DS .  $this->item->id_inscricao_etapa . '-comporvante.png';
-                    }    
-                   ?>
-                    <img class="img-responsive" src="/cache/<?php echo $this->item->id_inscricao_etapa . '-comporvante.png' ?>" />
+        <table width="680px" cellspacing="0" cellpadding="0" style="font-size:12px">
+            <tr valign="center">
+                <td align="left" width="45px">
+                    <strong>Atleta:</strong>
+                </td>
+                <td align="left" width="325px">
+                    <?php echo $this->item->name_atleta; ?>
+                </td>
+                <td align="left" width="35px">
+                    <strong>CPF:</strong>
+                </td>
+                <td align="left" width="130px">
+                <?php echo $this->item->cpf_atleta; ?>
+                </td>
+                <td align="left" width="100px">
+                    <strong>Matrícula FGCT:</strong>
+                </td>
+                <td align="right" width="35px">
+                <?php echo $this->item->id_associado; ?>
                 </td>
             </tr>
-            <tr>
-                <td><strong>Prova:</strong></td>
-                <td colspan="5"><?php echo $this->item->name_prova; ?></td>
-            </tr>
-            <tr>
-                <td><strong>Equipe:</strong></td>
-                <td colspan="5"><?php echo $this->item->name_equipe; ?></td>
-            </tr>
-            <tr>
-                <td><strong>Arma:</strong></td>
-                <td colspan="5">
-                    <table>
-                        <tr>
-                            <td style="padding-right:5px"><strong>Número:</strong></td>
-                            <td style="padding-right:10px"><?php echo $this->item->numero_arma; ?></td>
-                            <td style="padding-right:5px"><strong>Tipo:</strong></td>
-                            <td style="padding-right:10px"><?php echo $this->item->name_especie; ?></td>
-                            <td style="padding-right:5px"><strong>Calibre:</strong></td>
-                            <td style="padding-right:10px"><?php echo $this->item->name_calibre; ?></td>
-                            <td style="padding-right:5px"><strong>Marca:</strong></td>
-                            <td><?php echo $this->item->name_marca; ?></td>
-                        </tr>
-                    </table>
+        </table>   
+         
+        <table width="680px" cellspacing="0" cellpadding="0" style="margin-top:5px;font-size:12px">
+            <tr valign="center">
+                <td align="left" width="125px">
+                    <strong>Número da Inscrição:</strong>
+                </td>
+                <td align="left">
+                    <?php echo $this->item->id_inscricao_etapa; ?>
+                </td>
+                <td align="left" width="65px">
+                    <strong>Categoria:</strong>
+                </td>
+                <td align="left">
+                    <?php echo $this->item->name_categoria; ?>
+                </td>
+                <td align="left" width="50px">
+                    <strong>Classe:</strong>
+                </td>
+                <td align="left">
+                    <?php echo $this->item->name_classe; ?>
+                </td>
+                <td align="left" width="55px">
+                    <strong>Genero:</strong>
+                </td>
+                <td align="right" width="5%">
+                    <?php echo $this->item->name_genero; ?>
                 </td>
             </tr>
-            <tr>
-                <td><strong>Gênero:</strong></td>
-                <td width="120"><?php echo $this->item->name_genero; ?></td>
-                <td width="80"><strong>Categoria:</strong></td>
-                <td width="120"><?php echo $this->item->name_categoria; ?></td>
-                <td width="65"><strong>Classe:</strong></td>
-                <td width="110"><?php echo $this->item->name_classe; ?></td>
+        </table>  
+        <table width="680px" cellspacing="0" cellpadding="0" style="margin-top:5px;font-size:12px">
+            <tr valign="center">
+                <td align="left" width="50px">
+                    <strong>Equipe:</strong>
+                </td>
+                <td align="left" width="90%">
+                    <?php echo $this->item->name_equipe; ?>
+                </td>
+                <td align="left" width="90px">
+                    <strong>Tipo de Sócio:</strong>
+                </td>
+                <td align="right" nowrap>
+                    <?php if($this->item->compressed_air_pf == '0' && $this->item->copa_brasil_pf == '0'): ?>
+                    Completo
+                    <?php elseif($this->item->compressed_air_pf == '1' && $this->item->copa_brasil_pf == '0'): ?>
+                    Ar Comprimido
+                    <?php elseif($this->item->compressed_air_pf == '0' && $this->item->copa_brasil_pf == '1'): ?>
+                    Copa Brasil
+                    <?php endif; ?>
+                </td>
             </tr>
         </table> 
-        <br/>
-		<?php /*
-		$registry = new JRegistry;
+          
+        <table width="680px" cellspacing="0" cellpadding="0" style="margin-top:5px;font-size:12px">
+            <tr valign="center">
+                <td align="left" width="40px">
+                    <strong>Local:</strong>
+                </td>
+                <td align="left" width="70%">
+                    <?php echo $this->item->name_clube; ?>
+                </td>
+                <td align="left" width="70px">
+                    <strong>Endereço:</strong>
+                </td>
+                <td align="right" nowrap>
+                    <?php echo $this->item->logradouro_pj.', '.$this->item->numero_pj.' - '.$this->item->name_cidade.' / '.$this->item->sigla_estado;?>
+                </td>
+            </tr>
+        </table> 
+        <table width="680px" cellspacing="0" cellpadding="0" style="margin-top:25px">
+            <tr valign="center">
+                <td align="left">
+                    <h6 style="line-height: 12px; padding:0;margin:0px">
+                        <strong>
+                            Informações da Competição
+                        </strong>
+                    </h6>   
+                    <hr/>
+                </td>
+            </tr>
+        </table>
+        <table width="680px" cellspacing="0" cellpadding="0" style="font-size:12px">
+            <tr valign="center">
+                <td align="left" width="85px">
+                    <strong>Campeonato:</strong>
+                </td>
+                <td align="left" width="70%">
+                    <?php echo $this->item->name_campeonato; ?>
+                </td>
+                <td align="left" width="80px">
+                    <strong>Modalidade:</strong>
+                </td>
+                <td align="right" nowrap>
+                <?php echo $this->item->name_modalidade; ?>
+                </td>
+            </tr>
+        </table> 
+        <table width="680px" cellspacing="0" cellpadding="0" style="margin-top:5px;font-size:12px">
+            <tr valign="center">
+                <td align="left" width="45px">
+                    <strong>Prova:</strong>
+                </td>
+                <td align="left">
+                    <?php echo $this->item->name_prova; ?>
+                </td>
+                <td align="left" width="45px">
+                    <strong>Etapa:</strong>
+                </td>
+                <td align="left">
+                    <?php echo $this->item->name_etapa; ?>
+                </td>
+                <td align="left" width="140px">
+                    <strong>Período da Realização:</strong>
+                </td>
+                <td align="right"  width="148px">
+                    <?php echo JHTML::_('date', JFactory::getDate($this->item->data_beg_etapa, $_siteOffset)->toISO8601(true), 'DATE_FORMAT') .' até ' . JHTML::_('date', JFactory::getDate($this->item->data_end_etapa, $_siteOffset)->toISO8601(true), 'DATE_FORMAT'); ?>
+                </td>
+            </tr>
+        </table>  
+
+        <table width="680px" cellspacing="0" cellpadding="0" style="margin-top:25px">
+            <tr valign="center">
+                <td align="left">
+                    <h6 style="line-height: 12px; padding:0;margin:0px">
+                        <strong>
+                            Arma(s) do Atleta
+                        </strong>
+                    </h6>   
+                    <hr/>
+                </td>
+            </tr>
+        </table>
+        <table width="680px" cellspacing="0" cellpadding="0" style="font-size:12px">
+            <tr valign="center">
+                <td>
+                    <table width="680px" cellspacing="0" cellpadding="0" border="1" style="font-size:12px">
+                        <tr valign="center">
+                            <th>Registrador</th>                        
+                            <th>Registro</th>
+                            <th>Número</th>
+                            <th>Espécie</th>
+                            <th>Calibre</th>
+                            <th>Marca</th>
+                        </tr>
+                        <tr valign="center">
+                            <td align="center"><?php echo $this->item->registro_name_arma; ?></td>
+                            <td align="center"><?php echo $this->item->registro_arma; ?></td>
+                            <td align="center"><?php echo $this->item->numero_arma; ?></td>
+                            <td align="center"><?php echo $this->item->name_especie; ?></td>
+                            <td align="center"><?php echo $this->item->name_calibre; ?></td>
+                            <td align="center"><?php echo $this->item->name_marca; ?></td>
+                        </tr>
+                    </table> 
+                </td>
+            </tr>
+        </table> 
+
+
+
+
+        <?php if(count($this->agendamentosPrint)>0): ?>  
+
+        <table width="680px" cellspacing="0" cellpadding="0" style="margin-top:25px">
+            <tr valign="center">
+                <td align="left">
+                    <h6 style="line-height: 12px; padding:0;margin:0px">
+                        <strong>
+                            Agendamento(s) de Tiro
+                        </strong>
+                    </h6>   
+                    <hr/>
+                </td>
+            </tr>
+        </table>
+
+        <table width="680px" cellspacing="0" cellpadding="0" style="font-size:12px">
+            <tr valign="center">
+                <td>
+                    <table width="680px" cellspacing="0" cellpadding="0" border="1" style="font-size:12px">
+                        <tr valign="center">
+                            <th>Nr</th>                        
+                            <th>Data</th>
+                            <?php if($this->item->inscricao_bateria_prova>1): ?>
+                            <th><strong><?php echo JText::_('TORNEIOS_VIEWS_INSCRICOES_AGENDAMENTO_'.$this->tagLanguage.'BATERIA') ?></th>
+                            <?php endif; ?>
+                            <?php if($this->item->inscricao_turma_prova>1): ?>
+                            <th><strong><?php echo JText::_('TORNEIOS_VIEWS_INSCRICOES_AGENDAMENTO_'.$this->tagLanguage.'TURMA') ?></th>
+                            <?php endif; ?>
+                            <th><strong><?php echo JText::_('TORNEIOS_VIEWS_INSCRICOES_AGENDAMENTO_'.$this->tagLanguage.'POSTO') ?></th>
+                        </tr>
+                        <?php foreach($this->agendamentosPrint as $i => $agendamento):?>
+                        <tr>
+                            <td align="center"><?php echo $i + 1; ?></td>  
+                            <td align="center"><?php echo JHTML::_('date', JFactory::getDate($agendamento->date_inscricao_agenda, $_siteOffset)->toISO8601(true), 'DATE_FORMAT_LC3'); ?> </td>
+                            <?php if($this->item->inscricao_bateria_prova>1): ?>
+                            <td align="center"><?php echo JText::_('TORNEIOS_VIEWS_INSCRICOES_AGENDAMENTO_'.$this->tagLanguage.'BATERIA') . ' ' . $agendamento->bateria_inscricao_agenda; ?></td>
+                            <?php endif; ?>
+                            <?php if($this->item->inscricao_turma_prova>1): ?>
+                                <?php
+                                $agendamento_text = $agendamento->turma_inscricao_agenda;
+                                if($this->item->id_prova == 596 ):
+                                    $agendamento_text = $agendamento->turma_inscricao_agenda + (ceil($agendamento->turma_inscricao_agenda/8)-1)*2;
+                                    //$agendamento_text = $agendamento->turma_inscricao_agenda + (ceil($agendamento->turma_inscricao_agenda/6)-1)*4;
+                                    //$agendamento_text = $agendamento->turma_inscricao_agenda + (ceil($agendamento->turma_inscricao_agenda/9)-1)*1;
+                                endif;
+                                ?>
+                            <td align="center"><?php echo JText::_('TORNEIOS_VIEWS_INSCRICOES_AGENDAMENTO_'.$this->tagLanguage.'TURMA') . ' ' . $agendamento_text; ?></td>
+                            <?php endif; ?> 
+                            <td align="center"><?php echo JText::_('TORNEIOS_VIEWS_INSCRICOES_AGENDAMENTO_'.$this->tagLanguage.'POSTO') . ' ' . $agendamento->posto_inscricao_agenda; ?></td>
+                        </tr>
+                        <?php endforeach;?>
+                    </table> 
+                </td>
+            </tr>
+        </table> 
+
+
+    	<?php endif;?>
+
+
+
+
+        <?php
+        $registry = new JRegistry;
 		$registry->loadString($this->item->params_inscricao_etapa);
 		$params_inscricao_etapa = $registry->toArray();
-		if(!empty($params_inscricao_etapa) || !empty($this->additionalPrint)):
-		?>	
-        <table width="100%" border="0" >
-            <tr>
-                <td class="font-14 text-center" ><strong>Informações</strong></td>
-			</tr> 
-			<?php
-				if(!empty($params_inscricao_etapa)):
-                    echo '<tr><td class="font-14 text-center"><strong>Provas:</strong><br/>' . strtoupper (implode(', ', $params_inscricao_etapa)) . '</td></tr>';
-                endif;
+		if(!empty($params_inscricao_etapa) || !empty($this->additionalPrint)):?>	
 
-                if(!empty($this->additionalPrint)):
-                    echo '<tr><td class="font-14 text-center">'.$this->additionalPrint. '</td></tr>';
-                endif;
-            ?>    	
-        </table>   
-        <br/>
-        <?php endif; ?>
-		<?php if(count($this->agendamentosPrint)>0): ?>  
-        <table width="100%" border="0" >
-            <tr>
-                <th colspan="5" class="font-14 text-center" style=" padding-bottom:10px;"><strong>Agendamentos</strong></th>
-            </tr>   
-            <tr>
-                <td class="text-center"><strong>Nr</strong></td>  
-                <td class="text-center"><strong>Data</strong></td>
-                <?php if($this->item->inscricao_bateria_prova>1): ?>
-                <td class="text-center"><strong><?php echo JText::_('TORNEIOS_VIEWS_INSCRICOES_AGENDAMENTO_'.$this->tagLanguage.'BATERIA') ?></strong></td>
-                <?php endif; ?>
-                <?php if($this->item->inscricao_turma_prova>1): ?>
-                <td class="text-center"><strong><?php echo JText::_('TORNEIOS_VIEWS_INSCRICOES_AGENDAMENTO_'.$this->tagLanguage.'TURMA') ?></strong></td>
-                <?php endif; ?>
-                <td class="text-center"><strong><?php echo JText::_('TORNEIOS_VIEWS_INSCRICOES_AGENDAMENTO_'.$this->tagLanguage.'POSTO') ?></strong></td>
+        <table width="680px" cellspacing="0" cellpadding="0" style="margin-top:25px">
+            <tr valign="center">
+                <td align="left">
+                    <h6 style="line-height: 12px; padding:0;margin:0px">
+                        <strong>
+                            Outras Informações
+                        </strong>
+                    </h6>   
+                    <hr/>
+                </td>
             </tr>
-            <?php foreach($this->agendamentosPrint as $i => $agendamento):?>
-            <tr>
-            	<td class="text-center"><?php echo $i + 1; ?></td>  
-                <td class="text-center"><?php echo JHTML::_('date', JFactory::getDate($agendamento->date_inscricao_agenda, $_siteOffset)->toISO8601(true), 'DATE_FORMAT_LC3'); ?> </td>
-                <?php if($this->item->inscricao_bateria_prova>1): ?>
-                <td class="text-center"><?php echo JText::_('TORNEIOS_VIEWS_INSCRICOES_AGENDAMENTO_'.$this->tagLanguage.'BATERIA') . ' ' . $agendamento->bateria_inscricao_agenda; ?></td>
-                <?php endif; ?>
-                <?php if($this->item->inscricao_turma_prova>1): ?>
-                	<?php
-					$agendamento_text = $agendamento->turma_inscricao_agenda;
-					if($this->item->id_prova == 596 ):
-                        $agendamento_text = $agendamento->turma_inscricao_agenda + (ceil($agendamento->turma_inscricao_agenda/8)-1)*2;
-						//$agendamento_text = $agendamento->turma_inscricao_agenda + (ceil($agendamento->turma_inscricao_agenda/6)-1)*4;
-						//$agendamento_text = $agendamento->turma_inscricao_agenda + (ceil($agendamento->turma_inscricao_agenda/9)-1)*1;
-                    endif;
-                	?>
-                
-                <td class="text-center"><?php echo JText::_('TORNEIOS_VIEWS_INSCRICOES_AGENDAMENTO_'.$this->tagLanguage.'TURMA') . ' ' . $agendamento_text; ?></td>
-                <?php endif; ?> 
-                <td class="text-center"><?php echo JText::_('TORNEIOS_VIEWS_INSCRICOES_AGENDAMENTO_'.$this->tagLanguage.'POSTO') . ' ' . $agendamento->posto_inscricao_agenda; ?></td>
-            </tr>
-            <?php endforeach;?>
         </table>
-        <br/>    
-    	<?php endif; */?>
-		<div class="width-100 fltrht font-10" style="float:right; font-size:11px; margin-right:10px">    
-            <em>
-                <?php echo 'Registro de Inscrição em: ' . JHTML::_('date', JFactory::getDate($this->item->date_register_inscricao_etapa, $_siteOffset)->toISO8601(true), 'DATE_FORMAT_LC2'); ?>
-            </em>
-           
-    	</div>      
- 		<br/>
-    </div>    
-</div>      
+        <table width="680px" cellspacing="0" cellpadding="0" style="font-size:12px">
+            <?php if(!empty($this->additionalPrint)): ?>
+            <tr valign="center">
+                <td><?php echo $this->additionalPrint; ?></td>
+            </tr>
+            <?php endif; ?>
+            <?php if(!empty($params_inscricao_etapa)): ?>
+            <tr valign="center">
+                <td><?php echo '<strong>Registros Adicionais: </strong>' . strtoupper (implode(', ', $params_inscricao_etapa)); ?></td>
+            </tr>
+            <?php endif; ?>
 
+        </table> 
+        <?php endif; ?>
 
+        <table width="680px" cellspacing="0" cellpadding="0" style="margin-top:60px">
+            <tr valign="center">
+                <td align="center">
+                <?php
+                    if(!JFile::exists(JPATH_BASE . DS . 'cache' . DS .  $this->item->id_inscricao_etapa . '-comporvante.png'))
+                        QRcode::png(  $this->item->id_inscricao_etapa, JPATH_BASE . DS . 'cache' . DS . $this->item->id_inscricao_etapa . '-comporvante.png', 'L', 4, 2);
+
+                        
+                        $pathQR = JPATH_BASE . DS . 'cache' . DS .  $this->item->id_inscricao_etapa . '-comporvante.png';
+                        $typeQR = pathinfo($pathQR, PATHINFO_EXTENSION);
+                        $dataQR = file_get_contents($pathQR);
+                        $base64QR = 'data:image/' . $typeQR . ';base64,' . base64_encode($dataQR);
+                    
+                    ?>
+                    <img src="<?php echo $base64QR; ?>" width="150"  height="150"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="left"> 
+                    <hr style="margin-top:30px"/>
+                </td>
+            <tr>
+            <tr valign="top">
+                <td align="right">
+                    <em style="font-size:8px;padding:0;margin:0">
+                        <?php echo 'Data do Documento: ' . JHTML::_('date', JFactory::getDate('now', $_siteOffset)->toISO8601(true), 'DATE_FORMAT_LC2'); ?>
+                    </em>
+                </td>
+            </tr>
+        </table>
 
 
 
