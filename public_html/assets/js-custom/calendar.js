@@ -7,13 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
           , m = document.querySelector(".app-calendar-sidebar")
           , p = document.getElementById("addEventSidebar")
           , f = document.querySelector(".app-overlay")
-          , g = {
-            12: "primary",
-            2: "success",
-            3: "danger",
-            4: "warning",
-            5: "info"
-        }
+          , g = colors
           , b = document.querySelector(".offcanvas-title")
           , h = document.querySelector(".btn-toggle-sidebar")
           , y = document.querySelector('button[type="submit"]')

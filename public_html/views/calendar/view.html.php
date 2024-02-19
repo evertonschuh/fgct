@@ -44,12 +44,25 @@ class EASistemasViewCalendar extends JView
 		*/
 
 		$calendarScript = '
+		
+		
+
+		
+		
+		
 		"use strict";
-		let date = new Date
-		  , nextDay = new Date((new Date).getTime() + 864e5)
-		  , nextMonth = 11 === date.getMonth() ? new Date(date.getFullYear() + 1,0,1) : new Date(date.getFullYear(),date.getMonth() + 1,1)
-		  , prevMonth = 11 === date.getMonth() ? new Date(date.getFullYear() - 1,0,1) : new Date(date.getFullYear(),date.getMonth() - 1,1);
-		  window.events = [';
+
+
+
+		window.colors =  {
+			12: "primary",
+			2: "success",
+			3: "danger",
+			4: "warning",
+			5: "info"
+		};
+
+		window.events = [';
 
 
 		foreach($this->items as $i => $item):
@@ -58,7 +71,6 @@ class EASistemasViewCalendar extends JView
 				id: '.$i.',
 				url: "",
 				title: "'.$item->name_calendar.'",
-
 				start: "'.$item->data_beg_etapa.'",
 				end: "'.$item->data_end_etapa.'",
 				allDay: 1,
