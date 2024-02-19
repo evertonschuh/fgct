@@ -24,6 +24,23 @@
   --primary-rgba-85: rgba(70, 113, 25, 0.85); /*rgba(105, 108, 255, 0.85);*/
 }
 
+.fc .fc-button-primary:not(.fc-prev-button):not(.fc-next-button):hover {
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(105,108,255,.4);
+}
+.fc .fc-button-primary:not(.fc-prev-button):not(.fc-next-button).fc-button-active, .fc .fc-button-primary:not(.fc-prev-button):not(.fc-next-button):hover {
+  background-color: #696cff !important;
+  border-color: #696cff !important;
+  color: #fff;
+}
+.fc .fc-toolbar .fc-button:not(.fc-next-button):not(.fc-prev-button) {
+  padding: 0.438rem 1.125rem;
+}
+.fc .fc-button-primary:not(.fc-prev-button):not(.fc-next-button) {
+  background-color: rgba(105,108,255,.08) !important;
+  border: 0;
+  color: #696cff;
+}
+
 .authentication-wrapper.authentication-basic .authentication-inner .card .app-brand ,
 .app-brand
 {

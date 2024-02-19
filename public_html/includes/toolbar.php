@@ -30,16 +30,7 @@ abstract class JToolBarHelper
 	 */
 	public static function title($title, $icon = '')
 	{
-		//echo 'adasdasdasdsa'
-		// Strip the extension.
-		/*
-		$icons = explode(' ', $icon);
-		
-		foreach($icons as &$icon) {
-			$icon = 'icon-48-'.preg_replace('#\.[^.]*$#', '', $icon);
-		}
-		*/
-		//$html = '<div class="pagetitle '.htmlspecialchars(implode(' ', $icons)).'"><h2>'.$title.'</h2></div>';
+	
 		if ($icon)
 			$icon .= '&nbsp;';
 
@@ -47,8 +38,6 @@ abstract class JToolBarHelper
 
 		$app = JFactory::getApplication();
 		$app->JComponentTitle = $html;
-		//$doc = JFactory::getDocument();
-		//$doc->setTitle($app->getCfg('sitename'). ' - ' .JText::_('JADMINISTRATION').' - '.$title);
 	}
 
 	/**

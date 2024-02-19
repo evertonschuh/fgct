@@ -161,8 +161,11 @@ endif;
               </ul>
             </li>
             <li class="menu-item">
-              <a href="javascript:void(0);<?php // echo JRoute::_('index.php?view=calendar');?>"
+
+              <a href="<?php echo JRoute::_('index.php?view=calendar');?>"
+              <?php /* <a href="javascript:void(0);"
               onclick="Swal.fire({title:'Atenção',html:'Este portal está em desenvolvimento.<br/>Em breve mais recursos estarão disponíveis.',icon:'info',confirmButtonColor: '#467119',confirmButtonText: 'Entendi'})"
+              */?>
               class="menu-link">
               <i class="menu-icon tf-icons bx bx-calendar"></i>  
               <div data-i18n="Calendários">Calendários</div>
