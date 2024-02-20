@@ -79,6 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
             allDayText: "todo dia",
             moreLinkText: "provas",
             noEventsText:"Nenhuma prova programada",
+            display: 'block',
             buttonText:{
                 year:"Ano",
                 today: "Hoje",
