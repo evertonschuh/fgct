@@ -40,9 +40,9 @@ endif;
                             </div>
                             <div class="app-calendar-events-filter">
                                 <?php foreach($this->modalidades as $i => $modalidade): ?>
-                                <div class="form-check form-check-danger mb-2">
+                                <div class="form-check form-check-<?php echo $modalidade->id_modalidade; ?> mb-2">
                                     <input class="form-check-input input-filter" type="checkbox" id="select-<?php echo $modalidade->id_modalidade; ?>" data-value="<?php echo $modalidade->id_modalidade; ?>" checked>
-                                    <label class="form-check-label" for="select-<?php echo $modalidade->id_modalidade; ?>"><?php echo $modalidade->name_modalidade; ?></label>
+                                    <label class="form-check-label" for="select-<?php echo $modalidade->id_modalidade; ?>"><?php echo $modalidade->smallname_modalidade; ?></label>
                                 </div>
                                 
                                 <?php endforeach ?>

@@ -86,7 +86,8 @@ class EASistemasModelCalendar extends JModel {
 		$query = $this->_db->getQuery(true);
 					 
 		$query->select( $this->_db->quoteName(array('id_modalidade',
-													'name_modalidade',
+													'smallname_modalidade',
+													'color_modalidade'
 													)));				 
 		
 
