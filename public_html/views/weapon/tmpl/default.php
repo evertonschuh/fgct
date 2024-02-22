@@ -87,12 +87,12 @@ endif;
                         <div class="mb-3 col-md-3">
                             <div class="form-group">
                                 <label class="form-label" for="numero_arma">Número:*</label>
-                                <input type="text" class="form-control required" name="numero_arma" id="numero_arma" value="<?php echo $this->item->numero_arma; ?>" placeholder="<?php echo JText::_('Número') ?>">
+                                <input type="text" class="form-control <?php echo !empty($this->item->numero_arma) ? 'disabled" disabled="disabled' : 'required" name="numero_arma" id="numero_arma'; ?>" value="<?php echo $this->item->numero_arma; ?>" placeholder="<?php echo JText::_('Número') ?>">
                             </div>
                         </div> 
                         <div class="mb-3 col-md-3">
                             <label class="form-label" for="id_especie">Espécie:*</label>
-                            <select id="id_especie" name="id_especie" class="select2 form-select required">
+                            <select class="form-select <?php echo !empty($this->item->id_calibre) ? 'disabled" disabled="disabled' : 'required select2"id="id_especie" name="id_especie'; ?>">
                                 <?php if (empty($this->item->id_especie)) { ?>
                                 <option disabled selected class="default" value=""><?php echo JText::_('- Espécies -'); ?></option>
                                 <?php } ?>
@@ -101,7 +101,7 @@ endif;
                         </div>  
                         <div class="mb-3 col-md-3">
                             <label class="form-label" for="id_calibre">Calibre:*</label>
-                            <select id="id_calibre" name="id_calibre" class="select2 form-select required">
+                            <select class="form-select <?php echo !empty($this->item->id_calibre) ? 'disabled" disabled="disabled' : 'required select2" id="id_calibre" name="id_calibre'; ?>" >
                                 <?php if (empty($this->item->id_calibre)) { ?>
                                 <option disabled selected class="default" value=""><?php echo JText::_('- Calibres -'); ?></option>
                                 <?php } ?>
@@ -184,9 +184,10 @@ endif;
                         */ ?>
 
                         <div class="col-md-12 mt-2">
-                            <h6 class="card-title mb-sm-0 me-2">Registro da Ama</h6>
+                            <h6 class="card-title mb-sm-0 me-2">Número do Sigma</h6>
                             <hr class="my-1 mb-3" />
                         </div>
+                        <?php /*
                         <div class="mb-3 col-md-3">
                             <label class="form-label" for="registro_tipo_arma"><?php echo JText::_('Local do Registro:'); ?></label>
                             <select name="registro_tipo_arma" class="form-control select2">
@@ -198,15 +199,12 @@ endif;
                                     ?>
                             </select>
                         </div>
+                        */ ?>
                         <div class="mb-3 col-md-3">
                             <label class="form-label" for="registro_arma"><?php echo JText::_('Número do Registro:'); ?></label>
                             <input 
                                 type="text" 
-                                class="form-control" 
-                                name="registro_arma" 
-                                id="registro_arma" 
-                                value="<?php echo $this->item->registro_arma; ?>"  
-                                placeholder="<?php echo JText::_('Número do Registro') ?>"
+                                class="form-control <?php echo !empty($this->item->registro_arma) ? 'disabled" disabled="disabled' : '" name="registro_arma" id="registro_arma' ; ?>" value="<?php echo $this->item->registro_arma; ?>" placeholder="<?php echo JText::_('Número do Registro') ?>"
                             >
                         </div>
                         <div class="mb-3 col-md-3">
@@ -239,8 +237,8 @@ endif;
                                 </button>
                             </div>
                         </div>
-                        <div class="mb-3 col-md-6">
-                            <label class="form-label" for="id_acervo">Acervo:</label>
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label" for="id_acervo">Acervo CR:</label>
                             <select name="id_acervo"  id="id_acervo" class="form-control select2 required">
                                 <option selected class="default" value=""><?php echo JText::_('- Acervo -'); ?></option>
                                 <?php echo JHTML::_('select.options',  $this->acervo, 'value', 'text', $this->item->id_acervo ); ?>
