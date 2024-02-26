@@ -3,19 +3,29 @@ defined('_JEXEC') or die('Restricted access');
 $uri = JFactory::getURI();
 JHTML::_('behavior.formvalidation');
 
-jimport('joomla.image.resize');
-$resize = new JResize();
+$config   = JFactory::getConfig();
+$siteOffset = $config->getValue('offset');
+
+$filename = 'cache/image_login.png';
+if (!file_exists($filename) || (file_exists($filename) && JFactory::getDate(date ("Y-m-d", filectime($filename)), $siteOffset )->toFormat('%Y-%m-%d', true) < JFactory::getDate('now - 2 days', $siteOffset )->toFormat('%Y-%m-%d', true))) {
+
+  jimport('joomla.image.resize');
+  $resize = new JResize(); 
+  $image = $resize->resize(JPATH_BASE.DS. 'images' .DS. 'login'  .DS. 'atirador00' . rand(1,10) . '.jpg', 1250, 1200,  'cache/image_login.png');
+
+}							
 ?>
 <style>
 
   .cover {
-    background-image: url(/images/login/atirador00<?php echo rand(1,8); ?>.jpg);
+    background-image: url(<?php echo $filename; ?>);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     object-fit: cover;
     }
 </style>
+
 <form method="post" name="adminForm" class="form-validate">
   <div class="authentication-wrapper authentication-cover">
     <div class="authentication-inner row m-0">
