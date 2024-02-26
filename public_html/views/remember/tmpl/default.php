@@ -1,6 +1,6 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
-$uri = JFactory::getURI();
+
 JHTML::_('behavior.formvalidation');
 
 jimport('joomla.image.resize');
@@ -34,36 +34,35 @@ $resize = new JResize();
           <!-- Logo -->
           <div class="app-brand justify-content-center mb-5"></div>
           <!-- /Logo -->
-          <h4 class="mb-2">Bem-vindo ao Portal do Atleta 👋</h4>
-          <p class="mb-4">Por favor, insira seus dados de acesso para continuar</p>
+          <h4 class="mb-2">Esqueceu sua senha? 🔒</h4>
+          <p class="mb-4">Digite seu usuário e enviaremos instruções para redefinir sua senha</p>
 
           <div class="mb-3 fv-plugins-icon-container">
             <label for="email" class="form-label">Usuário</label>
             <input type="text" class="form-control required" id="username" name="username" placeholder="Escreva seu usuário" autofocus />
-          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
-          
-          <div class="mb-3 form-password-toggle">
-            <div class="d-flex justify-content-between">
-              <label class="form-label" for="password">Senha</label>
-              <a href="<?php echo JRoute::_('index.php?view=remember'); ?>">
-                <small>Esqueceu sua senha?</small>
-              </a>
-            </div>
-            <div class="input-group input-group-merge">
-              <input
-                type="password"
-                id="password"
-                class="form-control required"
-                name="password"
-                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                aria-describedby="password"
-              />
-              <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-            </div>
+          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+        </div>
+          <div class="mb-3 d-flex align-items-center justify-content-center">  
+            <?php 
+              JPluginHelper::importPlugin('captcha');
+              $dispatcher = JDispatcher::getInstance();
+              $dispatcher->trigger('onInit','recaptcha');	
+              $output = $dispatcher->trigger('onDisplay');
+              echo $output[0];
+            ?>        
           </div>
-
           <div class="mb-3">
-            <button class="btn btn-primary d-grid w-100 validate" type="submit">Acessar</button>
+            <button class="btn btn-primary d-grid w-100" type="submit">Enviar link de redefinição</button>
+          </div>
+          <div class="text-center">
+            <a href="<?php echo JRoute::_('index.php?view=login'); ?>" class="d-flex align-items-center justify-content-center">
+              <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">
+                  Volte ao login
+                </font>
+              </font>
+            </a>
           </div>
         </div>
       </div>
@@ -71,10 +70,9 @@ $resize = new JResize();
     </div>
   </div>
 
-  <input type="hidden" name="task" value="login" />
-  <input type="hidden" name="controller" value="login" />			
-  <input type="hidden" name="view" value="login" />
-  <input type="hidden" name="return" value="<?php echo base64_encode( $uri->toString() ); ?>" />
+  <input type="hidden" name="task" id="task" value="remember" />
+  <input type="hidden" name="controller" id="controller" value="remember" />			
+  <input type="hidden" name="view" id="view" value="remember" />
   <?php echo JHTML::_('form.token'); ?>	
 </form>
 

@@ -16,7 +16,10 @@ $nomecontroller = JRequest::getCmd('view');
 
 $user	= JFactory::getUser();
 if ( $user->get('guest') && !empty($nomecontroller) ) {
-	$nomecontroller = 'login';
+
+	if($nomecontroller != 'login' && $nomecontroller != 'remember')
+		$nomecontroller = 'login';
+
 	JRequest::setVar( 'view', $nomecontroller );	
 }
 

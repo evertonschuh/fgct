@@ -79,8 +79,11 @@
 .form-check-label {
   margin-right: 10px;
 }
-
-
+.has-error .input-group-text, 
+.error .input-group-text {
+  color:#ff3e1d !important;
+  border-color: #ff3e1d !important;
+} 
 .has-error .form-control,
 .error.form-control,
 .has-error .select2-container--default .select2-selection,

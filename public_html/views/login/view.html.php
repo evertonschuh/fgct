@@ -14,6 +14,7 @@ class EASistemasViewLogin extends JView
 {
 	function display($tpl = null)
 	{
+		JText::script('EASISTEMAS_SCRIPT_VALIDATE_ERROR_INPUT_REQUIRED');
 
 		$document 	=  JFactory::getDocument();
 
