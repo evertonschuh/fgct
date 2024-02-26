@@ -536,51 +536,49 @@ endif;
                                 </fieldset>
                             </div>
                             <div class="form-group">
-                                        <label><?php echo JText::_('Clube Filiado:'); ?></label>
-                                        <select name="id_clube" class="form-control select2">
-                                           <option class="default" value=""><?php echo JText::_('INTRANET_GLOBAL_CLUBE'); ?></option>
-                                            <?php                                                    
-											$clubes[] = JHTML::_('select.option', '0', JText::_( 'Clube não cadastrado na FGCT' ), 'value', 'text' );
-											if (count($this->clubes) > 0)
-												$clubes = array_merge($clubes, $this->clubes) ;
-                                            echo JHTML::_('select.options', $clubes, 'value', 'text', $this->item->id_clube );
-                                            ?>
-                                        </select>  
-                                    </div>        
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-6 col-lg-4">
-                                                <label><?php echo JText::_('Número do CR:'); ?></label>
-                                                <input type="text" class="form-control" name="numcr_pf" value="<?php echo $this->item->numcr_pf; ?>" placeholder="<?php echo JText::_('Número do CR') ?>" />
-                                            </div>
-                                        </div>
-                                    </div>   
-                                    <div class="form-group">
-                                        <label><?php echo JText::_('Vencimento CR:') ?></label>
-                                        <div class="input-group date col-md-4">
-                                            <input type="text" class="form-control" name="vencr_pf" value="<?php if( $this->item->vencr_pf ) echo JHtml::date(JFactory::getDate($this->item->vencr_pf, $siteOffset)->toISO8601(), 'DATE_FORMAT'); ?>" placeholder="<?php echo JText::_('Vencimento CR') ?>" />
-                                            <button class="btn btn-outline-primary" type="button">
-                                                <i class="bx bx-calendar"></i>
-                                            </button>
-                                        </div>
+                                <label><?php echo JText::_('Clube Filiado:'); ?></label>
+                                <select name="id_clube" class="form-control select2">
+                                    <option class="default" value=""><?php echo JText::_('INTRANET_GLOBAL_CLUBE'); ?></option>
+                                    <?php                                                    
+                                    $clubes[] = JHTML::_('select.option', '0', JText::_( 'Clube não cadastrado na FGCT' ), 'value', 'text' );
+                                    if (count($this->clubes) > 0)
+                                        $clubes = array_merge($clubes, $this->clubes) ;
+                                    echo JHTML::_('select.options', $clubes, 'value', 'text', $this->item->id_clube );
+                                    ?>
+                                </select>  
+                            </div>        
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-4">
+                                        <label><?php echo JText::_('Número do CR:'); ?></label>
+                                        <input type="text" class="form-control" name="numcr_pf" value="<?php echo $this->item->numcr_pf; ?>" placeholder="<?php echo JText::_('Número do CR') ?>" />
                                     </div>
-                                    <div class="form-group">
-                                        <label><?php echo JText::_('Status do CR:') ?></label>
-                                        <fieldset>
-                                            <?php echo JHTML::_('select.booleanlist', 'stacr_pf', '', $this->item->stacr_pf, 'Ativo', 'Cancelado'); ?>
-                                        </fieldset>
-                                    </div>  
+                                </div>
+                            </div>   
+                            <div class="form-group">
+                                <label><?php echo JText::_('Vencimento CR:') ?></label>
+                                <div class="input-group date col-md-4">
+                                    <input type="text" class="form-control" name="vencr_pf" value="<?php if( $this->item->vencr_pf ) echo JHtml::date(JFactory::getDate($this->item->vencr_pf, $siteOffset)->toISO8601(), 'DATE_FORMAT'); ?>" placeholder="<?php echo JText::_('Vencimento CR') ?>" />
+                                    <button class="btn btn-outline-primary" type="button">
+                                        <i class="bx bx-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label><?php echo JText::_('Status do CR:') ?></label>
+                                <fieldset>
+                                    <?php echo JHTML::_('select.booleanlist', 'stacr_pf', '', $this->item->stacr_pf, 'Ativo', 'Cancelado'); ?>
+                                </fieldset>
+                            </div>  
 
-                                    <div class="form-group">
-                                        <fieldset class="group-border">
-                                            <legend class="group-border">Atividades do CR</legend>
-                                            <fieldset class="radio" for="id_payment_enroll">
-                                                <?php //echo JHTML::_('select.checkboxlist',  $this->atividades, 'id_atividade','class="group-radio"', 'value', 'text', $this->itemAtividades ); ?>
-                                            </fieldset>
-                                        </fieldset>
-                                    </div>
-
-
+                            <div class="form-group">
+                                <fieldset class="group-border">
+                                    <legend class="group-border">Atividades do CR</legend>
+                                    <fieldset class="radio" for="id_payment_enroll">
+                                        <?php //echo JHTML::_('select.checkboxlist',  $this->atividades, 'id_atividade','class="group-radio"', 'value', 'text', $this->itemAtividades ); ?>
+                                    </fieldset>
+                                </fieldset>
+                            </div>
                         </div>    
                     </div>
                 </div>
