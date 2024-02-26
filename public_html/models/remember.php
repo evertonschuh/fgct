@@ -125,13 +125,12 @@ class EASistemasModelRemember extends JModel
 
 	function rememberUser()
 	{
-		if (empty($this->_data))
-			$this->getData();
+		$post = JRequest::get('post');
 
 		$query = $this->_db->getQuery(true);
 		$query->select($this->_db->quoteName(array('username', 'block')));
 		$query->from($this->_db->quoteName('#__users'));
-		$query->where($this->_db->quoteName('username') . ' = ' . $this->_db->quote($this->_data->email_remember));
+		$query->where($this->_db->quoteName('username') . ' = ' . $this->_db->quote($post['username']));
 		$this->_db->setQuery($query);
 		if ((bool) $result = $this->_db->loadObject())
 			return $result;
@@ -217,28 +216,19 @@ class EASistemasModelRemember extends JModel
 
 	function sendMail()
 	{
-		if (empty($this->_data))
-			$this->getData();
+		$post = JRequest::get('post');
 
 		$mailer = JFactory::getMailer();
 
 		$query	= $this->_db->getQuery(true);
-		$query->select('id');
+		$query->select($this->_db->quoteName(array('username', 'id', 'email', 'name')));
 		$query->from($this->_db->quoteName('#__users'));
-		$query->where($this->_db->quoteName('username') . ' = ' . $this->_db->quote($this->_data->email_remember));
+		$query->where($this->_db->quoteName('username') . ' = ' . $this->_db->quote($post['username']));
 
 		$this->_db->setQuery((string) $query);
-		$userId = $this->_db->loadResult();
+		$userLoad = $this->_db->loadResult();
 
-		$user = JUser::getInstance($userId);
-
-		/*
-		if (!$this->checkResetLimit($user)) {
-			$resetLimit = (int) JFactory::getApplication()->getParams()->get('reset_time');
-			$this->setError(JText::plural('COM_USERS_REMIND_LIMIT_ERROR_N_HOURS', $resetLimit));
-			return false;
-		}
-		*/
+		$user = JUser::getInstance($userLoad->id);
 
 		// Set the confirmation token.
 		$token = JApplication::getHash(JUserHelper::genRandomPassword());
@@ -268,11 +258,8 @@ class EASistemasModelRemember extends JModel
 
 		$link =   $base . JRoute::_('index.php?view=remember&layout=confirm', false);
 
-		$recipient = $this->_data->email_remember;
-		$subject = JText::sprintf(
-			'OEMPREGO_MODEL_REMEMBER_SENDMAIL_SUBJECT',
-			$username
-		);
+		$recipient = $userLoad->email;
+		$subject = 'Pedido de redefinição de senha para ' . $username;
 
 		$emailBody = JText::sprintf(
 			'OEMPREGO_MODEL_REMEMBER_SENDMAIL_BODY',

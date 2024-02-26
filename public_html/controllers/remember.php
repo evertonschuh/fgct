@@ -55,18 +55,18 @@ class EASistemasControllerRemember extends JController
 		if ($model->testCaptcha()) {
 			$userinfo = $model->rememberUser();
 			if($userinfo === false) {
-				$msg = JText::_('OEMPREGO_CONTROLLER_REMEMBER_EMAL_ERROR');	
-				$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'alert-danger');				
+				$msg = JText::_('Não encontramos nenhum usuário com este nome de acesso.');	
+				$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');				
 			}
 			elseif($userinfo->block != '0') {
-				$msg = JText::_('OEMPREGO_CONTROLLER_REMEMBER_BLOCK_ERROR');	
-				$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'alert-danger');
+				$msg = JText::_('Parece qie existe um bloqueio para este nome de usuário. Entre en contato com a FGCT');	
+				$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
 			}
 			else {
 				if ($model->sendMail()) {
 				
 					$msg = JText::_('OEMPREGO_CONTROLLER_REMEMBER_SENDMAIL');	
-					$this->setRedirect(JRoute::_('index.php?view=remember&layout=confirm', false), $msg, 'alert-info');
+					$this->setRedirect(JRoute::_('index.php?view=remember&layout=confirm', false), $msg, 'info');
 				}
 				else {
 					$msg = JText::_('OEMPREGO_CONTROLLER_REMEMBER_SENDMAIL_ERROR');	
@@ -75,8 +75,8 @@ class EASistemasControllerRemember extends JController
 			}
 		}
 		else {
-			$msg = JText::_('OEMPREGO_CONTROLLER_REMEMBER_CAPTCHA_ERROR');	
-			$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'alert-danger');
+			$msg = JText::_('Você deve ser aprovado no teste Captcha para prosseguir');	
+			$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
 		}
 	}
 	
