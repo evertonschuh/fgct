@@ -226,7 +226,8 @@ class EASistemasModelRemember extends JModel
 		$query->where($this->_db->quoteName('username') . ' = ' . $this->_db->quote($post['username']));
 
 		$this->_db->setQuery((string) $query);
-		$userLoad = $this->_db->loadResult();
+		if(!(boolean) $userLoad = $this->_db->loadObject())
+			return false;
 
 		$user = JUser::getInstance($userLoad->id);
 
@@ -239,10 +240,121 @@ class EASistemasModelRemember extends JModel
 
 		// Save the user to the database.
 		if (!$user->save(true)) {
-
 			return new JException(JText::sprintf('COM_USERS_USER_SAVE_FAILED', $user->getError()), 500);
 		}
 
+		$options['id_mailmessage_occurrence']='1';
+		$automaticMessages = $this->getAutomaticMessage($options);	
+
+		if(!count($automaticMessages)>0 )
+			return false;
+			  
+		$base = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
+
+		$data = array();
+		$data['NOME_CLIENTE']		= $$userLoad->name;                                                 
+		$data['CODIGO_ATIVACAO']		= $hashedToken;
+		$data['LINK_ATIVACAO'] =  $base . JRoute::_('index.php?view=remember&layout=confirm&code='.$hashedToken, false);
+
+		if(count($automaticMessages)>0):
+			foreach($automaticMessages as $automaticMessage):
+				$mailer = JFactory::getMailer(); 
+				
+				$mailer->isHTML(true);
+				$mailer->Encoding = 'base64';
+
+				if(!empty($automaticMessage->replyto_mailmessage))
+					$mailer->addReplyTo($automaticMessage->replyto_mailmessage);
+
+				$emailBody = $automaticMessage->theme_mailmessage_theme;
+					
+				preg_match_all('/<img[^>]+>/i',$emailBody, $result); 
+				$result = $result[0];
+				if(count($result)>0) 
+				{
+
+					$imgs = array();
+					foreach( $result as $img_tag)
+					{
+						preg_match_all('/(src)=("[^"]*")/i',$img_tag, $imgs[$img_tag]);
+					}
+					
+					if( count($imgs)>0 )
+					{
+						$i = 0;
+						foreach( $imgs as $key => $img)
+						{
+						$imgUrl = str_replace('"', '', $img[2][0]);
+							
+						$mailer->addEmbeddedImage( JPATH_BASE .DS. str_replace('/', DS, $imgUrl) , 'image'.$i, 'image'.$i.'.jpg', 'base64', 'image/jpg' );                   
+						$newkey = str_replace($imgUrl, 'cid:image'.$i, $key);
+						$emailBody =  str_replace($key, $newkey, $emailBody);
+						}  
+					}  
+					
+				}
+				
+				$bodyMessage = $automaticMessage->mensagem_mailmessage;
+
+				if (preg_match_all("/{{SE}}(.*?){{\/SE}}/", $bodyMessage, $m)) {
+					foreach ($m[1] as $i => $varname) {
+						if (preg_match_all("/{{(.*?)}}/", $varname, $g)) {
+							foreach ($g[1] as $y => $varname1) {
+								$SeText ='';
+								if(!empty($data[$varname1]))
+									$SeText = str_replace($g[0][$y], sprintf($data[$varname1], $varname1), $varname);
+
+								$bodyMessage = str_replace($m[0][$i], $SeText, $bodyMessage);
+							}
+						}
+					}
+				}
+				
+				if (preg_match_all("/{{(.*?)}}/", $bodyMessage, $m)) {
+					foreach ($m[1] as $i => $varname) {
+						$bodyMessage = str_replace($m[0][$i], sprintf($data[$varname], $varname), $bodyMessage);
+					}
+				}
+				
+				$emailBody = str_replace('{{MENSAGEM}}', $bodyMessage, $emailBody);
+
+				$mailer->setBody($emailBody);
+				
+				$subject = $automaticMessage->subject_mailmessage;
+				$mailer->setSubject($subject);
+				
+				$recipient = $this->_user->get('email');
+				$mailer->addRecipient($recipient);
+				
+				if($automaticMessage->account_mailmessage && $automaticMessage->password_mailmessage): 
+					$mailer->useSMTP('1', 'smtp.gmail.com', $automaticMessage->account_mailmessage, $automaticMessage->password_mailmessage, 'ssl', '465');
+					$mailer->setSender( array( $automaticMessage->account_mailmessage, $automaticMessage->name_account_mailmessage) );
+				else:
+					$fromname	= $this->_app->getCfg('fromname');
+					$mailfrom	= $this->_app->getCfg('mailfrom');
+					$mailer->setSender( array( $mailfrom, $fromname ) );
+				endif;	
+
+
+				$Bcc[] = 'everton-schuh@hotmail.com';		
+				$mailer->addBcc($Bcc);
+
+				$send = $mailer->Send();
+			endforeach;
+		endif;	
+
+
+
+		
+		if ($send !== true)
+			return false;
+		else
+			return true;
+
+
+
+
+/*
 		$name = $user->name;
 		$username = $user->username;
 		$fromname	= $this->_app->getCfg('fromname');
@@ -284,8 +396,11 @@ class EASistemasModelRemember extends JModel
 		if ($send !== true)
 			return false;
 		else
-			return true;
+			return true;*/
 	}
+
+
+	
 
 	function confirmCod()
 	{
@@ -362,4 +477,22 @@ class EASistemasModelRemember extends JModel
 
 		//$this->setPass
 	}
+
+
+
+	function getAutomaticMessage( $options = array() )
+	{	
+	
+		$query = $this->_db->getQuery(true);	
+		$query->select('*');	
+		$query->from($this->_db->quoteName('#__intranet_mailmessage'));
+		$query->leftJoin($this->_db->quoteName('#__intranet_mailmessage_theme') . ' USING ('.$this->_db->quoteName('id_mailmessage_theme').')');
+		$query->leftJoin($this->_db->quoteName('#__intranet_mailmessage_occurrence') . ' USING ('.$this->_db->quoteName('id_mailmessage_occurrence').')');
+		$query->where( $this->_db->quoteName('id_mailmessage_occurrence') . '=' . $this->_db->quote( $options['id_mailmessage_occurrence'] ) );
+
+		$this->_db->setQuery($query);
+		return $this->_db->loadObjectList();
+	}
+
+
 }
