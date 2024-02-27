@@ -322,7 +322,7 @@ class EASistemasModelRemember extends JModel
 				$subject = $automaticMessage->subject_mailmessage;
 				$mailer->setSubject($subject);
 				
-				$recipient = $this->_user->get('email');
+				$recipient = $userLoad->email;
 				$mailer->addRecipient($recipient);
 				
 				if($automaticMessage->account_mailmessage && $automaticMessage->password_mailmessage): 
@@ -335,8 +335,8 @@ class EASistemasModelRemember extends JModel
 				endif;	
 
 
-				$Bcc[] = 'everton-schuh@hotmail.com';		
-				$mailer->addBcc($Bcc);
+				//$Bcc[] = 'everton-schuh@hotmail.com';		
+				//$mailer->addBcc($Bcc);
 
 				$send = $mailer->Send();
 			endforeach;
