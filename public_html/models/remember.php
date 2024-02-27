@@ -246,7 +246,8 @@ class EASistemasModelRemember extends JModel
 
 		if(!count($automaticMessages)>0 )
 			return false;
-			  
+		
+		$uri = JURI::getInstance();
 		$base = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
 
 		$data = array();
