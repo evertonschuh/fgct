@@ -217,9 +217,7 @@ class EASistemasModelRemember extends JModel
 	function sendMail()
 	{
 		$post = JRequest::get('post');
-
-		$mailer = JFactory::getMailer();
-
+		
 		$query	= $this->_db->getQuery(true);
 		$query->select($this->_db->quoteName(array('username', 'id', 'email', 'name')));
 		$query->from($this->_db->quoteName('#__users'));
@@ -252,14 +250,14 @@ class EASistemasModelRemember extends JModel
 		$base = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
 
 		$data = array();
-		$data['NOME_CLIENTE']		= $$userLoad->name;                                                 
-		$data['CODIGO_ATIVACAO']		= $hashedToken;
+		$data['NOME_CLIENTE'] = $$userLoad->name;                                                 
+		$data['CODIGO_ATIVACAO'] = $hashedToken;
 		$data['LINK_ATIVACAO'] =  $base . JRoute::_('index.php?view=remember&layout=confirm&code='.$hashedToken, false);
 
 		if(count($automaticMessages)>0):
 			foreach($automaticMessages as $automaticMessage):
 				$mailer = JFactory::getMailer(); 
-				
+				exit;
 				$mailer->isHTML(true);
 				$mailer->Encoding = 'base64';
 
