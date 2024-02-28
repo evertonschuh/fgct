@@ -50,7 +50,8 @@ if (!file_exists($filename) || (file_exists($filename) && JFactory::getDate(date
           <div class="mb-3 fv-plugins-icon-container">
             <label for="email" class="form-label">Usuário</label>
             <input type="text" class="form-control required" id="username" name="username" placeholder="Escreva seu usuário" autofocus />
-          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div></div>
+            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+          </div>
           
           <div class="mb-3 form-password-toggle">
             <div class="d-flex justify-content-between">

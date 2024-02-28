@@ -29,12 +29,6 @@ if (!file_exists($filename) || (file_exists($filename) && JFactory::getDate(date
     <div class="authentication-inner row m-0">
       <!-- /Left Text -->
       <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center cover">
-      <?php /*
-      <div class="w-100 d-flex justify-content-center">
-          <img src="images/login/atirador001.jpg" class="img-fluid cover" alt="Login image" >
-        </div>
-        */ ?>
-      </div>
       <!-- /Left Text -->
       <!-- Login -->
       <div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
@@ -48,8 +42,8 @@ if (!file_exists($filename) || (file_exists($filename) && JFactory::getDate(date
           <div class="mb-3 fv-plugins-icon-container">
             <label for="email" class="form-label">Usuário</label>
             <input type="text" class="form-control required" id="username" name="username" placeholder="Escreva seu usuário" autofocus />
-          <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
-        </div>
+            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+          </div>
           <div class="mb-3 d-flex align-items-center justify-content-center">  
             <?php 
               JPluginHelper::importPlugin('captcha');

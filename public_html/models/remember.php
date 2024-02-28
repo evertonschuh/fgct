@@ -250,10 +250,13 @@ class EASistemasModelRemember extends JModel
 		$uri = JURI::getInstance();
 		$base = $uri->toString(array('scheme', 'user', 'pass', 'host', 'port'));
 
+
+
+
 		$data = array();
 		$data['NOME_CLIENTE'] = $userLoad->name;                                                 
 		$data['CODIGO_ATIVACAO'] = $hashedToken;
-		$data['LINK_ATIVACAO'] =  $base . JRoute::_('index.php?view=remember&layout=confirm&code='.$hashedToken, false);
+		$data['LINK_ATIVACAO'] =  $base . JRoute::_('index.php?view=remember&layout=confirm&c='.$hashedToken.'&u='.$userLoad->username, false);
 
 		if(count($automaticMessages)>0):
 			foreach($automaticMessages as $automaticMessage):
