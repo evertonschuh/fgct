@@ -53,7 +53,7 @@ if (!file_exists($filename) || (file_exists($filename) && JFactory::getDate(date
           </div>
           <div class="mb-3 fv-plugins-icon-container">
             <label for="token_remember" class="form-label">Código</label>
-            <input type="text" class="form-control required" id="token_remember" name="token_remember" placeholder="Informe o código" value="<?php echo JRequest::getVar('u', '', 'GET'); ?>" />
+            <input type="text" class="form-control required" id="token_remember" name="token_remember" placeholder="Informe o código" value="<?php echo JRequest::getVar('c', '', 'GET'); ?>" />
             <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
           </div>
 
