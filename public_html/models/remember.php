@@ -282,7 +282,7 @@ class EASistemasModelRemember extends JModel
 						{
 						$imgUrl = str_replace('"', '', $img[2][0]);
 							
-						$mailer->addEmbeddedImage( JPATH_BASE .DS. str_replace('/', DS, $imgUrl) , 'image'.$i, 'image'.$i.'.jpg', 'base64', 'image/jpg' );                   
+						$mailer->addEmbeddedImage( JPATH_ADMIN .DS. str_replace('/', DS, $imgUrl) , 'image'.$i, 'image'.$i.'.jpg', 'base64', 'image/jpg' );                   
 						$newkey = str_replace($imgUrl, 'cid:image'.$i, $key);
 						$emailBody =  str_replace($key, $newkey, $emailBody);
 						}  
