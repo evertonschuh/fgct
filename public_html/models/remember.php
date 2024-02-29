@@ -202,7 +202,7 @@ class EASistemasModelRemember extends JModel
 			return false;
 
 		$query	= $this->_db->getQuery(true);
-		$query->select($this->_db->quoteName(array('username', 'id', 'email', 'name', 'token_remember')));
+		$query->select($this->_db->quoteName(array('username', 'id', 'email', 'name')));
 		$query->from($this->_db->quoteName('#__users'));
 		$query->where($this->_db->quoteName('username') . ' = ' . $this->_db->quote($username));
 		$this->_db->setQuery($query);
