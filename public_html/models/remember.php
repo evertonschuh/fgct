@@ -51,21 +51,6 @@ class EASistemasModelRemember extends JModel
 		$this->_app->setUserState('cnpj_pj', $cnpj_pj);
 	}
 
-
-	function getData()
-	{
-		if (is_null($this->_data))
-			$this->_data = new stdClass();
-
-		$this->_data->email_remember = $this->_app->getUserStateFromRequest('email_remember');
-		$this->_data->type_doc = $this->_app->getUserStateFromRequest('type_doc');
-		$this->_data->cpf_pf = $this->_app->getUserStateFromRequest('cpf_pf');
-		$this->_data->cnpj_pj = $this->_app->getUserStateFromRequest('cnpj_pj');
-		$this->_data->token_remember = $this->_app->getUserStateFromRequest('token_remember');
-
-		return $this->_data;
-	}
-
 	function getMailResult()
 	{
 		return $this->_app->getUserStateFromRequest('__users');
@@ -73,8 +58,7 @@ class EASistemasModelRemember extends JModel
 
 	function getMail()
 	{
-		if (empty($this->_data))
-			$this->getData();
+
 
 		$query = $this->_db->getQuery(true);
 		$query->select($this->_db->quoteName(array('username', 'block')));
@@ -140,9 +124,6 @@ class EASistemasModelRemember extends JModel
 
 	function activatorMail()
 	{
-
-		if (empty($this->_data))
-			$this->getData();
 
 		$query = $this->_db->getQuery(true);
 		$query->select($this->_db->quoteName(array('username', 'activation', 'email', 'name')));
@@ -214,19 +195,32 @@ class EASistemasModelRemember extends JModel
 
 	}
 
-	function sendMail()
+	function getInfoUser($username = null)
 	{
-		$post = JRequest::get('post');
-		
-		$query	= $this->_db->getQuery(true);
-		$query->select($this->_db->quoteName(array('username', 'id', 'email', 'name')));
-		$query->from($this->_db->quoteName('#__users'));
-		$query->where($this->_db->quoteName('username') . ' = ' . $this->_db->quote($post['username']));
 
-		$this->_db->setQuery((string) $query);
+		if(empty($username))
+			return false;
+
+		$query	= $this->_db->getQuery(true);
+		$query->select($this->_db->quoteName(array('username', 'id', 'email', 'name', 'token_remember')));
+		$query->from($this->_db->quoteName('#__users'));
+		$query->where($this->_db->quoteName('username') . ' = ' . $this->_db->quote($username));
+		$this->_db->setQuery($query);
+
 		if(!(boolean) $userLoad = $this->_db->loadObject())
 			return false;
 
+		return $userLoad;
+	}
+
+	function sendMail()
+	{
+
+		$post = JRequest::get('post');
+
+		if( !(boolean) $userLoad = $this->getInfoUser($post['username']))
+			return false;
+		
 		$user = JUser::getInstance($userLoad->id);
 
 		// Set the confirmation token.
@@ -406,10 +400,12 @@ class EASistemasModelRemember extends JModel
 
 	function confirmCod()
 	{
-		$token_remember	= JRequest::getVar('token_remember', '', 'post');
 
-		if (empty($this->_data))
-			$this->getData();
+		$post = JRequest::get('post');
+
+		if( !(boolean) $userLoad = $this->getInfoUser($post['username']))
+			return false;
+		$token_remember	= JRequest::getVar('token_remember', '', 'post');
 
 
 		//

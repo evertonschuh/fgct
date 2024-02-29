@@ -65,12 +65,12 @@ class EASistemasControllerRemember extends JController
 			else {
 				if ($model->sendMail()) {
 				
-					$msg = JText::_('OEMPREGO_CONTROLLER_REMEMBER_SENDMAIL');	
+					$msg = JText::_('Enviamos uma mensagem para seu endereço de e-mail, contendo um codigo que permitirá resetar sua senha.');	
 					$this->setRedirect(JRoute::_('index.php?view=remember&layout=confirm', false), $msg, 'info');
 				}
 				else {
-					$msg = JText::_('OEMPREGO_CONTROLLER_REMEMBER_SENDMAIL_ERROR');	
-					$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'alert-danger');
+					$msg = JText::_('Ocorreu um erro ao tentar enviar a mensagem com o código.');	
+					$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
 				}	
 			}
 		}
