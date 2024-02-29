@@ -52,7 +52,7 @@ class EASistemasControllerRemember extends JController
 		JSession::checkToken('post') or jexit(JText::_('JINVALID_TOKEN'));
 		$model = $this->getModel('remember');
 		//$model->setData();
-		//if ($model->testCaptcha()) {
+		if ($model->testCaptcha()) {
 			$userinfo = $model->rememberUser();
 			if($userinfo === false) {
 				$msg = JText::_('Não encontramos nenhum usuário com este nome de acesso.');	
@@ -73,11 +73,11 @@ class EASistemasControllerRemember extends JController
 					$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
 				}	
 			}
-	//	}
-	//	else {
-	//		$msg = JText::_('Você deve ser aprovado no teste Captcha para prosseguir');	
-	//		$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
-	//	}
+		}
+		else {
+			$msg = JText::_('Você deve ser aprovado no teste Captcha para prosseguir');	
+			$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
+		}
 	}
 	
 	function confirm()
