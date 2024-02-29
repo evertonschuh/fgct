@@ -52,6 +52,7 @@ class EASistemasViewCalendar extends JView
 			border-color: '.$this->getContrastColor($modalidade->color_modalidade).'
 		}
 		.light-style .fc-event-'.$modalidade->id_modalidade.'.fc-list-event .fc-list-event-dot {
+			margin-top: 5px;
 			border-color: '.$modalidade->color_modalidade.' !important;
 		}
 		.dark-style .fc-event-'.$modalidade->id_modalidade.':not(.fc-list-event) {
