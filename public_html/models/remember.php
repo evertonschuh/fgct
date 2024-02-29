@@ -323,15 +323,38 @@ class EASistemasModelRemember extends JModel
 			return false;
 	}
 
+	function getDecode($t = null) 
+	{
+
+		if(empty($t))
+			return false;
+
+		$t	= JRequest::getVar('t', '', 'GET');
+		$value = base64_decode( base64_decode( strrev( '=' . $t ) ) ); 
+		$values = explode('@/#@', $value);
+
+		$response['username'] = $values[1];
+		$response['token_remember'] = $values[0];
+
+		return $response;
+
+	}
+
 	function confirmCod()
 	{
 
 		$post = JRequest::get('post');
+		$t	= JRequest::getVar('t', '', 'GET');
 
 		if (empty($post['token_remember']))
-			return false;
+			if(empty($t))
+				return false;
+			else
+				$post = $this->getDecode($t);
 
-		if ((boolean) $this->confirmToken($post)) 
+
+
+		if ((boolean) $this->confirmToken($post)) 	
 			return true;
 
 		return false;
@@ -339,22 +362,16 @@ class EASistemasModelRemember extends JModel
 
 	function resetPassword()
 	{
-		if (empty($this->_data))
-			$this->getData();
 
 		$post = JRequest::get('post');
-
 		$t	= JRequest::getVar('t', '', 'GET');
-		$value = base64_decode( base64_decode( strrev( '=' . $t ) ) ); 
-		$values = explode('@/#@', $value);
+		
+		$data = $this->getDecode($t);
 
-		$post['username'] = $values[1];
-		$post['token_remember'] = $values[0];
-
-		if (!(boolean) $this->confirmToken($post)) 
+		if (!(boolean) $this->confirmToken($data)) 
 			return false;
 
-		$userInfo =	$this->getInfoUser($post['username']);
+		$userInfo =	$this->getInfoUser($data['username']);
 
 
 		if (!empty($userInfo)) {

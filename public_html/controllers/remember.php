@@ -19,6 +19,7 @@ class EASistemasControllerRemember extends JController
 		if ( $user->get('guest'))
 		{
 			$layout	= JFactory::getApplication()->input->get('layout');
+			//exit;
 			switch($layout)
 			{
 				case 'complete':
@@ -31,6 +32,7 @@ class EASistemasControllerRemember extends JController
 				break;
 				case 'result':
 					$model = $this->getModel('remember');
+					exit;
 					if ( !$model->getMail() ) {
 						$this->setRedirect(JRoute::_('index.php?view=remember&layout=rememail', false));
 					
@@ -51,7 +53,7 @@ class EASistemasControllerRemember extends JController
 	{
 		JSession::checkToken('post') or jexit(JText::_('JINVALID_TOKEN'));
 		$model = $this->getModel('remember');
-		//if ($model->testCaptcha()) {
+		if ($model->testCaptcha()) {
 			$userinfo = $model->rememberUser();
 			if($userinfo === false) {
 				$msg = JText::_('Não encontramos nenhum usuário com este nome de acesso.');	
@@ -72,11 +74,11 @@ class EASistemasControllerRemember extends JController
 					$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
 				}	
 			}
-		//}
-	//	else {
-		//	$msg = JText::_('Você deve ser aprovado no teste Captcha para prosseguir');	
-	//		$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
-	//	}
+		}
+		else {
+			$msg = JText::_('Você deve ser aprovado no teste Captcha para prosseguir');	
+			$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
+		}
 	}
 	
 	function confirm()
