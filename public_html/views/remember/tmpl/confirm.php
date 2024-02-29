@@ -48,7 +48,7 @@ if (!file_exists($filename) || (file_exists($filename) && JFactory::getDate(date
 
           <div class="mb-3 fv-plugins-icon-container">
             <label for="email_remember" class="form-label">Usuário</label>
-            <input type="text" class="form-control required" id="email_remember" name="email_remember" placeholder="Escreva seu usuário" value="<?php echo JRequest::getVar('u', '', 'GET'); ?>" />
+            <input type="text" class="form-control required" id="username" name="username" placeholder="Escreva seu usuário" value="<?php echo JRequest::getVar('u', '', 'GET'); ?>" />
             <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
           </div>
           <div class="mb-3 fv-plugins-icon-container">

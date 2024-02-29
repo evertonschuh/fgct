@@ -51,15 +51,14 @@ class EASistemasControllerRemember extends JController
 	{
 		JSession::checkToken('post') or jexit(JText::_('JINVALID_TOKEN'));
 		$model = $this->getModel('remember');
-		//$model->setData();
-		if ($model->testCaptcha()) {
+		//if ($model->testCaptcha()) {
 			$userinfo = $model->rememberUser();
 			if($userinfo === false) {
 				$msg = JText::_('Não encontramos nenhum usuário com este nome de acesso.');	
 				$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');				
 			}
 			elseif($userinfo->block != '0') {
-				$msg = JText::_('Parece qie existe um bloqueio para este nome de usuário. Entre en contato com a FGCT');	
+				$msg = JText::_('Parece que existe um bloqueio para este nome de usuário. Entre en contato com a FGCT');	
 				$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
 			}
 			else {
@@ -73,35 +72,34 @@ class EASistemasControllerRemember extends JController
 					$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
 				}	
 			}
-		}
-		else {
-			$msg = JText::_('Você deve ser aprovado no teste Captcha para prosseguir');	
-			$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
-		}
+		//}
+	//	else {
+		//	$msg = JText::_('Você deve ser aprovado no teste Captcha para prosseguir');	
+	//		$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
+	//	}
 	}
 	
 	function confirm()
 	{
 		JSession::checkToken('post') or jexit(JText::_('JINVALID_TOKEN'));
 		$model = $this->getModel('remember');
-		$model->setData();
-		$userinfo = $model->rememberMail();
+		$userinfo = $model->rememberUser();
 		if($userinfo === false) {
-			$msg = JText::_('OEMPREGO_CONTROLLER_REMEMBER_EMAL_ERROR');	
-			$this->setRedirect(JRoute::_('index.php?view=remember&layout=confirm', false), $msg, 'alert-danger');				
+			$msg = JText::_('Não encontramos nenhum usuário com este nome de acesso.');	
+			$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');				
 		}
 		elseif($userinfo->block != '0') {
-			$msg = JText::_('OEMPREGO_CONTROLLER_REMEMBER_BLOCK_ERROR');	
-			$this->setRedirect(JRoute::_('index.php?view=remember&layout=confirm', false), $msg, 'alert-danger');
+			$msg = JText::_('Parece que existe um bloqueio para este nome de usuário. Entre en contato com a FGCT');	
+			$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
 		}
 		else {
 			if ($model->confirmCod()) {
-				$msg = JText::_('OEMPREGO_CONTROLLER_REMEMBER_COD');	
-				$this->setRedirect(JRoute::_('index.php?view=remember&layout=reset', false), $msg, 'alert-info' );
+				$msg = JText::_('Pronto! Agora é só cadastrar sua nova senha.');
+				$this->setRedirect(JRoute::_('index.php?view=remember&layout=reset&t=' . str_replace('=', '', strrev( base64_encode(base64_encode( $model->_code ) ) ) )	, false), $msg, 'info' );
 			}
 			else {
-				$msg = JText::_('OEMPREGO_CONTROLLER_REMEMBER_COD_ERROR');	
-				$this->setRedirect(JRoute::_('index.php?view=remember&layout=confirm', false), $msg, 'alert-danger');
+				$msg = JText::_('Ocorreu um erro ao tentar validar o código informado.');	
+				$this->setRedirect(JRoute::_('index.php?view=remember&layout=confirm', false), $msg, 'danger');
 			}	
 		}
 	}
@@ -111,12 +109,12 @@ class EASistemasControllerRemember extends JController
 		JSession::checkToken('post') or jexit(JText::_('JINVALID_TOKEN'));
 		$model = $this->getModel('remember');
 		if ($model->resetPassword()) {
-			$msg = JText::_('OEMPREGO_CONTROLLER_REMEMBER_RESET_COMPLET');	
-			$this->setRedirect(JRoute::_('index.php?view=login', false), $msg, 'alert-success');
+			$msg = JText::_('Nova senha cadastrada com sucesso!');	
+			$this->setRedirect(JRoute::_('index.php?view=login', false), $msg, 'success');
 		}
 		else {
-			$msg = JText::_('OEMPREGO_CONTROLLER_REMEMBER_RESET_ERROR');	
-			$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'alert-danger');
+			$msg = JText::_('Ocorreu um erro ao tentar cadastrar sua nova senha.');	
+			$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
 		}	
 
 	}
