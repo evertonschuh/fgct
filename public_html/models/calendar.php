@@ -71,6 +71,7 @@ class EASistemasModelCalendar extends JModel {
 			$direction = $this->getState('list.direction');
 			*/
 			$query->group($this->_db->quoteName('id_modalidade') . ' ASC' );
+			$query->group($this->_db->quoteName('id_etapa') . ' ASC' );
 			$query->order($this->_db->quoteName('data_beg_etapa') . ' ASC' );
 
 			$this->_db->setQuery($query);
