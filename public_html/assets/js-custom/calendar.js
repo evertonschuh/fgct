@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 month: "Mês",
                 week: "Semana",
                 day: "Hoje",
-                list: "Lista"
+                list: "Ano",
             },
             editable: false,
             eventLimit: false,
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
             },
             headerToolbar: {
                 start: "sidebarToggle, prev,next, title",
-                end: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+                end: "dayGridMonth,listYear"
             },
             direction: direction,
             initialDate: new Date,
