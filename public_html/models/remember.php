@@ -353,7 +353,6 @@ class EASistemasModelRemember extends JModel
 				$post = $this->getDecode($t);
 
 
-
 		if ((boolean) $this->confirmToken($post)) 	
 			return true;
 
