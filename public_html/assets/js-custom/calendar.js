@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let i = new Calendar(v,{
             initialView: "dayGridMonth",
             locale: "pt-br",
+            timeZone: "America/Sao_Paulo",
             buttonHints:{
                 prev:"$0 Anterior",
                 next:"Próximo $0"
@@ -90,6 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
             },
             editable: false,
             eventLimit: false,
+            eventOverlap: false,
             displayEventTime: this.displayEventTime,
             moreLinkHint(e){return`Ver mais ${e} provas`},
             events: function(e, t) {
@@ -107,10 +109,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 }))
             },
             plugins: [dayGridPlugin, interactionPlugin, listPlugin, timegridPlugin],
-            editable: !0,
-            dragScroll: !0,
+           // editable: !0,
+            dragScroll: true,
             dayMaxEvents: 2,
-            eventResizableFromStart: !0,
+            eventResizableFromStart: true,
             customButtons: {
                 sidebarToggle: {
                     text: "Sidebar"

@@ -35,9 +35,9 @@ class EASistemasModelCalendar extends JModel {
 														'data_end_etapa',
 														'insc_beg_etapa',
 														'insc_end_etapa',
-														'id_campeonato',
-														'name_campeonato',
-														'ano_campeonato',
+														//'id_campeonato',
+														//'name_campeonato',
+														//'ano_campeonato',
 														'id_modalidade',
 														'name_modalidade',
 														'#__ranking_etapa.ordering', 
@@ -45,7 +45,8 @@ class EASistemasModelCalendar extends JModel {
 														'#__ranking_etapa.checked_out_time'
 														)));				 
 			
-			$query->select( 'CONCAT(smallname_modalidade, \'  -  \', name_etapa) AS name_calendar' );											
+			$query->select( 'CONCAT(smallname_modalidade, \'  -  \', name_etapa) AS name_calendar' );		
+			$query->select( 'GROUP_CONCAT(name_campeonato) AS name_campeonatos' );											
 			$query->from( $this->_db->quoteName('#__ranking_etapa') );
 			$query->innerJoin( $this->_db->quoteName('#__ranking_campeonato') . 'USING('. $this->_db->quoteName('id_campeonato').')' );
 			$query->innerJoin( $this->_db->quoteName('#__ranking_modalidade') . 'USING('. $this->_db->quoteName('id_modalidade').')' );
@@ -70,8 +71,8 @@ class EASistemasModelCalendar extends JModel {
 			$ordering = $this->getState('list.ordering');
 			$direction = $this->getState('list.direction');
 			*/
-			$query->group($this->_db->quoteName('id_modalidade') . ' ASC' );
-			$query->group($this->_db->quoteName('id_etapa') . ' ASC' );
+			$query->group($this->_db->quoteName('id_modalidade'));
+			$query->group($this->_db->quoteName('data_beg_etapa'));
 			$query->order($this->_db->quoteName('data_beg_etapa') . ' ASC' );
 
 			$this->_db->setQuery($query);

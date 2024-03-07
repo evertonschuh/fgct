@@ -177,6 +177,27 @@ endif;
                   <div data-i18n="Minhas Armas">Minhas Armas</div>
                 </a>
               </li>
+              <li class="menu-item">
+                <a href="<?php echo JRoute::_('index.php?view=documents');?>" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-file" ></i>
+                  <div data-i18n="Meus Documentos">Meus Documentos</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="<?php echo JRoute::_('index.php?view=payments');?>" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-dollar-circle"></i>
+                  <div data-i18n="Cobranças">Minhas Cobranças</div>
+                </a>
+              </li>
+              <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Serviços</span>
+              </li> 
+              <li class="menu-item">
+                <a href="<?php echo JRoute::_('index.php?view=requests');?>" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-archive-in"></i>
+                  <div data-i18n="Pedidos">Serviços</div>
+                </a>
+              </li>
               <?php /*
               <li class="menu-item">
                 <a href="<?php echo JRoute::_('index.php?view=access');?>" class="menu-link">
@@ -185,22 +206,6 @@ endif;
                 </a>
               </li>
               */?>
-
-              <li class="menu-header small text-uppercase">
-                <span class="menu-header-text">Outros Serviços</span>
-              </li>
-              <li class="menu-item">
-                <a href="<?php echo JRoute::_('index.php?view=payments');?>" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-dollar-circle"></i>
-                  <div data-i18n="Cobranças">Cobranças</div>
-                </a>
-              </li>
-              <li class="menu-item">
-                <a href="<?php echo JRoute::_('index.php?view=documents');?>" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-file" ></i>
-                  <div data-i18n="Documentos">Documentos</div>
-                </a>
-              </li>
               <?php /*
               <li class="menu-item">
                 <a href="<?php echo JRoute::_('index.php?view=classifi');?>" class="menu-link">

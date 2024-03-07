@@ -13,6 +13,8 @@ class EASistemasViewCalendar extends JView
 
 		$this->items = $this->get('Items');
 		$this->modalidades = $this->get('Modalidades');
+		$this->_app 	= JFactory::getApplication(); 
+		$this->_siteOffset = $this->_app->getCfg('offset');
 
 		$document 			=  JFactory::getDocument();
 		$document->addStyleSheet('/assets/vendor/libs/fullcalendar/fullcalendar.css');
@@ -93,12 +95,13 @@ class EASistemasViewCalendar extends JView
 				id: '.$i.',
 				url: "",
 				title: "'.$item->name_calendar.'",
-				start: "'.$item->data_beg_etapa.'",
-				end: "'.$item->data_end_etapa.'",
+				start: "'.JFactory::getDate($item->data_beg_etapa, $this->_siteOffset )->toFormat('%Y-%m-%d', true) .'",
+				end: "'. JFactory::getDate($item->data_end_etapa .' + 01 day ', $this->_siteOffset )->toFormat('%Y-%m-%d', true)  . '",
 				allDay: 1,
 				extendedProps: {
 					calendar: "'.$item->id_modalidade.'"
-				}
+				},
+				description: "Lecture"
 			},';
 		
 		endforeach;
