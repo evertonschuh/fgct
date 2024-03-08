@@ -117,19 +117,32 @@ endif;
                                 <ul class="timeline ms-2">
                                     <?php foreach($this->serviceMaps as $i => $seriveMap): ?>
                                     <li class="timeline-item timeline-item-transparent">
-                                        <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-warning"></span></span>
+                                        <span class="timeline-point-wrapper">
+                                            <span class="timeline-point timeline-point-<?php echo $seriveMap->color_service_stage ?>"></span>
+                                        </span>
                                         <div class="timeline-event">
-                                        <div class="timeline-header mb-1">
-                                            <h6 class="mb-0">Client Meeting</h6>
-                                            <small class="text-muted">Today</small>
-                                        </div>
-                                        <p class="mb-2">Project meeting with john @10:15am</p>
-                                        <div class="d-flex flex-wrap">
-                                            <div class="avatar me-3">
-                                            <img src="../../assets/img/avatars/3.png" alt="Avatar" class="rounded-circle">
+                                            <div class="timeline-header mb-1">
+                                                <h6 class="mb-0"><?php echo $seriveMap->name_service_stage ?></h6>
+                                                <small class="text-muted"><?php echo JHtml::date(JFactory::getDate($seriveMap->update_service, $siteOffset)->toISO8601(true), 'DATE_FORMAT_DATATIME');  ?></small>
                                             </div>
+                                            <?php if(!empty($seriveMap->title_service)): ?>
+                                            <p class="mb-2"><?php echo $seriveMap->title_service ?></p>
+                                            <?php endif; ?>
+                                            <div class="d-flex flex-wrap">
+                                                <div class="avatar me-3">
+                                                    <?php 
+                                                        if ( !empty( $serivemap->image_pf ) && file_exists(JPATH_CDN .DS. 'images' .DS. 'avatar' .DS. $serivemap->image_pf)):
+                                                            $imageUser = $resize->resize(JPATH_CDN .DS. 'images' .DS. 'avatar' .DS. $serivemap->image_pf, 100, 100, 'cache/' . $serivemap->image_pf, 'manterProporcao');
+                                                        else:
+                                                            $imageUser = $resize->resize(JPATH_IMAGES .DS. 'noimageuser.png' , 100, 100, 'cache/noimageuser.png', 'manterProporcao'); 
+                                                        endif;   
+                                                    ?>
+
+                                                
+                                                    <img src="<?php echo $imageUser; ?>" alt="<?php echo $serivemap->name; ?>" class="rounded-circle">
+                                                </div>
                                             <div>
-                                            <h6 class="mb-0">Lester McCarthy (Client)</h6>
+                                            <h6 class="mb-0"><?php echo $serivemap->name; ?></h6>
                                             <span>CEO of Infibeam</span>
                                             </div>
                                         </div>
