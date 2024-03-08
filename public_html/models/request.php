@@ -85,6 +85,34 @@ class EASistemasModelRequest extends JModel {
 		$this->_db->setQuery($query);
 		return $this->_db->loadObjectList();	
 	}
+
+
+	function getServiceMaps() 
+	{
+		$query = $this->_db->getQuery(true);
+		$query->select($this->_db->quoteName(array( 'name_service_stage',
+													'color_service_stage',
+													'title_service',
+													'message_service',
+													'update_service',
+													'name',
+													'image_pf'
+
+													)));
+		$query->from($this->_db->quoteName('#__intranet_service_map'));
+		$query->innerJoin($this->_db->quoteName('#__intranet_service_stage').' USING ('.$this->_db->quoteName('id_service_stage').')');
+		$query->innerJoin($this->_db->quoteName('#__intranet_pf').' USING ('.$this->_db->quoteName('id_user').')');
+		$query->leftJoin($this->_db->quoteName('#__users').'  ON ('.$this->_db->quoteName('id').'='.$this->_db->quoteName('id_user').')');
+
+		$query->order($this->_db->quoteName('update_service') . ' DESC');
+		$this->_db->setQuery($query);
+		//print_r($this->_db->loadObjectList());
+		//exit;
+		return $this->_db->loadObjectList();	
+	}
+	
+
+
 	
 	function store() 
 	{
@@ -94,42 +122,26 @@ class EASistemasModelRequest extends JModel {
 		$data = JRequest::get( 'post' );
 
 		$this->addTablePath(JPATH_SITE.'/tables');
-	    $row = $this->getTable('request');
+		$row = $this->getTable('request');
 		
 		$data['id_user'] = $this->_user->get('id');
+		$data['status_service'] = '1';
 
-		
-		if($this->_id)
+		$options = array();
+		$options['id_user'] = $data['id_user'];
+		$options['update_service'] = JFactory::getDate('now', $siteOffset)->toISO8601(true);
+		$data['lastupdate_service'] = JFactory::getDate('now', $siteOffset)->toISO8601(true);
+		if($this->_id):
 			$row->load($this->_id);	
-		else
-			$data['status_arma'] = '1';
-				
-		if(!$this->_id) {
-			$data['register_arma'] = JFactory::getDate('now', $siteOffset)->toISO8601(true);
-			$data['user_register_arma'] = $this->_user->get('id');
-		}
-		else {
-			$data['update_arma'] = JFactory::getDate('now', $siteOffset)->toISO8601(true);
-			$data['user_update_arma'] = $this->_userAdmin;
-		}
+			$options['message_service'] = $data['message_service'];
+			$options['id_service_stage'] = '2';
+		else:
+			$data['create_service'] = $data['lastupdate_service'];
+			$options['id_service_stage'] = '1';
+			$options['title_service'] = '';
+			$options['message_service'] = '';
 
-		if(!empty($data['data_registro_arma']))
-		{
-			$dataaTmp = explode(" ",$data['data_registro_arma']);
-			$data['data_registro_arma'] = implode("-",array_reverse(explode("/", $dataaTmp[0]))) .' '. $dataaTmp[1];
-			$data['data_registro_arma'] = JFactory::getDate($data['data_registro_arma'], $siteOffset)->toFormat('%Y-%m-%d', true);
-		}
-		else
-			$data['data_registro_arma'] = NULL;
-
-		if(!empty($data['vencimento_registro_arma']))
-		{
-			$dataaTmp = explode(" ",$data['vencimento_registro_arma']);
-			$data['vencimento_registro_arma'] = implode("-",array_reverse(explode("/", $dataaTmp[0]))) .' '. $dataaTmp[1];
-			$data['vencimento_registro_arma'] = JFactory::getDate($data['vencimento_registro_arma'], $siteOffset)->toFormat('%Y-%m-%d', true);
-		}
-		else
-			$data['vencimento_registro_arma'] = NULL;
+		endif;
 
 
 		if ( !$row->bind($data)) 
@@ -137,16 +149,7 @@ class EASistemasModelRequest extends JModel {
 			$this->setError($this->_db->getErrorMsg());
 			return false;	
 		}
-		
-		//if($data['remove_img_arma'])
-		//	$row->img_arma = NULL;
-		
-		if(!$data['data_registro_arma'])
-			$row->data_registro_arma = NULL;
-			
-		if(!$data['vencimento_registro_arma'])
-			$row->vencimento_registro_arma = NULL;	
-		
+
 		if ( !$row->check($data)) 
 		{
 			$this->setError($this->_db->getErrorMsg());
@@ -159,6 +162,8 @@ class EASistemasModelRequest extends JModel {
 			return false;	
 		}
 
+
+
 		jimport('joomla.log.log');
 		JLog::addLogger(array( 'text_file' => 'log.request.php'));
 		
@@ -166,14 +171,34 @@ class EASistemasModelRequest extends JModel {
 			$row->checkin($this->_id);
 			JLog::add($this->_user->get('id') . JText::_('		Edit Request -  id('.$this->_id.')'), JLog::INFO, 'request');
 		else:
-			$this->setId( $row->get('id_arma') ); 	
+			$this->setId( $row->get('id_service') ); 	
 			JLog::add($this->_user->get('id') . JText::_('		New Request -  id('.$this->_id.')'), JLog::INFO, 'request');
 		endif;
-		
+
 		JRequest::setVar( 'cid', $this->_id );
-				
+			
+		$query = $this->_db->getQuery(true);
+		$query->insert( $this->_db->quoteName('#__intranet_service_map') );
+		$query->columns($this->_db->quoteName(array('id_service', 'id_user', 'id_service_stage', 'title_service','message_service', 'update_service')));	
+	
+
+		$values = array($this->_db->quote($this->_id),
+						$this->_db->quote($options['id_user']), 
+						$this->_db->quote($options['id_service_stage']), 
+						$this->_db->quote($options['title_service']),
+						$this->_db->quote($options['message_service']),
+						$this->_db->quote($options['update_service'])
+					);
+						
+		$query->values(implode(',', $values));
+		
+		
+		$this->_db->setQuery($query);
+		$this->_db->query();
+					
 		return true;
 	}
+
 	
 	function isCheckedOut()
 	{		

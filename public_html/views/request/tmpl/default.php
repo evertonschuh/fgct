@@ -89,7 +89,7 @@ endif;
                 <div class="row mb-3">
                     <div class="col-md-12">
                         <label class="form-label" for="id_especie">Serviço:*</label>
-                        <select class="form-select required select2" <?php echo ($this->item->id_service ? 'disabled="disabled"' : ''); ?> id="id_service" name="id_service">
+                        <select class="form-select required select2" <?php echo ($this->item->id_service ? 'disabled="disabled"' : ''); ?> id="id_service_type" name="id_service_type">
                             <option disabled selected class="default" value=""><?php echo JText::_('- Serviços -'); ?></option>
                             <?php echo JHTML::_('select.options',  $this->services, 'value', 'text',  $this->item->id_service); ?>    
                         </select>    
@@ -110,43 +110,33 @@ endif;
                     <div class="col-xl-12 col-lg-7 col-md-7">
                         <!-- Activity Timeline -->
                         <div class="card card-action mb-4">
-                        <div class="card-header align-items-center">
-                            <h5 class="card-action-title mb-0"><i class="bx bx-list-ul me-2"></i>Activity Timeline</h5>
-                            <div class="card-action-element">
-                            <div class="dropdown">
-                                <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-dots-vertical-rounded"></i></button>
-                                <ul class="dropdown-menu dropdown-menu-end" style="">
-                                <li><a class="dropdown-item" href="javascript:void(0);">Share timeline</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);">Suggest edits</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="javascript:void(0);">Report bug</a></li>
-                                </ul>
+                            <div class="card-header align-items-center">
+                                <h5 class="card-action-title mb-0"><i class="bx bx-list-ul me-2"></i>Histórico do Serviço</h5>
                             </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="timeline ms-2">
-                            <li class="timeline-item timeline-item-transparent">
-                                <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-warning"></span></span>
-                                <div class="timeline-event">
-                                <div class="timeline-header mb-1">
-                                    <h6 class="mb-0">Client Meeting</h6>
-                                    <small class="text-muted">Today</small>
-                                </div>
-                                <p class="mb-2">Project meeting with john @10:15am</p>
-                                <div class="d-flex flex-wrap">
-                                    <div class="avatar me-3">
-                                    <img src="../../assets/img/avatars/3.png" alt="Avatar" class="rounded-circle">
-                                    </div>
-                                    <div>
-                                    <h6 class="mb-0">Lester McCarthy (Client)</h6>
-                                    <span>CEO of Infibeam</span>
-                                    </div>
-                                </div>
-                                </div>
-                            </li>
+                            <div class="card-body">
+                                <ul class="timeline ms-2">
+                                    <?php foreach($this->serviceMaps as $i => $seriveMap): ?>
+                                    <li class="timeline-item timeline-item-transparent">
+                                        <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-warning"></span></span>
+                                        <div class="timeline-event">
+                                        <div class="timeline-header mb-1">
+                                            <h6 class="mb-0">Client Meeting</h6>
+                                            <small class="text-muted">Today</small>
+                                        </div>
+                                        <p class="mb-2">Project meeting with john @10:15am</p>
+                                        <div class="d-flex flex-wrap">
+                                            <div class="avatar me-3">
+                                            <img src="../../assets/img/avatars/3.png" alt="Avatar" class="rounded-circle">
+                                            </div>
+                                            <div>
+                                            <h6 class="mb-0">Lester McCarthy (Client)</h6>
+                                            <span>CEO of Infibeam</span>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </li>
+                                    <?php endforeach; ?>
+                                    <?php /*
                             <li class="timeline-item timeline-item-transparent">
                                 <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-info"></span></span>
                                 <div class="timeline-event">
@@ -187,8 +177,9 @@ endif;
                                 <p class="mb-0">Woocommerce iOS App Completed</p>
                                 </div>
                             </li>
+                            */ ?>
                             <li class="timeline-end-indicator">
-                                <i class="bx bx-check-circle"></i>
+                                <i class="bx bx-check-circle "></i>
                             </li>
                             </ul>
                         </div>
@@ -201,7 +192,6 @@ endif;
     </div>   
     <input type="hidden" name="task" value="" />
     <input type="hidden" name="cid[]" id="cid" value="<?php echo $this->item->id_service; ?>" />
-    <input type="hidden" name="id_pf" value="<?php echo $this->item->id_service; ?>" />
     <input type="hidden" name="controller" value="request" />
     <input type="hidden" name="view" value="request" />
     <?php echo JHTML::_('form.token'); ?>

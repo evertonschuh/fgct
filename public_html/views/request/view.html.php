@@ -14,7 +14,7 @@ class EASistemasViewRequest extends JView
 
 		$this->item = $this->get('Item');		
 		$this->services = $this->get('Services');
-
+		$this->serviceMaps = $this->get('ServiceMaps');
 
 		$document 			=  JFactory::getDocument();
 
@@ -24,9 +24,9 @@ class EASistemasViewRequest extends JView
 
 
 		$script ="jQuery(document).ready(function(){
-					 jQuery('#id_service').change(function(){
+					 jQuery('#id_service_type').change(function(){
 
-				   		switch(jQuery('#id_service').val()) {
+				   		switch(jQuery('#id_service_type').val()) {
 						";
 		foreach($this->services as $i => $service)
 			if($service->script =='1')
