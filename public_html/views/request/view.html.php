@@ -11,11 +11,44 @@ class EASistemasViewRequest extends JView
 	public function display($tpl = null)
 	{	
 
+
+		$this->item = $this->get('Item');		
+		$this->services = $this->get('Services');
+
+
 		$document 			=  JFactory::getDocument();
-/*
+
 		$document->addStyleSheet('/assets/vendor/libs/select2/select2.css');
 		$document->addScript('/assets/vendor/libs/select2/select2.js');
+		$document->addScript('/assets/js-custom/request.js');
 
+
+		$script ="jQuery(document).ready(function(){
+					 jQuery('#id_service').change(function(){
+
+				   		switch(jQuery('#id_service').val()) {
+						";
+		foreach($this->services as $i => $service)
+			if($service->script =='1')
+				$script .="case '".$service->value."':
+							jQuery('#message_service').prop('disabled', false);
+							break;";
+
+		$script .=" default:
+						jQuery('#message_service').val('');
+						jQuery('#message_service').prop('disabled', true);
+					break;
+			}
+		});
+	});";
+
+
+
+
+		$document->addScriptDeclaration($script);
+
+
+/*
 		$document->addStyleSheet('/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css');
 		$document->addScript('/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js');
 		$document->addScript('/assets/vendor/libs/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.js');
@@ -24,16 +57,10 @@ class EASistemasViewRequest extends JView
 
 		$document->addScript('/assets/js/jquery.mask.js');
 		$document->addScript('/assets/js-custom/weapon.js');
-	
-
 
 		$document->addScriptDeclaration('window.Helpers.initCustomOptionCheck();');
 		*/
 		
-		$this->item = $this->get('Item');
-
-		
-		$this->services = $this->get('Services');
 
 
 		if( empty($this->id_service) )

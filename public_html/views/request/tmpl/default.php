@@ -85,117 +85,118 @@ endif;
                         </div>
                     </div>
                     */ ?>
-                    <?php if($this->item->id_service):?>
-                                            <div class="row mb-3">
-                        <div class="col-xl-12 col-lg-7 col-md-7">
-                            <!-- Activity Timeline -->
-                            <div class="card card-action mb-4">
-                            <div class="card-header align-items-center">
-                                <h5 class="card-action-title mb-0"><i class="bx bx-list-ul me-2"></i>Activity Timeline</h5>
-                                <div class="card-action-element">
-                                <div class="dropdown">
-                                    <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-dots-vertical-rounded"></i></button>
-                                    <ul class="dropdown-menu dropdown-menu-end" style="">
-                                    <li><a class="dropdown-item" href="javascript:void(0);">Share timeline</a></li>
-                                    <li><a class="dropdown-item" href="javascript:void(0);">Suggest edits</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="javascript:void(0);">Report bug</a></li>
-                                    </ul>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <ul class="timeline ms-2">
-                                <li class="timeline-item timeline-item-transparent">
-                                    <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-warning"></span></span>
-                                    <div class="timeline-event">
-                                    <div class="timeline-header mb-1">
-                                        <h6 class="mb-0">Client Meeting</h6>
-                                        <small class="text-muted">Today</small>
-                                    </div>
-                                    <p class="mb-2">Project meeting with john @10:15am</p>
-                                    <div class="d-flex flex-wrap">
-                                        <div class="avatar me-3">
-                                        <img src="../../assets/img/avatars/3.png" alt="Avatar" class="rounded-circle">
-                                        </div>
-                                        <div>
-                                        <h6 class="mb-0">Lester McCarthy (Client)</h6>
-                                        <span>CEO of Infibeam</span>
-                                        </div>
-                                    </div>
-                                    </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label class="form-label" for="id_especie">Serviço:*</label>
+                        <select class="form-select required select2" <?php echo ($this->item->id_service ? 'disabled="disabled"' : ''); ?> id="id_service" name="id_service">
+                            <option disabled selected class="default" value=""><?php echo JText::_('- Serviços -'); ?></option>
+                            <?php echo JHTML::_('select.options',  $this->services, 'value', 'text',  $this->item->id_service); ?>    
+                        </select>    
+                    </div> 
+                </div>   
+                <div class="row mb-3">   
+                    <div class="col-md-12">
+                        <label class="form-label" for="message_service">Mensagem:</label>
+                        <textarea class="form-control" disabled="disabled" id="message_service" name="message_service" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="action-btns">
+                    <button type="button" onclick="Joomla.submitbutton('save')" class="btn btn-primary me-3">Enviar</button>
+                    <button type="button" onclick="Joomla.submitbutton('cancel')" class="btn btn-outline-secondary me-1">Sair</button>
+                </div>
+                <?php if($this->item->id_service):?>
+                <div class="row mb-3">
+                    <div class="col-xl-12 col-lg-7 col-md-7">
+                        <!-- Activity Timeline -->
+                        <div class="card card-action mb-4">
+                        <div class="card-header align-items-center">
+                            <h5 class="card-action-title mb-0"><i class="bx bx-list-ul me-2"></i>Activity Timeline</h5>
+                            <div class="card-action-element">
+                            <div class="dropdown">
+                                <button type="button" class="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-dots-vertical-rounded"></i></button>
+                                <ul class="dropdown-menu dropdown-menu-end" style="">
+                                <li><a class="dropdown-item" href="javascript:void(0);">Share timeline</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);">Suggest edits</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
                                 </li>
-                                <li class="timeline-item timeline-item-transparent">
-                                    <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-info"></span></span>
-                                    <div class="timeline-event">
-                                    <div class="timeline-header mb-1">
-                                        <h6 class="mb-0">Create a new project for client</h6>
-                                        <small class="text-muted">2 Day Ago</small>
-                                    </div>
-                                    <p class="mb-0">Add files to new design folder</p>
-                                    </div>
-                                </li>
-                                <li class="timeline-item timeline-item-transparent">
-                                    <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-primary"></span></span>
-                                    <div class="timeline-event">
-                                    <div class="timeline-header mb-1">
-                                        <h6 class="mb-0">Shared 2 New Project Files</h6>
-                                        <small class="text-muted">6 Day Ago</small>
-                                    </div>
-                                    <p class="mb-2">Sent by Mollie Dixon <img src="../../assets/img/avatars/4.png" class="rounded-circle ms-3" alt="avatar" height="20" width="20"></p>
-                                    <div class="d-flex flex-wrap gap-2">
-                                        <a href="javascript:void(0)" class="me-3">
-                                        <img src="../../assets/img/icons/misc/pdf.png" alt="Document image" width="20" class="me-2">
-                                        <span class="h6">App Guidelines</span>
-                                        </a>
-                                        <a href="javascript:void(0)">
-                                        <img src="../../assets/img/icons/misc/doc.png" alt="Excel image" width="20" class="me-2">
-                                        <span class="h6">Testing Results</span>
-                                        </a>
-                                    </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-item timeline-item-transparent">
-                                    <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-success"></span></span>
-                                    <div class="timeline-event pb-0">
-                                    <div class="timeline-header mb-1">
-                                        <h6 class="mb-0">Project status updated</h6>
-                                        <small class="text-muted">10 Day Ago</small>
-                                    </div>
-                                    <p class="mb-0">Woocommerce iOS App Completed</p>
-                                    </div>
-                                </li>
-                                <li class="timeline-end-indicator">
-                                    <i class="bx bx-check-circle"></i>
-                                </li>
+                                <li><a class="dropdown-item" href="javascript:void(0);">Report bug</a></li>
                                 </ul>
                             </div>
                             </div>
                         </div>
-                    </div>
-                    <?php else: ?>
- 
-                    <div class="row mb-3">
-                        <div class="mb-3 col-md-8">
-                            <label class="form-label" for="id_especie">Serviço:*</label>
-                            <select class="form-select required select2" id="id_servico" name="id_servico">
-                                <option disabled selected class="default" value=""><?php echo JText::_('- Serviços -'); ?></option>
-                                <?php echo JHTML::_('select.options',  $this->services, 'value', 'text',  $this->item->id_service); ?>    
-                            </select>    
-                        </div>  
-                       
-                        <div class="mb-3 col-md-3">
-                            <label class="form-label" for="acabamento_arma">Acabamento:</label>
-                            <input type="text" class="form-control" name="acabamento_arma" id="acabamento_arma" value="<?php echo $this->item->acabamento_arma; ?>" placeholder="<?php echo JText::_('Acabamento') ?>">
+                        <div class="card-body">
+                            <ul class="timeline ms-2">
+                            <li class="timeline-item timeline-item-transparent">
+                                <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-warning"></span></span>
+                                <div class="timeline-event">
+                                <div class="timeline-header mb-1">
+                                    <h6 class="mb-0">Client Meeting</h6>
+                                    <small class="text-muted">Today</small>
+                                </div>
+                                <p class="mb-2">Project meeting with john @10:15am</p>
+                                <div class="d-flex flex-wrap">
+                                    <div class="avatar me-3">
+                                    <img src="../../assets/img/avatars/3.png" alt="Avatar" class="rounded-circle">
+                                    </div>
+                                    <div>
+                                    <h6 class="mb-0">Lester McCarthy (Client)</h6>
+                                    <span>CEO of Infibeam</span>
+                                    </div>
+                                </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item timeline-item-transparent">
+                                <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-info"></span></span>
+                                <div class="timeline-event">
+                                <div class="timeline-header mb-1">
+                                    <h6 class="mb-0">Create a new project for client</h6>
+                                    <small class="text-muted">2 Day Ago</small>
+                                </div>
+                                <p class="mb-0">Add files to new design folder</p>
+                                </div>
+                            </li>
+                            <li class="timeline-item timeline-item-transparent">
+                                <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-primary"></span></span>
+                                <div class="timeline-event">
+                                <div class="timeline-header mb-1">
+                                    <h6 class="mb-0">Shared 2 New Project Files</h6>
+                                    <small class="text-muted">6 Day Ago</small>
+                                </div>
+                                <p class="mb-2">Sent by Mollie Dixon <img src="../../assets/img/avatars/4.png" class="rounded-circle ms-3" alt="avatar" height="20" width="20"></p>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <a href="javascript:void(0)" class="me-3">
+                                    <img src="../../assets/img/icons/misc/pdf.png" alt="Document image" width="20" class="me-2">
+                                    <span class="h6">App Guidelines</span>
+                                    </a>
+                                    <a href="javascript:void(0)">
+                                    <img src="../../assets/img/icons/misc/doc.png" alt="Excel image" width="20" class="me-2">
+                                    <span class="h6">Testing Results</span>
+                                    </a>
+                                </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item timeline-item-transparent">
+                                <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-success"></span></span>
+                                <div class="timeline-event pb-0">
+                                <div class="timeline-header mb-1">
+                                    <h6 class="mb-0">Project status updated</h6>
+                                    <small class="text-muted">10 Day Ago</small>
+                                </div>
+                                <p class="mb-0">Woocommerce iOS App Completed</p>
+                                </div>
+                            </li>
+                            <li class="timeline-end-indicator">
+                                <i class="bx bx-check-circle"></i>
+                            </li>
+                            </ul>
                         </div>
-                       
+                        </div>
                     </div>
-                    <?php endif; ?>
-                </form>
+                </div>
+                <?php endif; ?>
             </div>
-            <!-- /Account -->
         </div>
     </div>   
     <input type="hidden" name="task" value="" />

@@ -78,7 +78,7 @@ class EASistemasModelRequest extends JModel {
 	function getServices() 
 	{
 		$query = $this->_db->getQuery(true);
-		$query->select('id_service_type as value, CONCAT(codigo_service_type, \' - \', name_service_type) as text');
+		$query->select('id_service_type as value, CONCAT(codigo_service_type, \' - \', name_service_type) as text, message_service_type as script');
 		$query->from('#__intranet_service_type');
 		$query->where('status_service_type = 1');
 		$query->order($this->_db->quoteName('name_service_type'));
@@ -90,43 +90,14 @@ class EASistemasModelRequest extends JModel {
 	{
 		$config   = JFactory::getConfig();
 		$siteOffset = $config->getValue('offset');
-		$this->addTablePath(JPATH_SITE.'/tables');
-	    $row = $this->getTable('arma');
+
 		$data = JRequest::get( 'post' );
+
+		$this->addTablePath(JPATH_SITE.'/tables');
+	    $row = $this->getTable('request');
+		
 		$data['id_user'] = $this->_user->get('id');
 
-		/*$image = JRequest::getVar( 'img_arma_new', '', 'files', 'array' );
-		$_path = JPATH_MEDIA.DS.'images' . DS . 'armas';
-		
-		if(isset($data['remove_img_arma']))
-		{
-			if ( JFile::exists( $_path . DS .$data['img_arma'] ) )
-				JFile::delete( $_path . DS . $data['img_arma'] );	
-				
-			$data['img_arma'] = NULL;				
-		}
-		elseif(isset($image['name']) && $image['name'] != '') {   
-			$ext = strtolower( JFile::getExt($image['name']) );
-			$name =  md5(uniqid());	
-			$thumb = $name .'.'. $ext;		
-
-			if ( JFile::exists( $_path . DS .$thumb ) )
-				JFile::delete( $_path . DS . $thumb );
-				
-				
-
-			if (!JFile::upload($image['tmp_name'], $_path .DS. $thumb)) 	
-				return false;
-
-			
-			if ( JFile::exists( $_path . DS .$data['img_arma'] ) )
-				JFile::delete( $_path . DS . $data['img_arma'] );
-
-
-			$data['img_arma'] = $thumb;
-			
-		}
-		*/
 		
 		if($this->_id)
 			$row->load($this->_id);	
