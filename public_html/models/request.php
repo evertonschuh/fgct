@@ -106,8 +106,7 @@ class EASistemasModelRequest extends JModel {
 
 		$query->order($this->_db->quoteName('update_service') . ' DESC');
 		$this->_db->setQuery($query);
-		//print_r($this->_db->loadObjectList());
-		//exit;
+
 		return $this->_db->loadObjectList();	
 	}
 	

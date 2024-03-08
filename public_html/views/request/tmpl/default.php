@@ -137,15 +137,13 @@ endif;
                                                             $imageUser = $resize->resize(JPATH_IMAGES .DS. 'noimageuser.png' , 100, 100, 'cache/noimageuser.png', 'manterProporcao'); 
                                                         endif;   
                                                     ?>
-
-                                                
-                                                    <img src="<?php echo $imageUser; ?>" alt="<?php echo $serivemap->name; ?>" class="rounded-circle">
+                                                    <img src="<?php echo $imageUser; ?>" alt="<?php echo $seriveMap->name; ?>" class="rounded-circle">
                                                 </div>
-                                            <div>
-                                            <h6 class="mb-0"><?php echo $serivemap->name; ?></h6>
-                                            <span>CEO of Infibeam</span>
+                                                <div>
+                                                    <h6 class="mb-0"><?php echo $seriveMap->name; ?></h6>
+                                                    <span>Atleta</span>
+                                                </div>
                                             </div>
-                                        </div>
                                         </div>
                                     </li>
                                     <?php endforeach; ?>
