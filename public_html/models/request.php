@@ -125,7 +125,7 @@ class EASistemasModelRequest extends JModel {
 		
 		$data['id_user'] = $this->_user->get('id');
 		$data['status_service'] = '1';
-
+		
 		$options = array();
 		$options['id_user'] = $data['id_user'];
 		$options['update_service'] = JFactory::getDate('now', $siteOffset)->toISO8601(true);
@@ -142,26 +142,25 @@ class EASistemasModelRequest extends JModel {
 
 		endif;
 
-
 		if ( !$row->bind($data)) 
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return false;	
 		}
-
+		
 		if ( !$row->check($data)) 
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return false;	
 		}	
-			
+		
 		if ( !$row->store(true) ) 
 		{	
 			$this->setError( $this->_db->getErrorMsg());
 			return false;	
 		}
 
-
+		
 
 		jimport('joomla.log.log');
 		JLog::addLogger(array( 'text_file' => 'log.request.php'));
@@ -174,6 +173,8 @@ class EASistemasModelRequest extends JModel {
 			JLog::add($this->_user->get('id') . JText::_('		New Request -  id('.$this->_id.')'), JLog::INFO, 'request');
 		endif;
 
+
+		
 		JRequest::setVar( 'cid', $this->_id );
 			
 		$query = $this->_db->getQuery(true);

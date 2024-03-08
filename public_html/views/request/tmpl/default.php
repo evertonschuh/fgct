@@ -91,14 +91,14 @@ endif;
                         <label class="form-label" for="id_especie">Serviço:*</label>
                         <select class="form-select required select2" <?php echo ($this->item->id_service ? 'disabled="disabled"' : ''); ?> id="id_service_type" name="id_service_type">
                             <option disabled selected class="default" value=""><?php echo JText::_('- Serviços -'); ?></option>
-                            <?php echo JHTML::_('select.options',  $this->services, 'value', 'text',  $this->item->id_service); ?>    
+                            <?php echo JHTML::_('select.options',  $this->services, 'value', 'text',  $this->item->id_service_type); ?>    
                         </select>    
                     </div> 
                 </div>   
                 <div class="row mb-3">   
                     <div class="col-md-12">
                         <label class="form-label" for="message_service">Mensagem:</label>
-                        <textarea class="form-control" disabled="disabled" id="message_service" name="message_service" rows="4"></textarea>
+                        <textarea class="form-control" <?php echo (empty($this->item->id_service) ? 'disabled="disabled"' : ''); ?>  id="message_service" name="message_service" rows="4"></textarea>
                     </div>
                 </div>
                 <div class="action-btns">
