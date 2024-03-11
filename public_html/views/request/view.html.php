@@ -21,6 +21,13 @@ class EASistemasViewRequest extends JView
 		$document->addStyleSheet('/assets/vendor/libs/select2/select2.css');
 		$document->addScript('/assets/vendor/libs/select2/select2.js');
 		$document->addScript('/assets/js-custom/request.js');
+		$document->addStyleDeclaration('.wrap-line {
+											white-space: pre-wrap;
+											overflow-wrap: break-word;
+										}');
+
+
+
 
 
 		$script ="jQuery(document).ready(function(){

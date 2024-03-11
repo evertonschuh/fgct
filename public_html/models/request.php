@@ -1,7 +1,6 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 
-
 jimport( 'joomla.application.component.model' );
 
 class EASistemasModelRequest extends JModel {
@@ -10,10 +9,8 @@ class EASistemasModelRequest extends JModel {
 	var $_data = null;
 	var $_db = null;
 	var $_app = null;	
-	var $_isRoot = null;
 	var $_user = null;
-	var $_userAdmin = null;
-	var $_pagination = null;
+	var $_siteOffset = null;
 	
 	function __construct()
 	{
@@ -22,9 +19,7 @@ class EASistemasModelRequest extends JModel {
 		$this->_app 	= JFactory::getApplication(); 
 		$this->_db		= JFactory::getDBO();
 		$this->_user	= JFactory::getUser();
-		
-		$this->_isRoot		= $this->_user->get('isRoot');	
-		$this->_userAdmin	= $this->_user->get('id');
+		$this->_siteOffset = $this->_app->getCfg('offset');
 		
 		//echo JPATH_ADMINISTRATOR;
 		if( JRequest::getVar( 'task' )  != 'add')
@@ -33,6 +28,7 @@ class EASistemasModelRequest extends JModel {
 			JRequest::setVar( 'cid', $array[0] );
 			$this->setId( (int) $array[0] );
 		
+			/*
 			if (!$this->isCheckedOut() )
 			{
 				$this->checkout();		
@@ -41,9 +37,9 @@ class EASistemasModelRequest extends JModel {
 			{
 				$tipo = 'alert-warning';
 				$msg = JText::_( 'JGLOBAL_CONTROLLER_CHECKIN_ITEM' );
-				$link = 'index.php?view=armas';
+				$link = 'index.php?view=requests';
 				$this->_app->redirect($link, $msg, $tipo);
-			}
+			}*/
 		}
 		
 	}
@@ -62,7 +58,7 @@ class EASistemasModelRequest extends JModel {
 			$query->select('*');
 			$query->from('#__intranet_service');	
 			//$query->leftJoin($this->_db->quoteName('#__users').'  ON ('.$this->_db->quoteName('id').'='.$this->_db->quoteName('id_user').')');
-			$query->where( $this->_db->quoteName('id_service') . '=' . $this->_db->escape( $this->_id ) );
+			$query->where( $this->_db->quoteName('id_service') . '=' . $this->_db->quote( $this->_id ) );
 			$this->_db->setQuery($query);
 			if(!(boolean) $this->_data = $this->_db->loadObject()) {
 				$this->addTablePath(JPATH_SITE.'/tables');
@@ -80,6 +76,7 @@ class EASistemasModelRequest extends JModel {
 		$query = $this->_db->getQuery(true);
 		$query->select('id_service_type as value, CONCAT(codigo_service_type, \' - \', name_service_type) as text, message_service_type as script');
 		$query->from('#__intranet_service_type');
+		$query->where('public_service_type = 1');
 		$query->where('status_service_type = 1');
 		$query->order($this->_db->quoteName('name_service_type'));
 		$this->_db->setQuery($query);
@@ -104,7 +101,9 @@ class EASistemasModelRequest extends JModel {
 		$query->innerJoin($this->_db->quoteName('#__intranet_pf').' USING ('.$this->_db->quoteName('id_user').')');
 		$query->leftJoin($this->_db->quoteName('#__users').'  ON ('.$this->_db->quoteName('id').'='.$this->_db->quoteName('id_user').')');
 
-		$query->order($this->_db->quoteName('update_service') . ' DESC');
+		$query->where( $this->_db->quoteName('id_service') . '=' . $this->_db->quote( $this->_id ) );
+
+		$query->order($this->_db->quoteName('update_service') . ' ASC');
 		$this->_db->setQuery($query);
 
 		return $this->_db->loadObjectList();	
@@ -115,9 +114,8 @@ class EASistemasModelRequest extends JModel {
 	
 	function store() 
 	{
-		$config   = JFactory::getConfig();
-		$siteOffset = $config->getValue('offset');
 
+		$auto_execute = false;
 		$data = JRequest::get( 'post' );
 
 		$this->addTablePath(JPATH_SITE.'/tables');
@@ -128,10 +126,9 @@ class EASistemasModelRequest extends JModel {
 		
 		$options = array();
 		$options['id_user'] = $data['id_user'];
-		$options['update_service'] = JFactory::getDate('now', $siteOffset)->toISO8601(true);
-		$data['lastupdate_service'] = JFactory::getDate('now', $siteOffset)->toISO8601(true);
+		$data['lastupdate_service'] = JFactory::getDate('now', $this->_siteOffset)->toISO8601(true);
 		if($this->_id):
-			$row->load($this->_id);	
+			//$row->load($this->_id);	
 			$options['message_service'] = $data['message_service'];
 			$options['id_service_stage'] = '2';
 		else:
@@ -139,7 +136,7 @@ class EASistemasModelRequest extends JModel {
 			$options['id_service_stage'] = '1';
 			$options['title_service'] = '';
 			$options['message_service'] = '';
-
+			$id_document = $this->getAtuoExecute($data['id_service_type']);
 		endif;
 
 		if ( !$row->bind($data)) 
@@ -172,43 +169,127 @@ class EASistemasModelRequest extends JModel {
 			$this->setId( $row->get('id_service') ); 	
 			JLog::add($this->_user->get('id') . JText::_('		New Request -  id('.$this->_id.')'), JLog::INFO, 'request');
 		endif;
-
-
-		
+	
+		print_r($row);
 		JRequest::setVar( 'cid', $this->_id );
-			
+		$options['id_service'] = $this->_id;	
+		
+		if(!$this->setNewMapService($options))
+			return false;	
+		
+		if($id_document)
+			$this->setExecuteService($data['id_user'], $id_document);
+
+		return true;
+	}
+
+	function &setNewMapService($options = array()) 
+	{
+
+		if(	empty($options['id_service']) ||
+			empty($options['id_service_stage'])
+		  )
+			return false;
+
 		$query = $this->_db->getQuery(true);
 		$query->insert( $this->_db->quoteName('#__intranet_service_map') );
 		$query->columns($this->_db->quoteName(array('id_service', 'id_user', 'id_service_stage', 'title_service','message_service', 'update_service')));	
 	
-
-		$values = array($this->_db->quote($this->_id),
+		
+		$values = array($this->_db->quote($options['id_service']),
 						$this->_db->quote($options['id_user']), 
 						$this->_db->quote($options['id_service_stage']), 
 						$this->_db->quote($options['title_service']),
 						$this->_db->quote($options['message_service']),
-						$this->_db->quote($options['update_service'])
+						$this->_db->quote(JFactory::getDate('now', $this->_siteOffset)->toISO8601(true))
 					);
 						
 		$query->values(implode(',', $values));
 		
-		
 		$this->_db->setQuery($query);
-		$this->_db->query();
-					
+		if(!$this->_db->query())
+			return false;
+
 		return true;
 	}
 
-	
+
+	function setExecuteService($id_user = null, $id_document = null) 
+	{
+
+
+		$options = array();
+		$options['id_service'] = $this->_id;
+		$options['id_user']= NULL;
+		$options['id_service_stage'] = '3';
+		$options['title_service'] = 'Montando Documento';
+		$options['message_service'] = NULL;
+		$options['update_service']= NULL;
+		$this->setNewMapService($options);
+
+
+
+		require_once(JPATH_INCLUDES .DS. 'document.php');
+		$classDocument = new EASistemasIncludesDocument();
+
+		$options = array();
+		$options['id_user'] = $id_user;
+		$options['id_document'] = $id_document;
+
+		$classDocument->newDocument($options);
+
+
+		$options = array();
+		$options['id_service'] = $this->_id;
+		$options['id_user']= NULL;
+		$options['id_service_stage'] = '3';
+		$options['title_service'] = 'Salvando Documento';
+		$options['message_service']= NULL;
+		$options['update_service']= NULL;
+		$this->setNewMapService($options);
+		$this->setFish();
+		return true;
+	}
+
+
+
+	function getAtuoExecute($id_service_type = null) 
+	{
+		$query = $this->_db->getQuery(true);
+		$query->select('id_documento');
+		$query->from('#__intranet_service_type');
+		$query->where('automatic_service_type = 1');
+		$query->where('status_service_type = 1');
+		$query->where( $this->_db->quoteName('id_service_type') . '=' . $this->_db->quote( $id_service_type ) );
+		$this->_db->setQuery($query);
+		return $this->_db->loadResult();	
+	}
+
+	function setFish(){
+		if (!empty( $this->_id)) 
+		{
+			$query = $this->_db->getQuery(true);
+			$fields = array( $this->_db->quoteName('status_service').'='.$this->_db->quote( '2' ) );
+			$conditions = array( $this->_db->quoteName('id_service').'='.$this->_db->quote( $this->_id ) );
+			$query->update($this->_db->quoteName('#__intranet_service'))->set($fields)->where($conditions);
+			$this->_db->setQuery($query);
+			if ( !$this->_db->execute() ) {
+				$this->setError($this->_db->getErrorMsg());
+				return false;
+			}
+			return true;
+		}	
+	}
+
 	function isCheckedOut()
 	{		
 		$this->addTablePath(JPATH_SITE.'/tables');
-	    $row = $this->getTable('arma');
+	    $row = $this->getTable('request');
 		$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
 		$cid = $cid[0];
 		if ( $row->load( $cid ) ) 
 		{	
-			if (!$row->isCheckedOut( $this->_userAdmin ) )
+			if (!$row->isCheckedOut( $this->_user->get('id') ) )
 			{
 				return false;
 			}
@@ -220,12 +301,12 @@ class EASistemasModelRequest extends JModel {
 	function checkout()
 	{		
 		$this->addTablePath(JPATH_SITE.'/tables');
-	    $row = $this->getTable('arma');
+	    $row = $this->getTable('request');
 		$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
 		$cid = $cid[0];
 		if ( $row->load( $cid ) ) 
 		{	
-			if(! $row->checkout( $this->_userAdmin ) ) 
+			if(! $row->checkout( $this->_user->get('id') ) ) 
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
@@ -238,7 +319,7 @@ class EASistemasModelRequest extends JModel {
 	function checkin()
 	{	
 		$this->addTablePath(JPATH_SITE.'/tables');
-	    $row = $this->getTable('arma');
+	    $row = $this->getTable('request');
 		
 		$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
 		$cid = $cid[0];
@@ -253,5 +334,6 @@ class EASistemasModelRequest extends JModel {
 		}
 		return false;
 	}
+	
 	
 }

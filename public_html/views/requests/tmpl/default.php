@@ -50,9 +50,9 @@ $saveOrder    = $listOrder == 'ordering';
                 <table class="table border-top dataTable dtr-column">
                     <thead>
                         <tr>
-                            <th class="sorting sorting_desc"><?php echo JHtml::_('grid.sort',  'Número do Protocolo', 'id_service', $listDirn, $listOrder); ?></th>
-                            <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Tipo de Serviço', 'name_service_type', $listDirn, $listOrder); ?></th>
-                            <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Data da Solicitação', 'create_service', $listDirn, $listOrder); ?></th>
+                            <th class="sorting sorting_desc"><?php echo JHtml::_('grid.sort',  'Protocolo', 'id_service', $listDirn, $listOrder); ?></th>
+                            <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Serviço', 'name_service_type', $listDirn, $listOrder); ?></th>
+                            <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Cadastro', 'create_service', $listDirn, $listOrder); ?></th>
                             <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Situação', 'status_service', $listDirn, $listOrder); ?></th>
                             <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'última Movimentação', 'lastupdate_service', $listDirn, $listOrder); ?></th>
                             <th class="sorting_disabled text-center" width="2%" >Ações</th>

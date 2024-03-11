@@ -101,7 +101,7 @@ endif;
                         <textarea class="form-control" <?php echo (empty($this->item->id_service) ? 'disabled="disabled"' : ''); ?>  id="message_service" name="message_service" rows="4"></textarea>
                     </div>
                 </div>
-                <div class="action-btns">
+                <div class="action-btns mb-3">
                     <button type="button" onclick="Joomla.submitbutton('save')" class="btn btn-primary me-3">Enviar</button>
                     <button type="button" onclick="Joomla.submitbutton('cancel')" class="btn btn-outline-secondary me-1">Sair</button>
                 </div>
@@ -123,77 +123,30 @@ endif;
                                         <div class="timeline-event">
                                             <div class="timeline-header mb-1">
                                                 <h6 class="mb-0"><?php echo $seriveMap->name_service_stage ?></h6>
-                                                <small class="text-muted"><?php echo JHtml::date(JFactory::getDate($seriveMap->update_service, $siteOffset)->toISO8601(true), 'DATE_FORMAT_DATATIME');  ?></small>
+                                                <small class="text-muted"><?php echo JHtml::date(JFactory::getDate($seriveMap->update_service, $siteOffset)->toISO8601(true), 'DATE_FORMAT_DATATIME'); ?></small>
                                             </div>
                                             <?php if(!empty($seriveMap->title_service)): ?>
                                             <p class="mb-2"><?php echo $seriveMap->title_service ?></p>
                                             <?php endif; ?>
-                                            <div class="d-flex flex-wrap">
-                                                <div class="avatar me-3">
-                                                    <?php 
-                                                        if ( !empty( $serivemap->image_pf ) && file_exists(JPATH_CDN .DS. 'images' .DS. 'avatar' .DS. $serivemap->image_pf)):
-                                                            $imageUser = $resize->resize(JPATH_CDN .DS. 'images' .DS. 'avatar' .DS. $serivemap->image_pf, 100, 100, 'cache/' . $serivemap->image_pf, 'manterProporcao');
-                                                        else:
-                                                            $imageUser = $resize->resize(JPATH_IMAGES .DS. 'noimageuser.png' , 100, 100, 'cache/noimageuser.png', 'manterProporcao'); 
-                                                        endif;   
-                                                    ?>
-                                                    <img src="<?php echo $imageUser; ?>" alt="<?php echo $seriveMap->name; ?>" class="rounded-circle">
-                                                </div>
-                                                <div>
-                                                    <h6 class="mb-0"><?php echo $seriveMap->name; ?></h6>
-                                                    <span>Atleta</span>
-                                                </div>
-                                            </div>
+                                            <?php if(!empty($seriveMap->message_service)): ?>
+                                            <p class="mb-2 wrap-line"><?php echo $seriveMap->message_service ?></p>
+                                            <?php 
+                                                if ( !empty( $seriveMap->image_pf ) && file_exists(JPATH_CDN .DS. 'images' .DS. 'avatar' .DS. $seriveMap->image_pf)):
+                                                    $imageUser = $resize->resize(JPATH_CDN .DS. 'images' .DS. 'avatar' .DS. $seriveMap->image_pf, 100, 100, 'cache/' . $seriveMap->image_pf, 'manterProporcao');
+                                                else:
+                                                    $imageUser = $resize->resize(JPATH_IMAGES .DS. 'noimageuser.png' , 100, 100, 'cache/noimageuser.png', 'manterProporcao'); 
+                                                endif;   
+                                            ?>
+                                            <img src="<?php echo $imageUser; ?>" alt="<?php echo $seriveMap->name; ?>"class="rounded-circle me-2" height="20" width="20"><small class="mb-2"><?php echo $seriveMap->name; ?></small>
+                                            <?php endif; ?>
                                         </div>
                                     </li>
                                     <?php endforeach; ?>
-                                    <?php /*
-                            <li class="timeline-item timeline-item-transparent">
-                                <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-info"></span></span>
-                                <div class="timeline-event">
-                                <div class="timeline-header mb-1">
-                                    <h6 class="mb-0">Create a new project for client</h6>
-                                    <small class="text-muted">2 Day Ago</small>
-                                </div>
-                                <p class="mb-0">Add files to new design folder</p>
-                                </div>
-                            </li>
-                            <li class="timeline-item timeline-item-transparent">
-                                <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-primary"></span></span>
-                                <div class="timeline-event">
-                                <div class="timeline-header mb-1">
-                                    <h6 class="mb-0">Shared 2 New Project Files</h6>
-                                    <small class="text-muted">6 Day Ago</small>
-                                </div>
-                                <p class="mb-2">Sent by Mollie Dixon <img src="../../assets/img/avatars/4.png" class="rounded-circle ms-3" alt="avatar" height="20" width="20"></p>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <a href="javascript:void(0)" class="me-3">
-                                    <img src="../../assets/img/icons/misc/pdf.png" alt="Document image" width="20" class="me-2">
-                                    <span class="h6">App Guidelines</span>
-                                    </a>
-                                    <a href="javascript:void(0)">
-                                    <img src="../../assets/img/icons/misc/doc.png" alt="Excel image" width="20" class="me-2">
-                                    <span class="h6">Testing Results</span>
-                                    </a>
-                                </div>
-                                </div>
-                            </li>
-                            <li class="timeline-item timeline-item-transparent">
-                                <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-success"></span></span>
-                                <div class="timeline-event pb-0">
-                                <div class="timeline-header mb-1">
-                                    <h6 class="mb-0">Project status updated</h6>
-                                    <small class="text-muted">10 Day Ago</small>
-                                </div>
-                                <p class="mb-0">Woocommerce iOS App Completed</p>
-                                </div>
-                            </li>
-                            */ ?>
-                            <li class="timeline-end-indicator">
-                                <i class="bx bx-check-circle "></i>
-                            </li>
-                            </ul>
-                        </div>
+                                    <li class="timeline-end-indicator">
+                                        <i class="bx bxs-check-circle text-success"></i>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

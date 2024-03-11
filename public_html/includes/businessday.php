@@ -1,9 +1,8 @@
 <?php
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-class FbtIncludesProxDiaUtil {
-	
-	
+class EASistemasIncludesBusinessDay {
+
 	protected $_feriados;
 	
 	/*
