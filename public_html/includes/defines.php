@@ -36,7 +36,6 @@ define('JPATH_MODULE_TMPL',     JPATH_ADMIN .DS. 'modules');
 
 define('JPATH_ADMINISTRATOR',   JPATH_ADMIN);
 
-
 define('JPATH_SITE',            JPATH_ROOT);
 define('JPATH_CONFIGURATION',   JPATH_ROOT);
 define('JPATH_INSTALLATION',    JPATH_ROOT .DS. 'installation');
