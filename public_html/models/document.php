@@ -51,6 +51,7 @@ class EASistemasModelDocument extends JModel {
 														'register_documento_numero',
 														'name',
 														'cpf_pf',
+														'#__intranet_documento.name_documento',
 														'skin_documento',
 														'id_user',
 														'skin_documento'
@@ -68,6 +69,7 @@ class EASistemasModelDocument extends JModel {
 			$this->_db->setQuery($query);
 
 			$this->_data =  $this->_db->loadObject();
+
 
 			$this->_data->skin_documento_numero = '/media/images/ptimbrado/' . $this->_data->skin_documento. '.jpg';
 

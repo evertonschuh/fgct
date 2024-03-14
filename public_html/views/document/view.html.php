@@ -9,9 +9,10 @@ class EASistemasViewDocument extends JView
 	public function display($tpl = null)
 	{	
 		//// Set the toolbar
-	
-		$this->item = $this->get('Item');
+		$document = JFactory::getDocument();
 
+		$this->item = $this->get('Item');
+		$document->setTitle($this->item->name_documento);
 		parent::display($tpl);
 
 
