@@ -170,7 +170,7 @@ class EASistemasModelRequest extends JModel {
 			JLog::add($this->_user->get('id') . JText::_('		New Request -  id('.$this->_id.')'), JLog::INFO, 'request');
 		endif;
 	
-		print_r($row);
+		//print_r($row);
 		JRequest::setVar( 'cid', $this->_id );
 		$options['id_service'] = $this->_id;	
 		
@@ -183,7 +183,7 @@ class EASistemasModelRequest extends JModel {
 		return true;
 	}
 
-	function &setNewMapService($options = array()) 
+	function setNewMapService($options = array()) 
 	{
 
 		if(	empty($options['id_service']) ||

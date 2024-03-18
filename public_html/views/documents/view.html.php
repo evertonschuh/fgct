@@ -19,7 +19,7 @@ class EASistemasViewDocuments extends JView
 		$this->pagination	= $this->get('Pagination');		
 		$this->total		= $this->get('Total');	
 
-		$this->pagination->setAdditionalUrlParam('view','docassociados');
+		$this->pagination->setAdditionalUrlParam('view','documents');
 				
 		$situacao =  $this->get( 'Situacao');
 		$this->assignRef('situacao',$situacao);	

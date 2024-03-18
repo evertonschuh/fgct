@@ -2,7 +2,6 @@
 defined('_JEXEC') or die('Restricted access');
 
 jimport( 'joomla.filesystem.file' );
-require_once(JPATH_LIBRARIES .DS. 'qrcode' .DS. 'qrlib.php');
 
 jimport( 'joomla.application.component.model' );
 
@@ -71,7 +70,7 @@ class EASistemasModelDocument extends JModel {
 			$this->_data =  $this->_db->loadObject();
 
 
-			$this->_data->skin_documento_numero = '/media/images/ptimbrado/' . $this->_data->skin_documento. '.jpg';
+			//$this->_data->skin_documento_numero = '/media/images/ptimbrado/' . $this->_data->skin_documento. '.jpg';
 
 		}
 		return $this->_data;

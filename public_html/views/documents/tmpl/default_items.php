@@ -19,7 +19,7 @@ if (count($this->items)) {
     <td class="text-center"><?php echo $item->id_documento_numero; ?></td>
     <td>
         <div class="d-inline-block text-nowrap">
-            <a href="<?php echo JRoute::_('index.php?view=document&format=pdf&cid=' . $item->id_documento_numero); ?>" class="btn btn-sm btn-icon" target="_blank"><i class='bx bx-printer'></i></a>
+            <a href="<?php echo JRoute::_('index.php?view=document&cid=' . $item->id_documento_numero); ?>" class="btn btn-sm btn-icon" target="_blank"><i class='bx bx-printer'></i></a>
         </div>
     </td>
 </tr>
