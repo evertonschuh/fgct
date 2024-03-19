@@ -141,6 +141,29 @@ endif;
                                             <?php endif; ?>
                                         </div>
                                     </li>
+
+                                    <li class="timeline-item timeline-item-transparent">
+            <span class="timeline-point-wrapper"><span class="timeline-point timeline-point-primary"></span></span>
+            <div class="timeline-event">
+              <div class="timeline-header mb-1">
+                <h6 class="mb-0">Shared 2 New Project Files</h6>
+                <small class="text-muted">6 Day Ago</small>
+              </div>
+              <p class="mb-2">Sent by Mollie Dixon <img src="../../assets/img/avatars/4.png" class="rounded-circle ms-3" alt="avatar" height="20" width="20"></p>
+              <div class="d-flex flex-wrap gap-2">
+                <a href="javascript:void(0)" class="me-3">
+                  <img src="../../assets/img/icons/misc/pdf.png" alt="Document image" width="20" class="me-2">
+                  <span class="h6">App Guidelines</span>
+                </a>
+                <a href="javascript:void(0)">
+                  <img src="../../assets/img/icons/misc/doc.png" alt="Excel image" width="20" class="me-2">
+                  <span class="h6">Testing Results</span>
+                </a>
+              </div>
+            </div>
+          </li>
+
+                                    
                                     <?php endforeach; ?>
                                     <li class="timeline-end-indicator">
                                         <i class="bx bxs-check-circle text-success"></i>
