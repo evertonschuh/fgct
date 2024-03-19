@@ -91,6 +91,8 @@ class EASistemasModelRequest extends JModel {
 													'color_service_stage',
 													'title_service',
 													'message_service',
+													'id_documento_numero',
+													'name_documento',
 													'update_service',
 													'name',
 													'image_pf'
@@ -98,17 +100,47 @@ class EASistemasModelRequest extends JModel {
 													)));
 		$query->from($this->_db->quoteName('#__intranet_service_map'));
 		$query->innerJoin($this->_db->quoteName('#__intranet_service_stage').' USING ('.$this->_db->quoteName('id_service_stage').')');
-		$query->innerJoin($this->_db->quoteName('#__intranet_pf').' USING ('.$this->_db->quoteName('id_user').')');
-		$query->leftJoin($this->_db->quoteName('#__users').'  ON ('.$this->_db->quoteName('id').'='.$this->_db->quoteName('id_user').')');
+		$query->leftJoin($this->_db->quoteName('#__users').'  ON ('.$this->_db->quoteName('#__users.id').'='.$this->_db->quoteName('#__intranet_service_map.id_user').')');
+		$query->leftJoin($this->_db->quoteName('#__intranet_pf').' ON ('.$this->_db->quoteName('#__users.id').'='.$this->_db->quoteName('#__intranet_pf.id_user').')');
+		$query->leftJoin($this->_db->quoteName('#__intranet_documento_numero') . ' USING ('.$this->_db->quoteName('id_documento_numero').')');
 
 		$query->where( $this->_db->quoteName('id_service') . '=' . $this->_db->quote( $this->_id ) );
 
 		$query->order($this->_db->quoteName('update_service') . ' ASC');
 		$this->_db->setQuery($query);
+		$items = $this->_db->loadObjectList();
 
-		return $this->_db->loadObjectList();	
+		foreach($items as &$item)
+			$item->update_service_text =  $this->tempo_corrido($item->update_service);
+
+		return $items;
+
 	}
 	
+
+	function tempo_corrido($data_informada) {
+
+
+		$data_informada = JFactory::getDate($data_informada, $this->_siteOffset)->toISO8601(true);
+		$timestamp = new DateTime($data_informada);
+		$timestampInformado =  $timestamp->getTimestamp();
+		$agora = strtotime("now");
+		$data_a = $agora - $timestampInformado;
+		$segundos = $data_a;
+		$minutos = round($data_a / 60);
+		$horas = round($data_a / 3600);
+		$dias = round($data_a / 86400);
+		$semanas = round($data_a / 604800);
+		$meses = round($data_a / 2419200);
+		$anos = round($data_a / 29030400);
+		if ($segundos <= 60) return "1 min atrás";
+		else if ($minutos <= 60) return $minutos==1 ?'1 min atrás':$minutos.' min atrás';
+		else if ($horas <= 24) return $horas==1 ?'1 hrs atrás':$horas.' horas atrás';
+		else if ($dias <= 7) return $dias==1 ?'1 dia atras':$dias.' dias atrás';
+		else if ($semanas <= 4) return $semanas==1 ?'1 semana atrás':$semanas.' semanas atrás';
+		else if ($meses <= 12) return $meses == 1 ?'1 mês atrás':$meses.' meses atrás';
+		else return $anos == 1 ? 'um ano atrás':$anos.' anos atrás';
+	}
 
 
 	
@@ -121,6 +153,9 @@ class EASistemasModelRequest extends JModel {
 		$this->addTablePath(JPATH_SITE.'/tables');
 		$row = $this->getTable('request');
 		
+
+		$id_document = false;
+
 		$data['id_user'] = $this->_user->get('id');
 		$data['status_service'] = '1';
 		
@@ -157,7 +192,6 @@ class EASistemasModelRequest extends JModel {
 			return false;	
 		}
 
-		
 
 		jimport('joomla.log.log');
 		JLog::addLogger(array( 'text_file' => 'log.request.php'));
@@ -177,8 +211,17 @@ class EASistemasModelRequest extends JModel {
 		if(!$this->setNewMapService($options))
 			return false;	
 		
-		if($id_document)
-			$this->setExecuteService($data['id_user'], $id_document);
+		if($id_document){
+			$this->setMapExecuteDocument('Preparando Documento');
+			$options = array();
+			$options['id_user'] = $data['id_user'];
+			$options['id_document'] = $id_document;
+			$id_documento_numero = $this->setNewDocument($options);
+			$this->setMapExecuteDocument('Salvando Documento');
+			$this->setMapExecuteDocument('Documento pronto para download', $id_documento_numero);
+			$this->setFish();
+		}
+			
 
 		return true;
 	}
@@ -193,7 +236,7 @@ class EASistemasModelRequest extends JModel {
 
 		$query = $this->_db->getQuery(true);
 		$query->insert( $this->_db->quoteName('#__intranet_service_map') );
-		$query->columns($this->_db->quoteName(array('id_service', 'id_user', 'id_service_stage', 'title_service','message_service', 'update_service')));	
+		$query->columns($this->_db->quoteName(array('id_service', 'id_user', 'id_service_stage', 'title_service', 'message_service', 'id_documento_numero', 'update_service')));	
 	
 		
 		$values = array($this->_db->quote($options['id_service']),
@@ -201,6 +244,7 @@ class EASistemasModelRequest extends JModel {
 						$this->_db->quote($options['id_service_stage']), 
 						$this->_db->quote($options['title_service']),
 						$this->_db->quote($options['message_service']),
+						$this->_db->quote($options['id_documento_numero']),
 						$this->_db->quote(JFactory::getDate('now', $this->_siteOffset)->toISO8601(true))
 					);
 						
@@ -213,44 +257,38 @@ class EASistemasModelRequest extends JModel {
 		return true;
 	}
 
+	function setMapExecuteDocument($mensagem = null, $id_documento_numero = null) {
 
-	function setExecuteService($id_user = null, $id_document = null) 
-	{
-
+		if(is_null($mensagem))
+			return false;
 
 		$options = array();
 		$options['id_service'] = $this->_id;
 		$options['id_user']= NULL;
 		$options['id_service_stage'] = '3';
-		$options['title_service'] = 'Montando Documento';
+		$options['title_service'] = $mensagem;
+		$options['id_documento_numero'] = (is_null($id_documento_numero) ? NULL : $id_documento_numero);
 		$options['message_service'] = NULL;
 		$options['update_service']= NULL;
-		$this->setNewMapService($options);
 
+		if(!$this->setNewMapService($options))
+			return false;	
+		
+		return true;
 
+	}
 
+	function setNewDocument($options = array())  {
+		
 		require_once(JPATH_INCLUDES .DS. 'document.php');
 		$classDocument = new EASistemasIncludesDocument();
 
-		$options = array();
-		$options['id_user'] = $id_user;
-		$options['id_document'] = $id_document;
-
-		$classDocument->newDocument($options);
-
-
-		$options = array();
-		$options['id_service'] = $this->_id;
-		$options['id_user']= NULL;
-		$options['id_service_stage'] = '3';
-		$options['title_service'] = 'Salvando Documento';
-		$options['message_service']= NULL;
-		$options['update_service']= NULL;
-		$this->setNewMapService($options);
-		$this->setFish();
-		return true;
+		if(!(boolean) $responseIdDocumentNumero = $classDocument->newDocument($options))
+			return false;
+		
+		return $responseIdDocumentNumero;
+		
 	}
-
 
 
 	function getAtuoExecute($id_service_type = null) 
