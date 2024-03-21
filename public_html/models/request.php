@@ -27,19 +27,7 @@ class EASistemasModelRequest extends JModel {
 			$array  	= JRequest::getVar( 'cid', array(0), '', 'array');
 			JRequest::setVar( 'cid', $array[0] );
 			$this->setId( (int) $array[0] );
-		
-			/*
-			if (!$this->isCheckedOut() )
-			{
-				$this->checkout();		
-			}
-			else
-			{
-				$tipo = 'alert-warning';
-				$msg = JText::_( 'JGLOBAL_CONTROLLER_CHECKIN_ITEM' );
-				$link = 'index.php?view=requests';
-				$this->_app->redirect($link, $msg, $tipo);
-			}*/
+
 		}
 		
 	}
@@ -57,7 +45,7 @@ class EASistemasModelRequest extends JModel {
 			$query = $this->_db->getQuery(true);			
 			$query->select('*');
 			$query->from('#__intranet_service');	
-			//$query->leftJoin($this->_db->quoteName('#__users').'  ON ('.$this->_db->quoteName('id').'='.$this->_db->quoteName('id_user').')');
+			$query->leftJoin($this->_db->quoteName('#__intranet_service_type').'  USING ('.$this->_db->quoteName('id_service_type').')');
 			$query->where( $this->_db->quoteName('id_service') . '=' . $this->_db->quote( $this->_id ) );
 			$this->_db->setQuery($query);
 			if(!(boolean) $this->_data = $this->_db->loadObject()) {
@@ -76,11 +64,33 @@ class EASistemasModelRequest extends JModel {
 		$query = $this->_db->getQuery(true);
 		$query->select('id_service_type as value, CONCAT(codigo_service_type, \' - \', name_service_type) as text, message_service_type as script');
 		$query->from('#__intranet_service_type');
-		$query->where('public_service_type = 1');
-		$query->where('status_service_type = 1');
-		$query->order($this->_db->quoteName('name_service_type'));
+		$query->leftJoin( $this->_db->quoteName('#__intranet_documento') . ' USING('. $this->_db->quoteName('id_documento').')' );
+		$query->leftJoin( $this->_db->quoteName('#__intranet_documento_map') . ' USING('. $this->_db->quoteName('id_documento').')' );
+		$query->where($this->_db->quoteName('status_service_type') . ' = ' . $this->_db->quote('1'));
+		$query->where($this->_db->quoteName('public_service_type') . ' = ' . $this->_db->quote('1'));
+		
+		$query->where('(('.$this->_db->quoteName('status_documento').' = '.$this->_db->quote('1')
+						 .') OR ('
+						 .$this->_db->quoteName('#__intranet_documento.status_documento') . ' IS NULL'
+						 .'))');
+
+		$query->where('('
+						.'(' 
+						.$this->_db->quoteName('#__intranet_documento.status_documento') . ' IS NULL'
+						.' ) OR ('
+						.$this->_db->quoteName('public_documento') . ' = ' . $this->_db->quote('1')
+						.' ) OR ('
+						.$this->_db->quoteName('public_documento') . ' = ' . $this->_db->quote('2')
+						.'AND'
+						.$this->_db->quoteName('#__intranet_documento_map.id_user') . '=' . $this->_db->quote( $this->_user->get('id') )
+						.')'
+					 .')');
+					 
+		$query->group($this->_db->quoteName('id_service_type'));
+		$query->order($this->_db->quoteName('codigo_service_type'));
 		$this->_db->setQuery($query);
 		return $this->_db->loadObjectList();	
+
 	}
 
 

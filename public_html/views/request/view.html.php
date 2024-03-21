@@ -28,31 +28,29 @@ class EASistemasViewRequest extends JView
 
 
 
+		if(isset($this->services) && count($this->services)>0):
 
+			$script ="jQuery(document).ready(function(){
+						jQuery('#id_service_type').change(function(){
 
-		$script ="jQuery(document).ready(function(){
-					 jQuery('#id_service_type').change(function(){
+							switch(jQuery('#id_service_type').val()) {
+							";
+			foreach($this->services as $i => $service)
+				if($service->script =='1')
+					$script .="case '".$service->value."':
+								jQuery('#message_service').prop('disabled', false);
+								break;";
 
-				   		switch(jQuery('#id_service_type').val()) {
-						";
-		foreach($this->services as $i => $service)
-			if($service->script =='1')
-				$script .="case '".$service->value."':
-							jQuery('#message_service').prop('disabled', false);
-							break;";
-
-		$script .=" default:
-						jQuery('#message_service').val('');
-						jQuery('#message_service').prop('disabled', true);
-					break;
-			}
-		});
-	});";
-
-
-
-
-		$document->addScriptDeclaration($script);
+			$script .="			default:
+									jQuery('#message_service').val('');
+									jQuery('#message_service').prop('disabled', true);
+								break;
+								}
+							});
+						});";
+						
+			$document->addScriptDeclaration($script);
+		endif;
 
 
 /*

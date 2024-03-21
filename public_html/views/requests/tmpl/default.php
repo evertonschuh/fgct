@@ -51,7 +51,7 @@ $saveOrder    = $listOrder == 'ordering';
                     <thead>
                         <tr>
                             <th class="sorting sorting_desc"><?php echo JHtml::_('grid.sort',  'Protocolo', 'id_service', $listDirn, $listOrder); ?></th>
-                            <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Serviço', 'name_service_type', $listDirn, $listOrder); ?></th>
+                            <th class="sorting d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Serviço', 'name_service_type', $listDirn, $listOrder); ?></th>
                             <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Cadastro', 'create_service', $listDirn, $listOrder); ?></th>
                             <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'Situação', 'status_service', $listDirn, $listOrder); ?></th>
                             <th class="sorting text-center d-none d-md-table-cell"><?php echo JHtml::_('grid.sort', 'última Movimentação', 'lastupdate_service', $listDirn, $listOrder); ?></th>
