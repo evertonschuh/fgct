@@ -10,13 +10,6 @@ $resize = new JResize();
 $config   = JFactory::getConfig();
 $siteOffset = $config->getValue('offset');
 
-/*
-if ( !empty( $this->item->image_arma )):
-    $imageUser = $resize->resize(JPATH_CDN .DS. 'images' .DS. 'armas' .DS. $this->item->image_arma, 100, 100, 'cache/' . $this->item->image_arma, 'manterProporcao');
-else:
-    $imageUser = $resize->resize(JPATH_IMAGES .DS. 'noimageweapon.png' , 100, 100, 'cache/noimageweapon.png', 'manterProporcao'); 
-endif;  
-*/ 
 ?>
 
 <form method="post" name="adminForm" enctype="multipart/form-data" class="form-validate">
