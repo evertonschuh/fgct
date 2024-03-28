@@ -177,21 +177,20 @@ class EASistemasModelRemember extends JModel
 	function sendMail()
 	{
 
-
-
 		$post = JRequest::get('post');
 
 		if( !(boolean) $userLoad = $this->getInfoUser($post['username']))
 			return false;
-		
-		$user = JUser::getInstance($userLoad->id);
 
 		// Set the confirmation token.
 		$token = JApplication::getHash(JUserHelper::genRandomPassword());
 		$salt = JUserHelper::getSalt('crypt-md5');
 		$hashedToken = md5($token . $salt) . ':' . $salt;
 
+
+		$user = JUser::getInstance($userLoad->id);
 		$user->activation = $hashedToken;
+		
 
 		// Save the user to the database.
 		if (!$user->save(true)) {
@@ -216,8 +215,6 @@ class EASistemasModelRemember extends JModel
 		$data['CODIGO_ATIVACAO'] = $hashedToken;
 		$data['LINK_ATIVACAO'] =  $base . JRoute::_('index.php?view=remember&layout=confirm&c='.$hashedToken.'&u='.$userLoad->username, false);
 
-		print_r($data);
-		exit;
 		
 		if(count($automaticMessages)>0):
 			foreach($automaticMessages as $automaticMessage):
