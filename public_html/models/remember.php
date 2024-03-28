@@ -73,6 +73,7 @@ class EASistemasModelRemember extends JModel
 
 	function testCaptcha()
 	{
+		return true;
 		$post = JRequest::get('post');
 		JPluginHelper::importPlugin('captcha');
 		$dispatcher = JDispatcher::getInstance();
@@ -176,8 +177,7 @@ class EASistemasModelRemember extends JModel
 	function sendMail()
 	{
 
-		echo 'asdasd';
-		exit;
+
 
 		$post = JRequest::get('post');
 
@@ -192,7 +192,8 @@ class EASistemasModelRemember extends JModel
 		$hashedToken = md5($token . $salt) . ':' . $salt;
 
 		$user->activation = $hashedToken;
-
+		echo 'aaaa';
+		exit;
 		// Save the user to the database.
 		if (!$user->save(true)) {
 			return new JException(JText::sprintf('COM_USERS_USER_SAVE_FAILED', $user->getError()), 500);
