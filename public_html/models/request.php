@@ -21,7 +21,7 @@ class EASistemasModelRequest extends JModel {
 		$this->_user	= JFactory::getUser();
 		$this->_siteOffset = $this->_app->getCfg('offset');
 		
-		//echo JPATH_ADMINISTRATOR;
+		
 		if( JRequest::getVar( 'task' )  != 'add')
 		{
 			$array  	= JRequest::getVar( 'cid', array(0), '', 'array');

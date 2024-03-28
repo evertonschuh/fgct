@@ -32,12 +32,12 @@ jQuery(document).ready(function(){
           thisRadio.prop('checked', true);
           thisRadio.addClass("imChecked");
           jQuery('.btn-file').show();
-          jQuery('#image-gallery-image').attr('src','/midias/images/store/' + jQuery(this).val()); 
+          jQuery('#image-gallery-image').attr('src','/midias/assets/img/store/' + jQuery(this).val()); 
           
           window.parent.postMessage({
             mceAction: 'execCommand',
             cmd: 'imgmanagerCommand',
-            value: '/midias/images/store/' + jQuery(this).val()
+            value: '/midias/assets/img/store/' + jQuery(this).val()
           }, origin);
       };
   })

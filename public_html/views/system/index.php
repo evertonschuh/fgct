@@ -53,7 +53,7 @@ endif;
   <html lang="<?php echo $this->language; ?>" class="light-style layout-navbar-fixed layout-compact layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="/assets/" data-template="vertical-menu-template">
     <head>
       <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-      <link rel="shortcut icon" href="/images/favicon.ico" >
+      <link rel="shortcut icon" href="/assets/img/favicon.ico" >
       <jdoc:include type="head" />
       <link href="/assets/css/sweetalert.css" rel="stylesheet">   
         <!-- Fonts -->
@@ -80,7 +80,7 @@ endif;
 
       <div id="overlay" class="animate">
           <div class="preload-wrap"></div>
-          <img src="/images/favicon.ico" alt="" class="menu-logo" width="129" height="129">
+          <img src="/assets/img/favicon.ico" alt="" class="menu-logo" width="129" height="129">
       </div>
       <?php //if (!JRequest::getInt('hidemainmenu')): ?>
       <!-- Layout wrapper -->
@@ -511,7 +511,7 @@ endif;
                     <script>
                       document.write(new Date().getFullYear());
                     </script>, All Reserved 
-                    <img src="images/eas_box_min.png" style="margin-top:-5px" />
+                    <img src="assets/img/eas_box_min.png" style="margin-top:-5px" />
                     <a href="https://www.easistemas.com.br" target="_blank" class="footer-link fw-bolder">EASistemas</a>
                   </div>
                 </div>

@@ -24,8 +24,8 @@ $this->MetaRights  = $config->MetaRights;
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 <head>
    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-   <link rel="apple-touch-icon" href="views/system/images/apple-touch-icon.png"/>
-   <link rel="shortcut icon" href="views/system/images/favicon.ico" >
+   <link rel="apple-touch-icon" href="views/system/assets/img/apple-touch-icon.png"/>
+   <link rel="shortcut icon" href="views/system/assets/img/favicon.ico" >
    
    
   <title>ERROR</title>
@@ -81,7 +81,7 @@ $this->MetaRights  = $config->MetaRights;
 						<?php //echo $this->sitename; ?>
                         <div class="logosite">
                         	<h1 class="spt-logo h-logo"><?php echo $this->title; ?></h1>
-                        	<img src="<?php echo 'views/system/images/' . $this->file_logo; ?>" alt="<?php echo $this->title; ?>" />
+                        	<img src="<?php echo 'views/system/assets/img/' . $this->file_logo; ?>" alt="<?php echo $this->title; ?>" />
                         </div>
                     </a>
                 </div>

@@ -184,7 +184,7 @@
 
 .app-brand-logo.main {
   margin-bottom: 10px;
-  background-image: url('/images/logo.png');
+  background-image: url('/assets/img/logo.png');
   background-repeat: no-repeat;
   background-size: auto 80px;
   background-position: center;
@@ -193,7 +193,7 @@
 }
 
 .dark-style .app-brand-logo.main {
-  background-image: url(/images/logo-dark.png);
+  background-image: url(/assets/img/logo-dark.png);
 }
 
 .app-brand-text.main {

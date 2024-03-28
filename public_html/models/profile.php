@@ -545,7 +545,7 @@ class EASistemasModelProfile extends JModel {
 	
 	function isCheckedOut()
 	{		
-		$this->addTablePath(JPATH_ADMINISTRATOR.'/tables');
+		$this->addTablePath(JPATH_BASE.'/tables');
 	    $row = $this->getTable('associado');
 		$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
 		$cid = $cid[0];
@@ -562,7 +562,7 @@ class EASistemasModelProfile extends JModel {
 	
 	function checkout()
 	{		
-		$this->addTablePath(JPATH_ADMINISTRATOR.'/tables');
+		$this->addTablePath(JPATH_BASE.'/tables');
 	    $row = $this->getTable('associado');
 		$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
 		$cid = $cid[0];
@@ -580,7 +580,7 @@ class EASistemasModelProfile extends JModel {
 	   
 	function checkin()
 	{	
-		$this->addTablePath(JPATH_ADMINISTRATOR.'/tables');
+		$this->addTablePath(JPATH_BASE.'/tables');
 	    $row = $this->getTable('associado');
 		
 		$cid = JRequest::getVar( 'cid', array(0), '', 'array' );

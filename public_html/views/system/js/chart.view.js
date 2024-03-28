@@ -195,7 +195,7 @@ jQuery(document).ready(function(){
 			jQuery('#midiaModal').modal('toggle');
 			var item = jQuery('input[name="image_evento"]');
 			item.val(img);
-			item.parent().find('.img-thumbnail').attr('src', '/media/images/store/'+img);
+			item.parent().find('.img-thumbnail').attr('src', '/media/assets/img/store/'+img);
 		}
 		else
 		{

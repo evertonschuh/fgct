@@ -379,7 +379,7 @@ class EASistemasModelPayment extends JModel
 
 	function store() 
 	{
-		$this->addTablePath(JPATH_ADMINISTRATOR.'/tables');
+		$this->addTablePath(JPATH_BASE.'/tables');
 	    $row = $this->getTable('pagamento');
 		$data = JRequest::get( 'post' );
 
@@ -610,7 +610,7 @@ class EASistemasModelPayment extends JModel
 	function setPlots( $options = array() )
 	{
 		
-		$this->addTablePath(JPATH_ADMINISTRATOR.'/tables');
+		$this->addTablePath(JPATH_BASE.'/tables');
 		
 		$query = $this->_db->getQuery(true);	
 		$query->select($this->_db->quoteName(array( 'id_inscricao',
@@ -1143,7 +1143,7 @@ class EASistemasModelPayment extends JModel
 	function isCheckedOut()
 	{		
 
-		$this->addTablePath(JPATH_ADMINISTRATOR.'/tables');
+		$this->addTablePath(JPATH_BASE.'/tables');
 	    $row = $this->getTable('pagamento');
 		$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
 		$cid = $cid[0];
@@ -1161,7 +1161,7 @@ class EASistemasModelPayment extends JModel
 	
 	function checkout()
 	{		
-		$this->addTablePath(JPATH_ADMINISTRATOR.'/tables');
+		$this->addTablePath(JPATH_BASE.'/tables');
 	    $row = $this->getTable('pagamento');
 		$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
 		$cid = $cid[0];
@@ -1179,7 +1179,7 @@ class EASistemasModelPayment extends JModel
 	   
 	function checkin()
 	{	
-		$this->addTablePath(JPATH_ADMINISTRATOR.'/tables');
+		$this->addTablePath(JPATH_BASE.'/tables');
 	    $row = $this->getTable('pagamento');
 		$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
 		$cid = $cid[0];

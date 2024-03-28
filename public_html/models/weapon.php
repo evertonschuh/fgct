@@ -26,7 +26,7 @@ class EASistemasModelWeapon extends JModel {
 		$this->_isRoot		= $this->_user->get('isRoot');	
 		$this->_userAdmin	= $this->_user->get('id');
 		
-		//echo JPATH_ADMINISTRATOR;
+
 		if( JRequest::getVar( 'task' )  != 'add')
 		{
 			$array  	= JRequest::getVar( 'cid', array(0), '', 'array');

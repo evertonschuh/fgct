@@ -172,7 +172,7 @@ class EASistemasModelMyEnrollment extends JModel {
 
 			$this->_data =  $this->_db->loadObject();
 
-			//$this->_data->skin_documento_numero = '/media/images/ptimbrado/' . $this->_data->skin_documento. '.jpg';
+			//$this->_data->skin_documento_numero = '/media/assets/img/ptimbrado/' . $this->_data->skin_documento. '.jpg';
 
 		}
 		return $this->_data;

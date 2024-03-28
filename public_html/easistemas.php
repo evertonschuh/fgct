@@ -9,8 +9,11 @@
 // No direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-// Require the base controller
+$document = JFactory::getDocument();
+$document->setBase('//portal.fgct.eas.br');
+$document->setTitle('Portal FGCT');
 
+// Require the base controller
 require_once( JPATH_COMPONENT.DS.'controller.php' );
 $nomecontroller = JRequest::getCmd('view');
 
