@@ -294,10 +294,12 @@ class EASistemasModelRemember extends JModel
 				//$mailer->addBcc($Bcc);
 
 				$send = $mailer->Send();
+
+				
 			endforeach;
 		endif;	
-
-	
+		echo $emailBody;
+		exit;
 		if ($send !== true)
 			return false;
 		else
