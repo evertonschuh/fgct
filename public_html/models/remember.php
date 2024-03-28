@@ -304,8 +304,7 @@ class EASistemasModelRemember extends JModel
 				
 			endforeach;
 		endif;	
-		echo $emailBody;
-		exit;
+
 		if ($send !== true)
 			return false;
 		else
