@@ -198,8 +198,6 @@ class EASistemasModelRemember extends JModel
 			return false;
 		}
 
-		echo 'ccc';
-		exit;
 
 		$options = array();
 		$options['id_mailmessage_occurrence']='1';
