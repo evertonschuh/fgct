@@ -210,6 +210,9 @@ class EASistemasModelRemember extends JModel
 		$data['CODIGO_ATIVACAO'] = $hashedToken;
 		$data['LINK_ATIVACAO'] =  $base . JRoute::_('index.php?view=remember&layout=confirm&c='.$hashedToken.'&u='.$userLoad->username, false);
 
+		print_r($data);
+		exit;
+		
 		if(count($automaticMessages)>0):
 			foreach($automaticMessages as $automaticMessage):
 				$mailer = JFactory::getMailer(); 
