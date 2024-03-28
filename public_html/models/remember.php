@@ -198,9 +198,12 @@ class EASistemasModelRemember extends JModel
 			return new JException(JText::sprintf('COM_USERS_USER_SAVE_FAILED', $user->getError()), 500);
 		}
 
-		$options['id_mailmessage_occurrence']='1';
-		echo 'bbbb';
+		echo 'ccc';
 		exit;
+
+		$options = array();
+		$options['id_mailmessage_occurrence']='1';
+
 		$automaticMessages = $this->getAutomaticMessage($options);	
 
 		if(!count($automaticMessages)>0 )
