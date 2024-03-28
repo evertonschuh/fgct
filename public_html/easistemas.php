@@ -10,7 +10,7 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 $document = JFactory::getDocument();
-$document->setBase('//portal.fgct.eas.br');
+$document->setBase('//portal.fgct.com.br');
 $document->setTitle('Portal FGCT');
 
 // Require the base controller
