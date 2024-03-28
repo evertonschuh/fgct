@@ -192,14 +192,15 @@ class EASistemasModelRemember extends JModel
 		$hashedToken = md5($token . $salt) . ':' . $salt;
 
 		$user->activation = $hashedToken;
-		echo 'aaaa';
-		exit;
+
 		// Save the user to the database.
 		if (!$user->save(true)) {
 			return new JException(JText::sprintf('COM_USERS_USER_SAVE_FAILED', $user->getError()), 500);
 		}
 
 		$options['id_mailmessage_occurrence']='1';
+		echo 'bbbb';
+		exit;
 		$automaticMessages = $this->getAutomaticMessage($options);	
 
 		if(!count($automaticMessages)>0 )
