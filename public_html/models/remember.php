@@ -176,6 +176,9 @@ class EASistemasModelRemember extends JModel
 	function sendMail()
 	{
 
+		echo 'asdasd';
+		exit;
+
 		$post = JRequest::get('post');
 
 		if( !(boolean) $userLoad = $this->getInfoUser($post['username']))

@@ -57,29 +57,28 @@ class EASistemasControllerRemember extends JController
 			$userinfo = $model->rememberUser();
 			if($userinfo === false) {
 				$msg = JText::_('Não encontramos nenhum usuário com este nome de acesso.');	
-				//$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');				
+				$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');				
 			}
 			elseif($userinfo->block != '0') {
 				$msg = JText::_('Parece que existe um bloqueio para este nome de usuário. Entre en contato com a FGCT');	
-				//$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
+				$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
 			}
 			else {
 				if ($model->sendMail()) {
 				
 					$msg = JText::_('Enviamos uma mensagem para seu endereço de e-mail, contendo um codigo que permitirá resetar sua senha.');	
-					//$this->setRedirect(JRoute::_('index.php?view=remember&layout=confirm', false), $msg, 'info');
+					$this->setRedirect(JRoute::_('index.php?view=remember&layout=confirm', false), $msg, 'info');
 				}
 				else {
 					$msg = JText::_('Ocorreu um erro ao tentar enviar a mensagem com o código.');	
-					//$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
+					$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
 				}	
 			}
 		}
 		else {
 			$msg = JText::_('Você deve ser aprovado no teste Captcha para prosseguir');	
-			//$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
+			$this->setRedirect(JRoute::_('index.php?view=remember', false), $msg, 'danger');
 		}
-		echo $msg;
 	}
 	
 	function confirm()
