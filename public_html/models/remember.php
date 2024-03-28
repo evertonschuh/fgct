@@ -195,7 +195,7 @@ class EASistemasModelRemember extends JModel
 
 		// Save the user to the database.
 		if (!$user->save(true)) {
-			return new JException(JText::sprintf('COM_USERS_USER_SAVE_FAILED', $user->getError()), 500);
+			return false;
 		}
 
 		echo 'ccc';
