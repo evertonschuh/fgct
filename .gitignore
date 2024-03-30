@@ -1,4 +1,4 @@
 *.log
 .DS_Store
-easistemas.php
+/public_html/easistemas.php
 /public_html/cache/
