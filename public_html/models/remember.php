@@ -73,7 +73,7 @@ class EASistemasModelRemember extends JModel
 
 	function testCaptcha()
 	{
-		return true;
+	
 		$post = JRequest::get('post');
 		JPluginHelper::importPlugin('captcha');
 		$dispatcher = JDispatcher::getInstance();
@@ -244,11 +244,11 @@ class EASistemasModelRemember extends JModel
 						$i = 0;
 						foreach( $imgs as $key => $img)
 						{
-						$imgUrl = str_replace('"', '', $img[2][0]);
-							
-						$mailer->addEmbeddedImage( JPATH_IMAGES .DS. str_replace('/', DS, $imgUrl) , 'image'.$i, 'image'.$i.'.jpg', 'base64', 'image/jpg' );                   
-						$newkey = str_replace($imgUrl, 'cid:image'.$i, $key);
-						$emailBody =  str_replace($key, $newkey, $emailBody);
+							$imgUrl = str_replace('"', '', $img[2][0]);
+								
+							$mailer->addEmbeddedImage( JPATH_BASE .DS. str_replace('/', DS, $imgUrl) , 'image'.$i, 'image'.$i.'.jpg', 'base64', 'image/jpg' );                   
+							$newkey = str_replace($imgUrl, 'cid:image'.$i, $key);
+							$emailBody =  str_replace($key, $newkey, $emailBody);
 						}  
 					}  
 					
