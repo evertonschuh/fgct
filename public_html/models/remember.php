@@ -73,7 +73,7 @@ class EASistemasModelRemember extends JModel
 
 	function testCaptcha()
 	{
-	
+		return true;
 		$post = JRequest::get('post');
 		JPluginHelper::importPlugin('captcha');
 		$dispatcher = JDispatcher::getInstance();

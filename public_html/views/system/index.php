@@ -79,8 +79,8 @@ endif;
       <?php if( !$user->get('guest')): ?>
 
       <div id="overlay" class="animate">
-          <div class="preload-wrap"></div>
-          <img src="/assets/img/favicon.ico" alt="" class="menu-logo" width="129" height="129">
+        <div class="preload-wrap"></div>
+        <img src="/assets/img/favicon.ico" alt="" class="menu-logo" width="129" height="129">
       </div>
       <?php //if (!JRequest::getInt('hidemainmenu')): ?>
       <!-- Layout wrapper -->
@@ -576,9 +576,6 @@ endif;
     <script src="/assets/js/custom.js"></script>
     <script src="/assets/js/sweetalert.js"></script>
 		<jdoc:include type="footer" />
-
-
-
     <?php if( !$user->get('guest')): ?>
     <script type="text/javascript">
       $(document).ready(function(){
@@ -603,14 +600,6 @@ endif;
       });
     </script> 
     <?php endif; ?>
-    <?php 
-    /*
-      <script src="/assets/vendor/libs/hammer/hammer.js"></script>
-      <script src="/assets/vendor/libs/i18n/i18n.js"></script>
-      <script src="/assets/vendor/libs/typeahead-js/typeahead.js"></script>
-      <script src="/assets/vendor/js/menu.js"></script>
-    */ 
-    ?>
 	</body>
 </html>
 

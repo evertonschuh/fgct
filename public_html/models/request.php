@@ -202,22 +202,23 @@ class EASistemasModelRequest extends JModel {
 			return false;	
 		}
 
+		if($this->_id):
+			$row->checkin($this->_id);
+			$textLog = 'edit item';
+		else:
+			$this->setId( $row->get('id_service') ); 			
+			$textLog = 'new item';
+		endif;
+
+		JRequest::setVar( 'cid', $this->_id );
 
 		jimport('joomla.log.log');
 		JLog::addLogger(array( 'text_file' => 'log.request.php'));
-		
-		if($this->_id):
-			$row->checkin($this->_id);
-			JLog::add($this->_user->get('id') . JText::_('		Edit Request -  id('.$this->_id.')'), JLog::INFO, 'request');
-		else:
-			$this->setId( $row->get('id_service') ); 	
-			JLog::add($this->_user->get('id') . JText::_('		New Request -  id('.$this->_id.')'), JLog::INFO, 'request');
-		endif;
-	
-		//print_r($row);
-		JRequest::setVar( 'cid', $this->_id );
+		JLog::add($this->_user->get('id') . ' - ' . $textLog.' -  id item ('.$this->_id.')', JLog::INFO, 'request');
+
+		$row->checkin( $this->_id );
 		$options['id_service'] = $this->_id;	
-		
+		$options['id_documento_numero'] = NULL;
 		if(!$this->setNewMapService($options))
 			return false;	
 		
@@ -328,7 +329,7 @@ class EASistemasModelRequest extends JModel {
 			return true;
 		}	
 	}
-
+/*
 	function isCheckedOut()
 	{		
 		$this->addTablePath(JPATH_SITE.'/tables');
@@ -363,7 +364,7 @@ class EASistemasModelRequest extends JModel {
 		}
 		return false;
 	}
-	   
+	 */  
 	function checkin()
 	{	
 		$this->addTablePath(JPATH_SITE.'/tables');
