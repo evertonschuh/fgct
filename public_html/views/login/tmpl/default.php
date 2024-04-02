@@ -13,7 +13,12 @@ if (!file_exists($filename) || (file_exists($filename) && JFactory::getDate(date
   $resize = new JResize(); 
   $image = $resize->resize(JPATH_IMAGES.DS.'login'.DS.'atirador00'.rand(1,10).'.jpg', 1250, 1200, 'cache/image_login.png');
 
-}							
+}			
+
+
+echo JFactory::getDate(date ("Y-m-d", filectime($filename)), $siteOffset )->toFormat('%Y-%m-%d', true);
+exit;
+
 ?>
 <style>
 

@@ -183,7 +183,7 @@ class EASistemasModelRequest extends JModel {
 			$options['message_service'] = '';
 			$id_document = $this->getAtuoExecute($data['id_service_type']);
 		endif;
-
+/*
 		if ( !$row->bind($data)) 
 		{
 			$this->setError($this->_db->getErrorMsg());
@@ -221,19 +221,22 @@ class EASistemasModelRequest extends JModel {
 		$options['id_documento_numero'] = NULL;
 		if(!$this->setNewMapService($options))
 			return false;	
-		
+		*/
 		if($id_document){
-			$this->setMapExecuteDocument('Preparando Documento');
+			//$this->setMapExecuteDocument('Preparando Documento');
 			$options = array();
 			$options['id_user'] = $data['id_user'];
 			$options['id_document'] = $id_document;
 			$id_documento_numero = $this->setNewDocument($options);
+			echo 'fim';
+			exit;
 			$this->setMapExecuteDocument('Salvando Documento');
 			$this->setMapExecuteDocument('Documento pronto para download', $id_documento_numero);
 			$this->setFish();
 		}
 			
-
+		echo 'passou';
+			exit;
 		return true;
 	}
 
