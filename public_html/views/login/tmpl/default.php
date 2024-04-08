@@ -1,6 +1,15 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 $uri = JFactory::getURI();
+
+jimport('joomla.image.resize');
+$resize = new JResize(); 
+
+
+$filename = $resize->resize(JPATH_IMAGES.DS.'login'.DS.'fixa.jpg', 1250, 1200, 'cache/imagelogin.png');
+
+
+
 JHTML::_('behavior.formvalidation');
 
 $config   = JFactory::getConfig();
@@ -10,11 +19,10 @@ $siteOffset = $config->getValue('offset');
 //if (!file_exists($filename) || (file_exists($filename) && JFactory::getDate(date ("Y-m-d", filectime($filename)), $siteOffset )->toFormat('%Y-%m-%d', true) < JFactory::getDate('now + 1 days', $siteOffset )->toFormat('%Y-%m-%d', true))) {
 
  // unlink(JPATH_CACHE.DS.'image_login.png');
-  $nr = rand(1,9);
-  jimport('joomla.image.resize');
-  $resize = new JResize(); 
-  $filename = $resize->resize(JPATH_IMAGES.DS.'login'.DS.'atirador00'.$nr.'.jpg', 1250, 1200, 'cache/image_login'.$nr.'.png');
+  /*$nr = rand(1,9);
 
+  $filename = $resize->resize(JPATH_IMAGES.DS.'login'.DS.'atirador00'.$nr.'.jpg', 1250, 1200, 'cache/image_login'.$nr.'.png');
+*/
 //}			
 
 ?>
