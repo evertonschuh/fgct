@@ -1,0 +1,470 @@
+/*
+* main.css
+* File include item main only specific css only
+******************************************************************************/
+
+
+
+@charset "UTF-8";
+:root {
+  --primary: #8DA500; /* #FF7000; #696cff;*/
+  --primary-rgba-0: rgba(141, 165, 0, 0); /*rgba(105, 108, 255, 0);*/
+  --primary-rgba-08: rgba(141, 165, 0, 0.08); /*rgba(105, 108, 255, 0.08);*/
+  --primary-rgba-11: rgba(141, 165, 0, 0.11); /*rgba(105, 108, 255, 0.11);*/
+  --primary-rgba-15: rgba(141, 165, 0, 0.15); /*rgba(105, 108, 255, 0.15);*/
+  --primary-rgba-16: rgba(141, 165, 0, 0.16); /*rgba(105, 108, 255, 0.16);*/
+  --primary-rgba-4: rgba(141, 165, 0, 0.4); /*rgba(105, 108, 255, 0.4);*/
+  --primary-rgba-85: rgba(141, 165, 0, 0.85); /*rgba(105, 108, 255, 0.85);*/
+}
+
+#overlay {
+  background: rgba(245, 245, 249, 1);
+  visibility: visible;
+  z-index: 99999;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#overlay img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  width: 5.0625rem;
+  height: 4.9375rem;
+  max-width: 100%;
+}
+
+#overlay .preload-wrap {
+  position: absolute;
+  border-radius: 100%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  width: 7.5rem;
+  height: 7.5rem;
+  border: 0.0625rem var(--primary) solid;
+  border-top: 0.25rem var(--primary) solid;
+  -webkit-animation: spin 1s infinite linear;
+  animation: spin 1s infinite linear;
+}
+
+.animate {
+   -webkit-transition: all 0.75s ease-out;
+  -o-transition: all 0.75s ease-out;
+  transition: all 0.75s ease-out;	
+}
+
+@keyframes spin {
+  0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg)
+  }
+
+  to {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg)
+  }
+}
+
+
+.form-check-label {
+  margin-right: 10px;
+}
+.has-error .input-group-text, 
+.error .input-group-text {
+  color:#ff3e1d !important;
+  border-color: #ff3e1d !important;
+} 
+.has-error .form-control,
+.error.form-control,
+.has-error .select2-container--default .select2-selection,
+.error .select2-container--default .select2-selection {
+  border-color: #ff3e1d;
+} 
+
+.select2-container--default.select2-container--focus .select2-selection, .select2-container--default.select2-container--open .select2-selection {
+  border-color: var(--primary) !important;
+}
+
+#system-message-container {
+
+	position: absolute;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#system-message {
+	animation: 0s linear 4s fadeOut;
+  animation-fill-mode: forwards;
+  visibility: visible;
+	position: relative;
+  float: left;
+	width:100%;
+	z-index:99;
+}
+
+#page-login #system-message {
+  position: absolute;
+  margin-top:-30px;
+  z-index:999;
+}
+
+#system-message .message {
+	box-shadow: 0 0 30px #9E9E9E;
+	margin: 0 auto;
+    display: table;
+	width:85%;
+}
+
+@keyframes fadeOut{
+  0% {
+    opacity: 1;
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+#system-message dt {
+	display:none
+}
+.message{
+	padding:15px;
+	margin:30px;
+	border:1px solid transparent;
+	border-radius:4px
+}
+.message ul li {
+	list-style-type:none
+}
+.message ul {
+	padding:0
+}
+.message h4 {
+	margin-top:0;
+	color:inherit
+}
+.message .message-link {
+	font-weight:700
+}
+.message>p,.message>ul {
+	margin-bottom:0
+}
+.message>p+p {
+	margin-top:5px
+}
+.message-dismissable,
+.message-dismissible {
+	padding-right:35px
+}
+.message-dismissable .close,
+.message-dismissible .close {
+	position:relative;
+	top:-2px;
+	right:-21px;
+	color:inherit
+}
+
+
+.menu .app-brand.main {
+  height: 84px;
+  margin-top: 12px;
+}
+
+.app-brand-logo.main {
+  margin-bottom: 10px;
+  background-image: url('/assets/img/logo.png');
+  background-repeat: no-repeat;
+  background-size: auto 80px;
+  background-position: center;
+  height: 100px;
+  width: 200px;
+}
+
+.dark-style .app-brand-logo.main {
+  background-image: url(/assets/img/logo-dark.png);
+}
+
+.app-brand-text.main {
+  font-size: 1.75rem;
+  letter-spacing: -0.5px;
+  text-transform: lowercase;
+}
+
+/* ! For .layout-navbar-fixed added fix padding top tpo .layout-page */
+/* Detached navbar */
+.layout-navbar-fixed .layout-wrapper:not(.layout-horizontal):not(.layout-without-menu) .layout-page {
+  padding-top: 76px !important;
+}
+/* Default navbar */
+.layout-navbar-fixed .layout-wrapper:not(.layout-without-menu) .layout-page {
+  padding-top: 64px !important;
+}
+
+/* Navbar page z-index issue solution */
+.content-wrapper .navbar {
+  z-index: auto;
+}
+
+/*
+* Content
+******************************************************************************/
+
+.main-blocks > * {
+  display: block !important;
+}
+
+.main-inline-spacing > * {
+  margin: 1rem 0.375rem 0 0 !important;
+}
+
+/* ? .main-vertical-spacing class is used to have vertical margins between elements. To remove margin-top from the first-child, use .main-only-element class with .main-vertical-spacing class. For example, we have used this class in forms-input-groups.html file. */
+.main-vertical-spacing > * {
+  margin-top: 1rem !important;
+  margin-bottom: 0 !important;
+}
+.main-vertical-spacing.main-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.main-vertical-spacing-lg > * {
+  margin-top: 1.875rem !important;
+  margin-bottom: 0 !important;
+}
+.main-vertical-spacing-lg.main-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.main-vertical-spacing-xl > * {
+  margin-top: 5rem !important;
+  margin-bottom: 0 !important;
+}
+.main-vertical-spacing-xl.main-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.rtl-only {
+  display: none !important;
+  text-align: left !important;
+  direction: ltr !important;
+}
+
+[dir='rtl'] .rtl-only {
+  display: block !important;
+}
+
+/*
+* Layout main
+******************************************************************************/
+
+.layout-main-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+.layout-main-placeholder img {
+  width: 900px;
+}
+.layout-main-info {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.pagination-div ul {
+  display: inline-block;
+  padding-left: 0;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+.pagination-div ul > li {
+  display: inline;
+}
+.pagination-div ul > li > a,
+.pagination-div ul > li > span {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  border-radius: 0.25rem;
+  margin-left: 0.1875rem;
+  line-height: 1.42857143;
+  text-decoration: none;
+  color: #697a8d;
+  background-color: #f0f2f4;
+  border: 0px solid #d9dee3;
+}
+
+
+.pagination-div ul > li:first-child > a,
+.pagination-div ul > li:first-child > span {
+
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.pagination-div ul > li:last-child > a,
+.pagination-div ul > li:last-child > span {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.pagination-div ul > li > a:hover,
+.pagination-div ul > li > span:hover,
+.pagination-div ul > li > a:focus,
+.pagination-div ul > li > span:focus {
+  color: #2a6496;
+  background-color: #eee;
+  border-color: #ddd;
+  
+  box-shadow: 0 0.125rem 0.25rem var(--primary-rgba-4);
+}
+.pagination-div ul > .active > a,
+.pagination-div ul > .active > span,
+.pagination-div ul > .active > a:hover,
+.pagination-div ul > .active > span:hover,
+.pagination-div ul > .active > a:focus,
+.pagination-div ul > .active > span:focus {
+  z-index: 2;
+  cursor: default;
+  border-radius: 0.25rem;
+  border-color: var(--primary);
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.pagination-div ul > .active > a:hover,
+.pagination-div ul > .active > span:hover,
+.pagination-div ul > .active > a:focus,
+.pagination-div ul > .active > span:focus {
+  box-shadow: 0 0.125rem 0.25rem var(--primary-rgba-4);
+}
+
+.pagination-div ul li > span.pagenav,
+.pagination-div ul li > span.pagenav:hover,
+.pagination-div ul li > span.pagenav:focus {
+  z-index: 2;
+  cursor: default;
+  border-color: var(--primary);
+  background-color: var(--primary);
+  color: #fff;
+  border-radius: 0.25rem;
+}
+
+
+.pagination-div ul li > span.pagenav:hover,
+.pagination-div ul li > span.pagenav:focus {
+  box-shadow: 0 0.125rem 0.25rem var(--primary-rgba-4);
+}
+
+
+.pagination-div .pagination-start span.pagenav,
+.pagination-div .pagination-start span.pagenav:hover,
+.pagination-div .pagination-start span.pagenav:focus,
+.pagination-div .pagination-prev span.pagenav,
+.pagination-div .pagination-prev span.pagenav:hover,
+.pagination-div .pagination-prev span.pagenav:focus,
+.pagination-div .pagination-next span.pagenav,
+.pagination-div .pagination-next span.pagenav:hover,
+.pagination-div .pagination-next span.pagenav:focus,
+.pagination-div .pagination-end span.pagenav,
+.pagination-div .pagination-end span.pagenav:hover,
+.pagination-div .pagination-end span.pagenav:focus {	
+  color: #777;
+  cursor: not-allowed;
+  text-decoration: none;
+  color: #697a8d;
+  background-color: #f0f2f4;
+  border: 0px solid #d9dee3;
+  box-shadow: none;
+}
+
+.pagination-div ul > .disabled > span,
+.pagination-div ul > .disabled > span:hover,
+.pagination-div ul > .disabled > span:focus,
+.pagination-div ul > .disabled > a,
+.pagination-div ul > .disabled > a:hover,
+.pagination-div ul > .disabled > a:focus {
+  color: #777;
+  cursor: not-allowed;
+  text-decoration: none;
+  color: #697a8d;
+  background-color: #f0f2f4;
+  border: 0px solid #d9dee3;
+}
+.pagination-lg > li > a,
+.pagination-lg > li > span {
+  padding: 10px 16px;
+  font-size: 18px;
+}
+.pagination-lg > li:first-child > a,
+.pagination-lg > li:first-child > span {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.pagination-lg > li:last-child > a,
+.pagination-lg > li:last-child > span {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.pagination-sm > li > a,
+.pagination-sm > li > span {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+.pagination-sm > li:first-child > a,
+.pagination-sm > li:first-child > span {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.pagination-sm > li:last-child > a,
+.pagination-sm > li:last-child > span {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.limit{
+	margin: auto;
+}
+
+
+.list-footer div.limit {
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 25px 0;
+	text-align:left;
+}
+
+.list-footer div.limit select#limit {
+	width: 80px;
+	float: right;
+	margin-left:0;
+	margin-top:-5px;
+}
+
+.list-footer div.counter {
+	float: right;
+	height: 22px;
+	line-height: 22px;
+	margin: 25px 0;
+}
+
+.grid-icon {
+	font-size:18px;
+    color: #444;
+}
