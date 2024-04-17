@@ -45,7 +45,7 @@ define('JPATH_ASSETS',          JPATH_BASE .DS. 'assets');
 define('JPATH_IMAGES',          JPATH_ASSETS .DS. 'img');
 
 //define('JPATH_CDN',             JPATH_ROOT_ABSOLUT .DS. 'cdn');
-define('JPATH_INTRANET',        JPATH_ROOT_ABSOLUT .DS. 'fgct_intranet' .DS. 'public_html');
+define('JPATH_INTRANET',        dirname(dirname(dirname(dirname(__FILE__)))) .DS. 'fgct_intranet' .DS. 'public_html');
 define('JPATH_CDN',             JPATH_INTRANET .DS. 'media');
 define('JPATH_SYSTEM',	        JPATH_INTRANET .DS. 'admin' .DS. 'classes');
 
