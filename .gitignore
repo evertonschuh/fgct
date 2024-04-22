@@ -1,9 +1,9 @@
 *.log
 *errors.txt
 .DS_Store
-
+configuration.php
 /easistemas_framework
-/rs_shooting_apps
+/apps
 
 /portal/public_html/cache
 /portal/public_html/easistemas.php

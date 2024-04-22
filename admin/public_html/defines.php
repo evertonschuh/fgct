@@ -22,9 +22,10 @@ $parts = explode(DIRECTORY_SEPARATOR, JPATH_BASE);
 
 
 define('JPATH_ROOT',            implode(DIRECTORY_SEPARATOR, $parts));
+define('JPATH_FRAMEWORK',       dirname(dirname(dirname(dirname(__FILE__)))) .DS. 'easistemas_framework');
 define('JPATH_ROOT_ABSOLUT',	dirname(dirname(dirname(__FILE__))));
-define('JPATH_FRAMEWORK',       JPATH_ROOT_ABSOLUT .DS. 'easistemas_framework');
-define('JPATH_CONFIGURATION',   JPATH_FRAMEWORK);
+
+define('JPATH_CONFIGURATION',   JPATH_ROOT_ABSOLUT);
 
 define('JPATH_LIBRARIES',       JPATH_FRAMEWORK .DS. 'libraries');
 define('JPATH_PLUGINS',         JPATH_FRAMEWORK .DS. 'plugins');
