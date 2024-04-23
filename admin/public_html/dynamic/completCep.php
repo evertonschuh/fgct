@@ -36,7 +36,8 @@ class EASistemasCompletCep {
 				{
 
 
-					$address = 'https://cep.awesomeapi.com.br/json/' . $cep_endereco;
+					$address = "https://viacep.com.br/ws/$cep_endereco/json/";
+					//$address = 'https://cep.awesomeapi.com.br/json/' . $cep_endereco;
 					$json = file_get_contents($address);
 					$results = json_decode($json);
 					//return $results;
@@ -51,18 +52,21 @@ class EASistemasCompletCep {
 					$client = new SoapClient($address, $config);
 					$results  = $client->consultaCEP(['cep' => $cep_endereco]);
 */
-					if(!isset($results->state))
+
+
+					if(!isset($results->uf))
 						die();
-					$uf         = $results->state;
-					$cidade     = $results->city;		
-					$bairro     = $results->district;
-					$logradouro = $results->address_name;
+					$uf         = $results->uf;
+					$cidade     = $results->localidade;		
+					$bairro     = $results->bairro;
+					$logradouro = $results->logradouro;
 					
 					$posicao = strpos($logradouro, ' - ');
 					if ($posicao!=0)
 						$logradouro = substr($logradouro, 0, $posicao);				
 					else
 						$logradouro = $logradouro;
+					
 					
 					
 					//$uf = str_replace('&nbsp;','',$uf);
