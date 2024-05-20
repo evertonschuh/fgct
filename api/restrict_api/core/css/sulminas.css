@@ -1,0 +1,129 @@
+
+.table-sulminas th, .table-sulminas td, .table-sulminas .cat-list-row0 td, .table-sulminas .cat-list-row1 td{
+	padding-left:5px !important;
+	padding-right:5px !important;
+	font-size:11px;
+}
+
+.local-prova-sulminas {
+	border:#F00 3px solid !important;
+	font-weight:bold !important;
+	font-size:15px;
+}
+
+.cat-list-row .rs-sulminas, 
+.cat-list-row0 .rs-sulminas {
+	background: #EBD7FF !important;
+	color: #300;
+	font-weight:bold;
+}
+
+.cat-list-row1 .rs-sulminas {
+	background:#E2C6FF  !important;
+	color: #300;
+	font-weight:bold;
+}
+
+.cat-list-row .porcentage-sulminas,
+.cat-list-row0 .porcentage-sulminas {
+	background: #D9ECFF!important;
+	color: #036;
+	font-weight:bold;
+}
+
+.cat-list-row1 .porcentage-sulminas {
+	background: #BBDDFF !important;
+	color: #036;
+	font-weight:bold;;
+}
+
+.cat-list-row .rf-sulminas, 
+.cat-list-row0 .rf-sulminas {
+	background: #FFEFBF !important;
+	color: #930;
+	font-weight:bold;
+}
+
+.cat-list-row1 .rf-sulminas {
+	background: #FFE495 !important;
+	color: #930;
+	font-weight:bold;
+}
+
+.cat-list-row .soma-sulminas, 
+.cat-list-row0 .soma-sulminas {
+	background: #DFDFD0 !important;
+	color: #666;
+	font-weight:bold;
+}
+
+.cat-list-row1 .soma-sulminas {
+	background: #CECEBF !important;
+	color: #666;
+	font-weight:bold;
+}
+
+.cat-list-row .fator4-sulminas,
+.cat-list-row0 .fator4-sulminas {
+	background: #D9ECFF!important;
+	color: #036;
+	font-weight:bold;
+}
+
+.cat-list-row1 .fator4-sulminas {
+	background: #BBDDFF !important;
+	color: #036;
+	font-weight:bold;
+}
+
+.cat-list-row .final-sulminas,
+.cat-list-row0 .final-sulminas {
+	background: #FEFDC2 !important;	
+	color: #8C6900;
+	font-weight:bold;
+}
+
+.cat-list-row1 .final-sulminas {
+	background: #FDFB93 !important;	
+	color: #8C6900;
+	font-weight:bold;
+}
+
+.cat-list-row .total-sulminas,
+.cat-list-row0 .total-sulminas,
+.cat-list-row0 .destaque-100 {
+	background: #CCF7D9!important;
+	color: #030;
+	font-weight:bold;
+}
+
+.cat-list-row1 .total-sulminas,
+.cat-list-row1 .destaque-100 {
+	background: #AAF0BF !important;
+	color: #030;
+	font-weight:bold;
+}
+
+tfoot {
+	background: #eee !important;
+	text-align: center !important;
+}
+
+tfoot .total-sulminas{
+	background: #7cca8b !important;
+	color: #001000;
+	font-weight:bold;
+}
+
+tfoot .rf-sulminas{
+	background: #f3c235 !important;
+    color: #0e0601;
+	font-weight:bold;
+}
+/*
+thead {
+	background: #cc1d1a;
+    color: #fff;
+	font-weight:bold;
+}*/
+

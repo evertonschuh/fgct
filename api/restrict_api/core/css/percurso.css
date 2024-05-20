@@ -1,0 +1,144 @@
+
+.table-percurso th, .table-percurso td, .table-percurso .cat-list-row0 td, .table-percurso .cat-list-row1 td{
+	padding-left:4px !important;
+	padding-right:4px !important;
+	font-size:10px;
+}
+
+.local-prova-percurso {
+	border:#F00 3px solid !important;
+	font-weight:bold !important;
+	font-size:15px;
+}
+
+.cat-list-row .rs-percurso, 
+.cat-list-row0 .rs-percurso {
+	background: #EBD7FF !important;
+	color: #300;
+	font-weight:bold;
+}
+
+.cat-list-row1 .rs-percurso {
+	background:#E2C6FF  !important;
+	color: #300;
+	font-weight:bold;
+}
+
+
+.cat-list-row .posto-percurso,
+.cat-list-row0 .posto-percurso {
+	background: #DFDFD0 !important;
+	color: #666;
+	font-weight:bold;
+}
+
+.cat-list-row1 .posto-percurso {
+	background: #CECEBF !important;
+	color: #666;
+	font-weight:bold;
+}
+
+.cat-list-row .porcentage-percurso,
+.cat-list-row0 .porcentage-percurso {
+	background: #D9ECFF!important;
+	color: #036;
+	font-weight:bold;
+}
+
+.cat-list-row1 .porcentage-percurso {
+	background: #BBDDFF !important;
+	color: #036;
+	font-weight:bold;;
+}
+
+.cat-list-row .rf-percurso, 
+.cat-list-row0 .rf-percurso {
+	background: #FFEFBF !important;
+	color: #930;
+	font-weight:bold;
+}
+
+.cat-list-row1 .rf-percurso {
+	background: #FFE495 !important;
+	color: #930;
+	font-weight:bold;
+}
+
+.cat-list-row .soma-percurso, 
+.cat-list-row0 .soma-percurso {
+	background: #DFDFD0 !important;
+	color: #666;
+	font-weight:bold;
+}
+
+.cat-list-row1 .soma-percurso {
+	background: #CECEBF !important;
+	color: #666;
+	font-weight:bold;
+}
+
+.cat-list-row .fator4-percurso,
+.cat-list-row0 .fator4-percurso {
+	background: #D9ECFF!important;
+	color: #036;
+	font-weight:bold;
+}
+
+.cat-list-row1 .fator4-percurso {
+	background: #BBDDFF !important;
+	color: #036;
+	font-weight:bold;
+}
+
+.cat-list-row .final-percurso,
+.cat-list-row0 .final-percurso {
+	background: #FEFDC2 !important;	
+	color: #8C6900;
+	font-weight:bold;
+}
+
+.cat-list-row1 .final-percurso {
+	background: #FDFB93 !important;	
+	color: #8C6900;
+	font-weight:bold;
+}
+
+.cat-list-row .total-percurso,
+.cat-list-row0 .total-percurso,
+.cat-list-row0 .destaque-100 {
+	background: #CCF7D9!important;
+	color: #030;
+	font-weight:bold;
+}
+
+.cat-list-row1 .total-percurso,
+.cat-list-row1 .destaque-100 {
+	background: #AAF0BF !important;
+	color: #030;
+	font-weight:bold;
+}
+
+tfoot {
+	background: #eee !important;
+	text-align: center !important;
+}
+
+tfoot .total-percurso{
+	background: #7cca8b !important;
+	color: #001000;
+	font-weight:bold;
+}
+
+tfoot .rf-percurso{
+	background: #f3c235 !important;
+    color: #0e0601;
+	font-weight:bold;
+}
+
+@media only screen and (max-width: 767px) {
+	.soma-percurso,
+	.fator4-percurso,
+	.final-percurso{
+		display:none !important;
+	}	
+}

@@ -1,0 +1,128 @@
+
+.table-skeet th, .table-skeet td, .table-skeet .cat-list-row0 td, .table-skeet .cat-list-row1 td{
+	padding-left:5px !important;
+	padding-right:5px !important;
+	font-size:11px;
+}
+
+.local-prova-skeet {
+	border:#F00 3px solid !important;
+	font-weight:bold !important;
+	font-size:15px;
+}
+
+.cat-list-row .rs-skeet, 
+.cat-list-row0 .rs-skeet {
+	background: #EBD7FF !important;
+	color: #300;
+	font-weight:bold;
+}
+
+.cat-list-row1 .rs-skeet {
+	background:#E2C6FF  !important;
+	color: #300;
+	font-weight:bold;
+}
+
+.cat-list-row .porcentage-skeet,
+.cat-list-row0 .porcentage-skeet {
+	background: #D9ECFF!important;
+	color: #036;
+	font-weight:bold;
+}
+
+.cat-list-row1 .porcentage-skeet {
+	background: #BBDDFF !important;
+	color: #036;
+	font-weight:bold;;
+}
+
+.cat-list-row .rf-skeet, 
+.cat-list-row0 .rf-skeet {
+	background: #FFEFBF !important;
+	color: #930;
+	font-weight:bold;
+}
+
+.cat-list-row1 .rf-skeet {
+	background: #FFE495 !important;
+	color: #930;
+	font-weight:bold;
+}
+
+.cat-list-row .soma-skeet, 
+.cat-list-row0 .soma-skeet {
+	background: #DFDFD0 !important;
+	color: #666;
+	font-weight:bold;
+}
+
+.cat-list-row1 .soma-skeet {
+	background: #CECEBF !important;
+	color: #666;
+	font-weight:bold;
+}
+
+.cat-list-row .fator4-skeet,
+.cat-list-row0 .fator4-skeet {
+	background: #D9ECFF!important;
+	color: #036;
+	font-weight:bold;
+}
+
+.cat-list-row1 .fator4-skeet {
+	background: #BBDDFF !important;
+	color: #036;
+	font-weight:bold;
+}
+
+.cat-list-row .final-skeet,
+.cat-list-row0 .final-skeet {
+	background: #FEFDC2 !important;	
+	color: #8C6900;
+	font-weight:bold;
+}
+
+.cat-list-row1 .final-skeet {
+	background: #FDFB93 !important;	
+	color: #8C6900;
+	font-weight:bold;
+}
+
+.cat-list-row .total-skeet,
+.cat-list-row0 .total-skeet,
+.cat-list-row0 .destaque-100 {
+	background: #CCF7D9!important;
+	color: #030;
+	font-weight:bold;
+}
+
+.cat-list-row1 .total-skeet,
+.cat-list-row1 .destaque-100 {
+	background: #AAF0BF !important;
+	color: #030;
+	font-weight:bold;
+}
+
+tfoot {
+	background: #eee !important;
+	text-align: center !important;
+}
+
+tfoot .total-skeet{
+	background: #7cca8b !important;
+	color: #001000;
+	font-weight:bold;
+}
+
+tfoot .rf-skeet{
+	background: #f3c235 !important;
+    color: #0e0601;
+	font-weight:bold;
+}
+/*
+thead {
+	background: #cc1d1a;
+    color: #fff;
+	font-weight:bold;
+}*/

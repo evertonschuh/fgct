@@ -171,7 +171,7 @@ endif;
                         <div class="mb-3 col-md-3" class="dte">
                         <label for="data_nascimento_pf" class="form-label">Data de Nascimento</label>
                             <input class="form-control date" 
-                                   type="text" 
+                                   type="tel" 
                                    value="<?php echo $this->item->data_nascimento_pf ? JHtml::date(JFactory::getDate($this->item->data_nascimento_pf, $siteOffset)->toISO8601(), 'DATE_FORMAT') : ''; ?>" 
                                    name="data_nascimento_pf" 
                                    id="data_nascimento_pf"
@@ -182,7 +182,7 @@ endif;
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text">BR (55)</span>
                                 <input
-                                    type="text"
+                                    type="tel"
                                     id="tel_residencial_pf"
                                     name="tel_residencial_pf"
                                     class="form-control"

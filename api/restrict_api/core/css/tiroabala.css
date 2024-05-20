@@ -1,0 +1,135 @@
+.table-tiroabala th, .table-tiroabala td, .table-tiroabala .cat-list-row0 td, .table-tiroabala .cat-list-row1 td{
+	padding-left:5px !important;
+	padding-right:5px !important;
+	font-size:11px;
+}
+
+.local-prova-tiroabala {
+	border:#F00 3px solid !important;
+	font-weight:bold !important;
+	font-size:15px;
+}
+
+.cat-list-row .rs-tiroabala, 
+.cat-list-row0 .rs-tiroabala {
+	background: #EBD7FF !important;
+	color: #300;
+	font-weight:bold;
+}
+
+.cat-list-row1 .rs-tiroabala {
+	background:#E2C6FF  !important;
+	color: #300;
+	font-weight:bold;
+}
+
+.cat-list-row .rf-tiroabala, 
+.cat-list-row0 .rf-tiroabala {
+	background: #FFEFBF !important;
+	color: #930;
+	font-weight:bold;
+}
+
+.cat-list-row1 .rf-tiroabala {
+	background: #FFE495 !important;
+	color: #930;
+	font-weight:bold;
+}
+
+.cat-list-row .soma-tiroabala, 
+.cat-list-row0 .soma-tiroabala {
+	background: #DFDFD0 !important;
+	color: #666;
+	font-weight:bold;
+}
+
+.cat-list-row1 .soma-tiroabala {
+	background: #CECEBF !important;
+	color: #666;
+	font-weight:bold;
+}
+
+.cat-list-row .fator4-tiroabala,
+.cat-list-row0 .fator4-tiroabala {
+	background: #D9ECFF!important;
+	color: #036;
+	font-weight:bold;
+}
+
+.cat-list-row1 .fator4-tiroabala {
+	background: #BBDDFF !important;
+	color: #036;
+	font-weight:bold;
+}
+
+.cat-list-row .final0-tiroabala,
+.cat-list-row0 .final0-tiroabala {
+	background: #FEFDC2 !important;	
+	color: #8C6900;
+	font-weight:bold;
+}
+
+.cat-list-row1 .final0-tiroabala {
+	background: #FDFB93 !important;	
+	color: #8C6900;
+	font-weight:bold;
+}
+
+
+.cat-list-row .final-tiroabala,
+.cat-list-row0 .final-tiroabala {
+	background: #fef5c2 !important;	
+	color: #8C6900;
+	font-weight:bold;
+}
+
+.cat-list-row1 .final-tiroabala {
+	background: #fded93 !important;	
+	color: #8C6900;
+	font-weight:bold;
+}
+
+
+.cat-list-row .total-tiroabala,
+.cat-list-row0 .total-tiroabala {
+	background: #CCF7D9!important;
+	color: #030;
+	font-weight:bold;
+}
+
+.cat-list-row1 .total-tiroabala {
+	background: #AAF0BF !important;
+	color: #030;
+	font-weight:bold;
+}
+
+tfoot {
+	background: #eee !important;
+	text-align: center !important;
+}
+
+tfoot .total-tiroabala{
+	background: #7cca8b !important;
+	color: #001000;
+	font-weight:bold;
+}
+
+tfoot .rf-tiroabala{
+	background: #f3c235 !important;
+    color: #0e0601;
+	font-weight:bold;
+}
+@media only screen and (max-width: 767px) {
+	.soma-tiroabala{
+		display:none !important;
+	}
+}
+
+
+/*
+thead {
+	background: #cc1d1a;
+    color: #fff;
+	font-weight:bold;
+}*/
+
