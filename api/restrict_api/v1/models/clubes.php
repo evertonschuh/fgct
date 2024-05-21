@@ -3,6 +3,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 jimport( 'joomla.application.component.modellist' );
+jimport('joomla.image.resize');
 
 class EASistemasModelClubes extends JModelList
 {
@@ -12,12 +13,17 @@ class EASistemasModelClubes extends JModelList
 	var $_total = null;	
 	var $_data = null;
 	var $_siteOffset = null;
+	var $_resize = null;
+	var $_path_logo = null;
 
 	function __construct()
 	{		
 		$this->_db	= JFactory::getDBO();
 		$this->_app = JFactory::getApplication();
 		$this->_siteOffset = $this->_app->getCfg('offset');
+		$this->_resize = new JResize();
+		$this->_path_logo = JPATH_CDN .DS. 'images' .DS. 'logos' . DS;
+
 		parent::__construct();
 	}
 
@@ -73,6 +79,22 @@ class EASistemasModelClubes extends JModelList
 		//$data = $this->getListQuery();
 		parent::setDbo($this->_db);
 		$data = parent::getItems();
+
+
+		$image_default = $this->_resize->resize(JPATH_IMAGES .DS. 'noclube.png' , 350, 350, 'cache/noclube350x350.png', true, 2);
+		foreach($data as &$item){
+			if(!empty($item->logo_pj))
+				$image_path = $this->_resize->resize($this->_path_logo. $item->logo_pj, 350, 359, 'cache/' .  $item->logo_pj .'350x350.png', true, 2);
+			else
+			$image_path = $image_default;
+		
+			$image_contents = file_get_contents($image_path) ;
+			$type = pathinfo($image_path, PATHINFO_EXTENSION);
+			$image_base64 = 'data:image/' . $type . ';base64,' . base64_encode($image_contents);
+			$item->image_base64 = $image_base64;
+		}
+
+
 		$total = parent::getTotal();
 
 		$limit = JRequest::getVar( 'limit','10', 'GET' );
