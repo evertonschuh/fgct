@@ -21,6 +21,20 @@ class EASistemasModelClubes extends JModelList
 		parent::__construct();
 	}
 
+	
+    protected function populateState($ordering = null, $direction = null) {
+
+		$limit = JRequest::getVar( 'limit','10', 'GET' );
+		$page = JRequest::getVar( 'page','1', 'GET' );
+
+		$this->setState('list.limit', $limit); 
+
+		$limitstart = ($limit != 0 ? (($page-1) * $limit) : 0);
+		
+		$this->setState('list.start', $limitstart); 
+		$this->setState('list.limitstart', $limitstart); 
+
+    }
 
 	protected function getListQuery()
 	{
