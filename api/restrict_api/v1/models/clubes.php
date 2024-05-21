@@ -81,10 +81,10 @@ class EASistemasModelClubes extends JModelList
 		$data = parent::getItems();
 
 
-		$image_default = $this->_resize->resize(JPATH_IMAGES .DS. 'noclube.png' , 350, 350, 'cache/noclube350x350.png', true, 2);
+		$image_default = $this->_resize->resize(JPATH_IMAGES .DS. 'noclube.png' , 350, 350, 'cache/noclube350x350.png', false, 2);
 		foreach($data as &$item){
 			if(!empty($item->logo_pj))
-				$image_path = $this->_resize->resize($this->_path_logo. $item->logo_pj, 350, 359, 'cache/' .  $item->logo_pj .'350x350.png', true, 2);
+				$image_path = $this->_resize->resize($this->_path_logo. $item->logo_pj, 350, 359, 'cache/' .  $item->logo_pj .'350x350.png', false, 2);
 			else
 			$image_path = $image_default;
 		
@@ -145,6 +145,19 @@ class EASistemasModelClubes extends JModelList
 		
 				$this->_db->setQuery($query);
 				$result = $this->_db->loadObject();
+
+				if(!empty($$result->logo_pj))
+					$image_path = $this->_resize->resize($this->_path_logo. $$result->logo_pj, 350, 359, 'cache/' .  $$result->logo_pj .'350x350.png', false, 2);
+				else
+					$image_path = $this->_resize->resize(JPATH_IMAGES .DS. 'noclube.png' , 350, 350, 'cache/noclube350x350.png', false, 2);
+			
+				$image_contents = file_get_contents($image_path) ;
+				$type = pathinfo($image_path, PATHINFO_EXTENSION);
+				$image_base64 = 'data:image/' . $type . ';base64,' . base64_encode($image_contents);
+				$result->image_base64 = $image_base64;
+
+
+
 				return $result;
 
 			}
