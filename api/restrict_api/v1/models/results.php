@@ -35,7 +35,30 @@ class EASistemasModelResults extends JModel
 					$response = new stdClass();
 					$response->info = $this->getInfoEtapa();
 					$response->tableConfig = $this->getInforTables();
-					$response->results = $this->getResultsEtapa();
+					//print_r( $this->getResultsGeralEtapa());
+					//exit;
+
+					switch($varsGet['type']) {
+						case 'geral':							
+							$response->results = $this->getResultsGeralEtapa();
+						break;
+						case 'classe':							
+							$response->results = $this->getResultsEtapa();
+						break;
+						case 'equipe':							
+							$response->results = $this->getEquipeEtapa();
+						break;
+						case 'participacao':							
+							$response->results = $this->getParticipacaoEtapa();
+						break;
+						case 'especial':							
+							$response->results = $this->getCustomizeEtapa();
+						break;
+						
+
+
+					}
+
 
 					return $response;
 
@@ -49,6 +72,11 @@ class EASistemasModelResults extends JModel
 		return false;
 
 	}
+
+
+
+
+
 
 
 	function getEtapa()
@@ -147,7 +175,7 @@ class EASistemasModelResults extends JModel
 
 			$addColsBeforeEtapa = $this->getAddColsBeforeEtapa();
 			$addColsAfterEtapa = $this->getAddColsAfterEtapa();
-
+			
 			$tableHeaders = array();
 			$tableHeaders[] = 'Posição';
 			$tableHeaders[] = 'Atleta';
@@ -336,7 +364,28 @@ class EASistemasModelResults extends JModel
 		return 	$this->_db->loadResult();
 	}
 
-	
+	function getEquipeEtapa() {
+
+		if(empty($this->_data)) 
+			$this->getEtapa();
+
+		if(isset($this->_data->equipe_prova) && $this->_data->equipe_prova>0){
+
+			if($this->_data->equipe_prova==3 || $this->_data->equipe_prova==4 || $this->_data->equipe_prova==5) 
+				return $this->getEquipeEstadoEtapa();				
+			elseif($this->_data->equipe_prova==6 || $this->_data->equipe_prova==7) 
+				return $this->getEquipePaisEtapa();				
+			elseif($this->_data->equipe_prova==1 || $this->_data->equipe_prova==4) 
+				return $this->getEquipeDefaultEtapa();					
+			elseif($this->_data->equipe_prova==2 || $this->_data->equipe_prova==5 || $this->_data->equipe_prova==7) 
+				return $this->getEquipeLivreEtapa();				
+					
+		}	
+		else
+			return false;
+	}
+
+
 	function getEspecialEtapaView()
 	{
 		if($this->_id)
@@ -383,7 +432,7 @@ class EASistemasModelResults extends JModel
 		return false;
 	}
 	
-	function getEquipeEtapa()
+	function getEquipeDefaultEtapa()
 	{
 		if((boolean) $options = $this->getOptionsClassEtapa())
 		{

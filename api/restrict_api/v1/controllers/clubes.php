@@ -41,7 +41,7 @@ class EASistemasControllerClubes extends JController
 							$header = 400;	
 					}
 				break;
-;
+
 				default:
 					$header = 400;
 				break;

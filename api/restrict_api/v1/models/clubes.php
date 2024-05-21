@@ -146,8 +146,8 @@ class EASistemasModelClubes extends JModelList
 				$this->_db->setQuery($query);
 				$result = $this->_db->loadObject();
 
-				if(!empty($$result->logo_pj))
-					$image_path = $this->_resize->resize($this->_path_logo. $$result->logo_pj, 350, 359, 'cache/' .  $$result->logo_pj .'350x350.png', false, 2);
+				if(!empty($result->logo_pj))
+					$image_path = $this->_resize->resize($this->_path_logo. $result->logo_pj, 350, 359, 'cache/' .  $result->logo_pj .'350x350.png', false, 2);
 				else
 					$image_path = $this->_resize->resize(JPATH_IMAGES .DS. 'noclube.png' , 350, 350, 'cache/noclube350x350.png', false, 2);
 			
