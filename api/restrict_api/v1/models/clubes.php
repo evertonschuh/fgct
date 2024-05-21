@@ -81,6 +81,7 @@ class EASistemasModelClubes extends JModelList
 			$get = JRequest::get( 'get' );
 			if(isset($get['query_rest'][2]) && !empty($get['query_rest'][2]) && is_numeric($get['query_rest'][2])) {
 
+				$query = $this->_db->getQuery(true);
 				$query->select( $this->_db->quoteName(array( 'id',
 															'name',
 															'email',
@@ -107,6 +108,7 @@ class EASistemasModelClubes extends JModelList
 				$query->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote( $get['query_rest'][2] ));		
 		
 				$this->_db->setQuery($query);
+				$result = $this->_db->loadObject();
 				return $result;
 
 			}

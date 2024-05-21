@@ -27,10 +27,19 @@ class EASistemasControllerClubes extends JController
 
 			switch ($requestType) {
 				case 'GET':
-					if((boolean) $response = $model->getItems())
-						$header = 200;
-					else
-						$header = 400;
+					$get = JRequest::get( 'get' );
+					if(isset($get['query_rest'][2]) && !empty($get['query_rest'][2]) && is_numeric($get['query_rest'][2]) ){
+						if((boolean) $response = $model->getItem())
+							$header = 200;
+						else
+							$header = 400;
+					}
+					else{
+						if((boolean) $response = $model->getItems())
+							$header = 200;
+						else
+							$header = 400;	
+					}
 				break;
 ;
 				default:
