@@ -41,24 +41,25 @@ class EASistemasModelResults extends JModel
 					switch($varsGet['type']) {
 						case 'geral':							
 							$response->results = $this->getResultsGeralEtapa();
+							$response->info->name_consulta = 'Resustado Geral na Etapa';
 						break;
 						case 'classe':							
 							$response->results = $this->getResultsEtapa();
+							$response->info->name_consulta = 'Resustados por Classes na Etapa';
 						break;
 						case 'equipe':							
 							$response->results = $this->getEquipeEtapa();
+							$response->info->name_consulta = 'Resustados das Equipes na Etapa';
 						break;
 						case 'participacao':							
 							$response->results = $this->getParticipacaoEtapa();
+							$response->info->name_consulta = 'Resustados de Participações por Equipes na Etapa';
 						break;
 						case 'especial':							
 							$response->results = $this->getCustomizeEtapa();
 						break;
 						
-
-
 					}
-
 
 					return $response;
 
