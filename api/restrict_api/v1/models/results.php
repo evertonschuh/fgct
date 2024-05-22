@@ -35,16 +35,22 @@ class EASistemasModelResults extends JModel
 					$response = new stdClass();
 					$response->info = $this->getInfoEtapa();
 					$response->tableConfig = $this->getInforTables();
+
+
+
+					//$result->name_genero, $result->name_categoria, $result->name_classe
 					//print_r( $this->getResultsGeralEtapa());
 					//exit;
 
 					switch($varsGet['type']) {
 						case 'geral':							
 							$response->results = $this->getResultsGeralEtapa();
+							$response->results = $this->setConfigureResults($response);
 							$response->info->name_consulta = 'Resustado Geral na Etapa';
 						break;
 						case 'classe':							
 							$response->results = $this->getResultsEtapa();
+							$response->results = $this->setConfigureResults($response);
 							$response->info->name_consulta = 'Resustados por Classes na Etapa';
 						break;
 						case 'equipe':							
@@ -73,11 +79,6 @@ class EASistemasModelResults extends JModel
 		return false;
 
 	}
-
-
-
-
-
 
 
 	function getEtapa()
@@ -162,6 +163,149 @@ class EASistemasModelResults extends JModel
 		$this->_special_arguments->special_text_etapa =  isset($this->_data->special_text_etapa) ? $this->_data->special_text_etapa : NULL;
 		*/
 					
+	}
+
+	
+	function setConfigureResults(stdClass $response)
+	{
+
+		if(empty($this->_data)) 
+			$this->getEtapa();
+
+		$addColsBeforeEtapa = $this->getAddColsBeforeEtapa();
+		$addColsAfterEtapa = $this->getAddColsAfterEtapa();	
+
+		if(count($response->results)>0):
+			foreach($response->results as $key => &$result):
+				
+				$result->rank = $result->rank  .'&ordm;';
+				for ($x = 1; $x <= $this->_data->nr_etapa_prova; $x++): 
+					if( $this->_data->ns_variavel_prova==0):
+						$ns_etapa_prova = $this->_data->ns_etapa_prova;
+					else:
+						$ns_etapa_prova = $this->maxNs;
+					endif;
+
+					
+					for ($m = 1; $m <= $ns_etapa_prova; $m++): 
+						$nameField = 'r'.$x.'s'.$m;
+
+						if ($result->$nameField ) : 
+							$decimais = explode('.', $result->$nameField);
+							if( (!empty($decimais[1]))
+								&&
+								(
+									( strlen($decimais[1]) != 6 && $this->_data->decimal_prova == 0 )
+									||
+									( strlen($decimais[1]) != 6 && strlen($decimais[1]) != $this->_data->decimal_prova ) 
+								)
+							  ):
+							 	$result->$nameField = $result->$nameField;
+							else:
+								$result->$nameField = number_format($result->$nameField, $this->_data->decimal_prova, '.', '');
+							endif; 
+						endif;	
+
+					endfor;
+					if ( $this->_data->nr_etapa_prova > 1 &&  $this->_data->ns_etapa_prova >1 ): 
+						$nameFieldRs = 'rs'.$x;
+						if ($result->$nameFieldRs ) : 
+						
+							$decimais = explode('.', $result->$nameFieldRs);
+							if( (!empty($decimais[1]))
+								&&
+								(
+									( strlen($decimais[1]) != 6 && $this->_data->decimal_prova == 0 )
+									||
+									( strlen($decimais[1]) != 6 && strlen($decimais[1]) != $this->_data->decimal_prova ) 
+								)
+							  ):
+							  	$result->$nameFieldRs = $result->$nameFieldRs;
+							else:
+								$result->$nameFieldRs = number_format($result->$nameFieldRs, $this->_data->decimal_prova, '.', '');
+							endif; 
+						endif;	
+
+					endif; 
+				endfor;
+
+				if ( $addColsBeforeEtapa > 0 ): 
+					for ($x = 1; $x <= $addColsBeforeEtapa; $x++):
+						$nameColAdd = 'rAddColsBefore'.$x;
+						$class100P = '';
+						if ($result->$nameColAdd == 100 ) :
+							$class100P = 'destaque-100 ';
+						endif;
+						if ($result->$nameColAdd > 0 ) : 
+							$decimais = explode('.', $result->$nameColAdd);
+							if( (!empty($decimais[1]))
+								&&
+								(
+									( strlen($decimais[1]) != 6 && $this->_data->decimal_prova == 0 )
+									||
+									( strlen($decimais[1]) != 6 && strlen($decimais[1]) != $this->_data->decimal_prova ) 
+								)
+							  ):
+							  $result->$nameColAd = $result->$nameColAdd;
+							else:
+								$result->$nameColAd = number_format($result->$nameColAdd, $this->_data->decimal_prova, '.', '');
+							endif;
+						else:
+							if (!empty($result->$nameColAdd)) 
+							$result->$nameColAd = $result->$nameColAdd; 
+						endif;	
+					endfor;
+				endif;
+
+				if ($result->rf > 0 ) : 
+				
+					$decimais = explode('.', $result->rf);
+					if( (!empty($decimais[1]))
+						&&
+						(
+							( strlen($decimais[1]) != 6 && $this->_data->decimal_prova == 0 )
+							||
+							( strlen($decimais[1]) != 6 && strlen($decimais[1]) != $this->_data->decimal_prova ) 
+						)
+						):
+						$result->rf = $result->rf;
+					else:
+						$result->rf = number_format($result->rf, $this->_data->decimal_prova, '.', '');
+					endif; 
+				endif;	
+
+				if ( $addColsAfterEtapa > 0 ): 
+					for ($x = 1; $x <= $addColsAfterEtapa; $x++) :
+						$nameColAdd = 'rAddColsAfter'.$x;
+						$class100P = '';
+						if ($result->$nameColAdd == 100 ) :
+							$class100P = 'destaque-100 ';
+						endif;
+						if ($result->$nameColAdd > 0 ) : 
+							$decimais = explode('.', $result->$nameColAdd);
+							if( (!empty($decimais[1]))
+								&&
+								(
+									( strlen($decimais[1]) != 6 && $this->_data->decimal_prova == 0 )
+									||
+									( strlen($decimais[1]) != 6 && strlen($decimais[1]) != $this->_data->decimal_prova ) 
+								)
+							  ):
+							  $result->$nameColAdd = $result->$nameColAdd;
+							else:
+								$result->$nameColAdd = number_format($result->$nameColAdd, $this->_data->decimal_prova, '.', '');
+							endif;
+						elseif(!empty($result->$nameColAdd)):
+							$result->$nameColAdd = $result->$nameColAdd; 
+						endif;	
+					endfor;
+				endif;
+
+			endforeach;
+			return $response->results;
+		else:
+			return false;
+		endif;
 	}
 
 	function getInforTables()
