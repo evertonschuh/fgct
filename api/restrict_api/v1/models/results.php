@@ -46,11 +46,40 @@ class EASistemasModelResults extends JModel
 						case 'geral':							
 							$response->results = $this->getResultsGeralEtapa();
 							$response->results = $this->setConfigureResults($response);
+							
+							$newResults = new stdClass();
+							$newResults->name_classe = null;
+							$newResults->results = array();
+							$newResults->results[] = $response->results;
+
+							$responseNew = array();
+							$responseNew[] = $newResults;
+							
+							$response->results = $responseNew;
 							$response->info->name_consulta = 'Resustado Geral na Etapa';
 						break;
+
 						case 'classe':							
 							$response->results = $this->getResultsEtapa();
 							$response->results = $this->setConfigureResults($response);
+							
+							$responseNew = array();
+							foreach($response->results as $i => $result):
+
+								if ($i == 0 || $i > 0 && $result->id_classe != $response->results[$i-1]->id_classe) : 
+									$newResults = new stdClass();
+									$newResults->name_genero = $result->name_genero;
+									$newResults->name_categoria = $result->name_categoria;
+									$newResults->name_classe = $result->name_classe;
+									$newResults->results = array();
+								endif;
+								$newResults->results[] = $result;
+								if ($i == (count($response->results) -1) || $result->id_classe !=  $response->results[$i+1]->id_classe) : 
+									$responseNew[] = $newResults;
+								endif;
+							endforeach;
+							
+							$response->results = $responseNew;
 							$response->info->name_consulta = 'Resustados por Classes na Etapa';
 						break;
 						case 'equipe':							
@@ -177,6 +206,9 @@ class EASistemasModelResults extends JModel
 
 		if(count($response->results)>0):
 			foreach($response->results as $key => &$result):
+
+				//if($key == 0 ||  $response->results[$key-1]->id_classe != $result->id_classe) :	
+
 				
 				$result->rank = $result->rank  .'&ordm;';
 				for ($x = 1; $x <= $this->_data->nr_etapa_prova; $x++): 
