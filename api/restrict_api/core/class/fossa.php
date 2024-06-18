@@ -1590,7 +1590,6 @@ class EASistemasClassesFossa {
 		$query->order('pontos desc');
 			
 		$this->_db->setQuery($query);
-		//print_r($this->_db->loadObjectList());
 
 		return 	$this->_db->loadObjectList();	
 	

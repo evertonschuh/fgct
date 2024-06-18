@@ -36,12 +36,6 @@ class EASistemasModelResults extends JModel
 					$response->info = $this->getInfoEtapa();
 					$response->tableConfig = $this->getInforTables();
 
-
-
-					//$result->name_genero, $result->name_categoria, $result->name_classe
-					//print_r( $this->getResultsGeralEtapa());
-					//exit;
-
 					switch($varsGet['type']) {
 						case 'geral':							
 							$response->results = $this->getResultsGeralEtapa();
