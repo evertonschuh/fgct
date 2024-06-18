@@ -2867,13 +2867,7 @@ class TorneiosClassesGrandPrixCompak {
 	
 			*/																																												
 																																															
-						/*																																									
-			
-		$this->_db->setQuery($queryResultsRF);
-		print_r($this->_db->loadObjectList());																																														
-		break;
-			*/																																																																																					
-																																													
+																																									
 
 	
 	

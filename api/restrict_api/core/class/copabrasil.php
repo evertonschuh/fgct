@@ -1663,12 +1663,7 @@ class TorneiosClassesCopaBrasil {
 																																															//----
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------																																												
 
-		if($this->_user->get('id') == 42)
-		{		
-			//$this->_db->setQuery($queryPosition);
-			//print_r($this->_db->loadObjectList());
-			//exit;
-		}
+
 		$query = $this->_db->getQuery(true);
 		$query->select( $this->_db->quoteName(array( 'id_inscricao',
 													 'id_prova',
@@ -2500,12 +2495,8 @@ class TorneiosClassesCopaBrasil {
 	
 			*/																																												
 																																															
-						/*																																									
-			
-		$this->_db->setQuery($queryResultsRF);
-		print_r($this->_db->loadObjectList());																																														
-		break;
-			*/																																																																																					
+
+																																																																																				
 																																													
 
 	
