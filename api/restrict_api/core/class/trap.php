@@ -22,7 +22,7 @@ class EASistemasClassesTrap {
 	const specialEtapa = true;
 	const multiLocal = true;
 	const useFinal = false;
-	const tagLanguage=  'TRAP_';
+	const tagLanguage =  'TRAP_';
 
 	const colsEdit = 3;
 	const colsEtapa = 4;

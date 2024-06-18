@@ -750,7 +750,7 @@ class EASistemasModelResults extends JModel
 	function getClassModalidade( $id_prova = null )
 	{
 		$varsGet = JRequest::get( 'get' );
-
+		
 		if($varsGet['prova'])
 		{							
 		
@@ -764,7 +764,7 @@ class EASistemasModelResults extends JModel
 	
 			if( !(boolean) $fileModalidade =  $this->_db->loadObject())
 				return false;
-
+				
 			$file =  JPATH_API .DS. 'core' .DS. 'class' .DS. $fileModalidade->file_modalidade;
 			
 			if (!file_exists($file))
