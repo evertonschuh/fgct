@@ -43,23 +43,20 @@ class EASistemasClassesTrap {
 		$this->_siteOffset = $this->_app->getCfg('offset');
 		
 		$token = md5(uniqid(""));
-
 		$document = JFactory::getDocument();
 		$document->addStyleSheet( JPATH_API .DS. 'core' .DS. 'css' .DS. 'trap.css?v=' . $token );	
 		$document->addScript( JPATH_API .DS. 'core' .DS. 'js' .DS. 'trap.js?v=' . $token  );	
-		$lang = JFactory::getLanguage();
+		
 
-		$lang = JFactory::getLanguage();
-		
-		$base_dir = JPATH_SITE;	
-		
 		$extension = 'com_easistemas';
 		$language_tag = 'pt-BR';
-		$lang->load($extension, $base_dir, $language_tag, false);
-		
 		$reload = true;
+		$base_dir = JPATH_SITE;	
 		$base_dir_custon = JPATH_API .DS. 'core';	
 		$extension_custon = $extension . '_trap';
+		
+		$lang = JFactory::getLanguage();
+		$lang->load($extension, $base_dir, $language_tag, false);
 		$lang->load($extension_custon, $base_dir_custon, $language_tag, $reload);
 		
 		$this->_db->setQuery('SET SESSION group_concat_max_len = 1000000');

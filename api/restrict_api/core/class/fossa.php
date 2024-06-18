@@ -2,7 +2,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-class TorneiosClassesFossa {
+class EASistemasClassesFossa {
 	
 	const addColsBeforeProva = 2;
 	const addColsAfterProva = 0;
@@ -44,19 +44,18 @@ class TorneiosClassesFossa {
 		
 		$token = md5(uniqid(""));
 		$document = JFactory::getDocument();
-		$document->addStyleSheet( 'administrator/components/com_torneios/classes/css/fossa.css?v=' . $token );		
-	
-		$lang = JFactory::getLanguage();
-
-		$base_dir = JPATH_SITE;	
+		$document->addStyleSheet( JPATH_API .DS. 'core' .DS. 'css' .DS. 'fossa.css?v=' . $token );		
+		//$document->addScript( JPATH_API .DS. 'core' .DS. 'js' .DS. 'trap.js?v=' . $token  );
 		
-		$extension = 'com_torneios';
+		$extension = 'com_easistemas';
 		$language_tag = 'pt-BR';
-		$lang->load($extension, $base_dir, $language_tag, false);
-				
 		$reload = true;
-		$base_dir_custon = JPATH_SITE .DS. 'administrator' .DS. 'components' .DS. $extension .DS. 'classes';	
+		$base_dir = JPATH_SITE;	
+		$base_dir_custon = JPATH_API .DS. 'core';	
 		$extension_custon = $extension . '_fossa';
+
+		$lang = JFactory::getLanguage();
+		$lang->load($extension, $base_dir, $language_tag, false);
 		$lang->load($extension_custon, $base_dir_custon, $language_tag, $reload);
 	}
 	
