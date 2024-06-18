@@ -59,7 +59,6 @@ class EASistemasClassesFossa {
 		$lang->load($extension, $base_dir, $language_tag, false);
 		$lang->load($extension_custon, $base_dir_custon, $language_tag, $reload);
 
-
 	}
 
 
