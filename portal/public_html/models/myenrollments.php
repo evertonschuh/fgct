@@ -143,7 +143,7 @@ class EASistemasModelMyEnrollments extends JModelList
 			$query->where( $this->_db->quoteName('socioar_prova') . ' = ' . $this->_db->quote('1') );
 		endif;
 */
-		$query->group('id_prova');
+		$query->group('id_campeonato');
         $query->group('id_etapa');
 		return $query;
 
