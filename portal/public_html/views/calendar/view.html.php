@@ -112,15 +112,7 @@ class EASistemasViewCalendar extends JView
 
 		$document->addScriptDeclaration($calendarScript);
 		
-
-
-		
-		
-
-		if( empty($this->id_arma) )
-			JToolBarHelper::title('<span class="text-muted fw-light">CADASTRO / Minhas Armas / </span> Nova Arma');
-		else
-			JToolBarHelper::title('<span class="text-muted fw-light">CADASTRO / Minhas Armas / </span> Arma número ' . $this->numero_arma);
+		JToolBarHelper::title('<span class="text-muted fw-light">MENU ESPORTIVO</span> / Calendários');
 
 
 		parent::display($tpl);	
