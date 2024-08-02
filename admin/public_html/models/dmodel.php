@@ -286,7 +286,7 @@ class EASistemasModelDModel extends JModelList {
 		$cpf[] = '003.735.260-16';
 		$cpf[] = '007.353.930-95';
 		
-		
+
 		return $cpf;
 	}
 		
