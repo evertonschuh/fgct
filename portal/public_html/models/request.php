@@ -54,6 +54,7 @@ class EASistemasModelRequest extends JModel {
 				//$this->_data->name='';
 				//$this->_data->email='';
 			}
+			$query->clear();
 		}
 		return $this->_data;
 	}
@@ -89,7 +90,9 @@ class EASistemasModelRequest extends JModel {
 		$query->group($this->_db->quoteName('id_service_type'));
 		$query->order($this->_db->quoteName('codigo_service_type'));
 		$this->_db->setQuery($query);
-		return $this->_db->loadObjectList();	
+		$list = $this->_db->loadObjectList();
+		$query->clear();
+		return $list;
 
 	}
 
@@ -119,7 +122,7 @@ class EASistemasModelRequest extends JModel {
 		$query->order($this->_db->quoteName('update_service') . ' ASC');
 		$this->_db->setQuery($query);
 		$items = $this->_db->loadObjectList();
-
+		$query->clear();
 		foreach($items as &$item)
 			$item->update_service_text =  $this->tempo_corrido($item->update_service);
 
@@ -163,7 +166,6 @@ class EASistemasModelRequest extends JModel {
 		$this->addTablePath(JPATH_SITE.'/tables');
 		$row = $this->getTable('request');
 		
-
 		$id_document = false;
 
 		$data['id_user'] = $this->_user->get('id');
@@ -203,20 +205,30 @@ class EASistemasModelRequest extends JModel {
 		}
 
 		if($this->_id):
-			$row->checkin($this->_id);
 			$textLog = 'edit item';
 		else:
 			$this->setId( $row->get('id_service') ); 			
 			$textLog = 'new item';
 		endif;
 
+		//$row = null;
+		//$row->load(null);
+		
+		//$row->unbind();
+		//unset($row);
+		//$row->checkin( $this->_id );
+		//JTable::getInstance
+
+		//$row->load('DocumentNumber');
+	
+		//echo 'asdasdddddddddddddddddddddddd';*/
 		JRequest::setVar( 'cid', $this->_id );
 
 		jimport('joomla.log.log');
 		JLog::addLogger(array( 'text_file' => 'log.request.php'));
 		JLog::add($this->_user->get('id') . ' - ' . $textLog.' -  id item ('.$this->_id.')', JLog::INFO, 'request');
 
-		$row->checkin( $this->_id );
+		//$row->checkin( $this->_id );
 		$options['id_service'] = $this->_id;	
 		$options['id_documento_numero'] = NULL;
 		if(!$this->setNewMapService($options))
@@ -227,10 +239,18 @@ class EASistemasModelRequest extends JModel {
 			$options = array();
 			$options['id_user'] = $data['id_user'];
 			$options['id_document'] = $id_document;
-			$id_documento_numero = $this->setNewDocument($options);
-			$this->setMapExecuteDocument('Salvando Documento');
-			$this->setMapExecuteDocument('Documento pronto para download', $id_documento_numero);
-			$this->setFish();
+			if( (boolean) $documentPdf = $this->storeNewDocument($options)) {
+				$this->setMapExecuteDocument('Salvando Documento');
+				if( (boolean) $datdPDF  = $this->createPDFDocumento($documentPdf) ) {
+					$documentPdf['datdPDF'] = $datdPDF;
+					$this->storeBinDocument($documentPdf);
+					$this->setMapExecuteDocument('Documento pronto para download', $documentPdf['id']);
+					$this->setFish();
+				}
+				else{
+					exit;
+				}
+			}
 		}
 			
 		return true;
@@ -264,6 +284,8 @@ class EASistemasModelRequest extends JModel {
 		if(!$this->_db->query())
 			return false;
 
+		$query->clear();	
+
 		return true;
 	}
 
@@ -288,15 +310,171 @@ class EASistemasModelRequest extends JModel {
 
 	}
 
-	function setNewDocument($options = array())  {
-		
-		require_once(JPATH_INCLUDES .DS. 'document.php');
-		$classDocument = new EASistemasIncludesDocument();
 
-		if(!(boolean) $responseIdDocumentNumero = $classDocument->newDocument($options))
+	function storeNewDocument($options = array())
+	{
+
+		require_once(JPATH_LIB .DS. 'document.php');
+		$modelClass = 'EASistemasLibsDocument';
+		
+		if (!class_exists($modelClass))
+			return false;
+	
+		$classDocument = new $modelClass();
+
+		$this->addTablePath(JPATH_SITE.'/tables');
+		$row = $this->getTable('DocumentNumber');
+
+
+		unset($row->id_service);
+		unset($row->status_service);
+		unset($row->id_service_type);
+		unset($row->create_service);
+		unset($row->lastupdate_service);
+		unset($row->checked_out);
+		unset($row->checked_out_time);
+
+
+		$documento = $classDocument->getDocumento($options['id_document']);
+
+		$data = array();
+		$data['id_documento']  = $documento->id_documento;
+		$data['id_user'] = $options['id_user'];
+		$data['ano_documento_numero'] = JFactory::getDate('now', $this->_siteOffset)->Format('Y', true);
+		$data['name_documento'] = $documento->name_documento;
+		$data['register_documento_numero'] = JFactory::getDate('now', $this->_siteOffset)->toISO8601(true);
+		$data['user_register_documento_numero'] = $options['id_user'];
+		$data['numero_documento_numero'] = $classDocument->getNumero();
+
+		if (!$row->bind($data)) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		if (!$row->check($data)) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		if (!$row->store(true)) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+
+		jimport('joomla.log.log');
+		JLog::addLogger(array('text_file' => 'log.documents.php'));
+		JLog::add($this->_user->get('id')  . JText::_('		New Document -  idDocumento(' . $row->get('id_documento_numero') . ')'), JLog::INFO, 'documents');
+
+		$options['user_info'] = $classDocument->getUserInfo($options['id_user']);
+		$options['numero_documento'] = $row->get('numero_documento_numero') .'/'. $row->get('ano_documento_numero');
+		$options['text_documento'] = $documento->text_documento;
+
+		$responseDocument = $classDocument->createDocument($options);
+
+		$documentPdf = array();
+		$documentPdf['id'] = $row->id_documento_numero;
+		$documentPdf['texto'] = $responseDocument->textDocument;
+		$documentPdf['register_documento_numero'] = $row->register_documento_numero;
+		$documentPdf['numeber'] = $options['numero_documento'];
+
+		/*$documentPdf['id_documento_numero'] = '1';
+		$documentPdf['texto_documento_numero'] = $textDocument;
+		$documentPdf['register_documento_numero'] = '';
+		$documentPdf['numero_documento_numero'] = '1/2024';*/
+		$documentPdf['name'] = $documento->name_documento;
+		$documentPdf['skin'] = $documento->skin_documento;
+		//$documentPdf['id_documento'] = $documento->id_documento;
+		$documentPdf['loads'] = $responseDocument->loads;
+
+		$documentPdf['id_user'] = $options['user_info']->id;
+		$documentPdf['cpf_pf'] = $options['user_info']->cpf_pf;
+		$documentPdf['name'] = $options['user_info']->name;
+
+
+		return $documentPdf;
+	}
+
+	function storeBinDocument($options = array())
+	{
+
+		$this->addTablePath(JPATH_SITE.'/tables');
+		$row = $this->getTable('DocumentNumber');
+
+		$row->load($options['id']);
+	
+
+		$data = array();
+		$data['texto_documento_numero']  = $options['datdPDF'];
+
+
+		if (!$row->bind($data)) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		unset($row->id_service);
+		unset($row->status_service);
+		unset($row->id_service_type);
+		unset($row->create_service);
+		unset($row->lastupdate_service);
+		unset($row->checked_out);
+		unset($row->checked_out_time);
+
+		if (!$row->store(true)) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+		
+		
+		jimport('joomla.log.log');
+		JLog::addLogger(array('text_file' => 'log.documents.php'));
+		JLog::add($this->_user->get('id')  . JText::_('		Store Data Bin Document -  idDocumento(' . $row->get('id_documento_numero') . ')'), JLog::INFO, 'documents');
+
+		return true;
+
+	}
+
+
+	function getDocumento($id_documento = null)
+	{
+		$post = JRequest::get('post');
+		$query = $this->_db->getQuery(true);
+		$query->select('*');
+		$query->from('#__intranet_documento');
+		$query->where($this->_db->quoteName('id_documento') . '=' . $this->_db->quote($id_documento));
+		$this->_db->setQuery($query);
+		return $this->_db->loadObject();
+	}
+
+	function getNumero()
+	{
+		$numero_protocolo = 0;
+		$query = $this->_db->getQuery(true);
+		$query->select('MAX(numero_documento_numero)');
+		$query->from('#__intranet_documento_numero');
+		$query->where($this->_db->quoteName('ano_documento_numero') . ' = YEAR(CURDATE())');
+		$this->_db->setQuery($query);
+		$numero_protocolo += $this->_db->loadResult();
+		$numero_protocolo++;
+
+		return  $numero_protocolo;
+	}
+
+	function createPDFDocumento($options = array())  {
+
+		require_once(JPATH_INCLUDES .DS. 'document.php');
+		$modelClass = 'EASistemasIncludesDocument';
+
+		if (!class_exists($modelClass))
+			return false;
+
+		$classDocument = new $modelClass();
+
+		if(!(boolean) $datdPDF = $classDocument->createDocumentPdf($options))
 			return false;
 		
-		return $responseIdDocumentNumero;
+		return $datdPDF;
 		
 	}
 
@@ -328,6 +506,11 @@ class EASistemasModelRequest extends JModel {
 			return true;
 		}	
 	}
+
+
+
+
+
 /*
 	function isCheckedOut()
 	{		
@@ -345,9 +528,10 @@ class EASistemasModelRequest extends JModel {
 		}
 		return false;
 	}
-	
+	*/
 	function checkout()
 	{		
+		/*
 		$this->addTablePath(JPATH_SITE.'/tables');
 	    $row = $this->getTable('request');
 		$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
@@ -361,12 +545,12 @@ class EASistemasModelRequest extends JModel {
 			}
 			return true;
 		}
-		return false;
+		return false;*/
 	}
-	 */  
+	
 	function checkin()
 	{	
-		$this->addTablePath(JPATH_SITE.'/tables');
+		/*$this->addTablePath(JPATH_SITE.'/tables');
 	    $row = $this->getTable('request');
 		
 		$cid = JRequest::getVar( 'cid', array(0), '', 'array' );
@@ -380,8 +564,9 @@ class EASistemasModelRequest extends JModel {
 			}
 			return true;
 		}
-		return false;
+		return false;*/
 	}
+
 	
 	
 }

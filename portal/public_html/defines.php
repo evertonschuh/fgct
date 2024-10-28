@@ -38,6 +38,7 @@ define('JPATH_SITE',            JPATH_ROOT);
 define('JPATH_INSTALLATION',    JPATH_ROOT .DS. 'installation');
 
 define('JPATH_COMPONENT',       JPATH_BASE);
+define('JPATH_LIB',             JPATH_BASE .DS. 'libs');
 define('JPATH_THEMES',          JPATH_BASE .DS. 'views');
 define('JPATH_THEMES_NATIVE',   JPATH_BASE .DS. 'views/system');
 define('JPATH_CACHE',           JPATH_BASE .DS. 'cache');

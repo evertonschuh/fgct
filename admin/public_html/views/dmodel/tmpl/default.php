@@ -266,18 +266,3 @@ $user = JFactory::getUser();
   	</div>
 </div>
 <?php endif; ?>
-
-<?php /*
-    <div class="form-group">
-        <label id="text_documento-lbl" for="text_documento" class="hasTip" >
-            <?php echo JText::_('Descrição'); ?>
-        </label>
-        <?php
-            $editor = JFactory::getEditor('tinymce');
-            $params = array('class_editor'=>'addVarsPlugins', 'custom_plugin'=>'variable', 'custom_button'=>'variable');
-            echo $editor->display('text_documento', $this->item->text_documento, '100%', '400', '60', '20', array('pagebreak','article','image','readmore'), null, null, null, $params,'addVarsPlugins');
-        ?>
-        <div class="clearfix"></div>
-    </div>
-    */ 
-?>
