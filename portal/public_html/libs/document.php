@@ -172,8 +172,6 @@ class EASistemasLibsDocument {
 			}
 		}
 
-
-
 		$response = new stdClass();
 		$response->loads = $loads;
 		$response->textDocument = $textDocument;
@@ -181,8 +179,6 @@ class EASistemasLibsDocument {
 		return $response;
 
 	}
-
-
 
 	function getSignature($options = array())
 	{
@@ -196,6 +192,7 @@ class EASistemasLibsDocument {
 		return $this->_db->loadAssoc();
 	}
 
+	/*
 	function setSignature($options = array())
 	{
 
@@ -241,16 +238,30 @@ class EASistemasLibsDocument {
 
         }
 
-
 		$pdf->setSignature($cert_info['cert'], $cert_info['pkey'], '','', 2, $info, 'A');
+
+
+		// create content for signature (image and/or text)
+		$pdf->Image('images/tcpdf_signature.png', 180, 60, 15, 15, 'PNG');
+
+		// define active area for signature appearance
+		$pdf->setSignatureAppearance(180, 60, 15, 15);
+
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+		// *** set an empty signature appearance ***
+		$pdf->addEmptySignatureAppearance(180, 80, 15, 15);
+		
+
+		exit;
+
 
 		ob_clean();
 
 		return $pdf->Output('','S');
 
-
 	}
-
+*/
 
 	function getHabituality( $id_user = null, $numero_doc = null ) 
 	{

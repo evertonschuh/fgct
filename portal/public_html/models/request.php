@@ -247,9 +247,6 @@ class EASistemasModelRequest extends JModel {
 					$this->setMapExecuteDocument('Documento pronto para download', $documentPdf['id']);
 					$this->setFish();
 				}
-				else{
-					exit;
-				}
 			}
 		}
 			
@@ -284,7 +281,7 @@ class EASistemasModelRequest extends JModel {
 		if(!$this->_db->query())
 			return false;
 
-		$query->clear();	
+		
 
 		return true;
 	}
