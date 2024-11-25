@@ -1654,6 +1654,7 @@ class EASistemasClassesTrap {
 																																															//----
 		$queryPosition->select('id_inscricao AS RankInscricao');																															//----
 		$queryPosition->select('id_associado AS RankAssociado');																															//----
+		$queryPosition->select('shotoff_inscricao AS RankSrotOff');																															//----
 																																															//----
 		$RF = '';																																											//----
 		$RN = '';																																											//----
@@ -1679,7 +1680,7 @@ class EASistemasClassesTrap {
 		$queryPosition->innerJoin($this->_db->quoteName('#__ranking_inscricao') . ' USING('. $this->_db->quoteName('id_inscricao').','. $this->_db->quoteName('id_classe').')' );			//----
 																																															//----
 		$queryPosition->order($this->_db->quoteName('RankRf') . ' DESC');																													//----
-																																															//----
+		$queryPosition->order($this->_db->quoteName('RankSrotOff') . ' DESC');																												//----
 		$queryPosition->order($this->_db->quoteName('rAddColsBefore1') . ' DESC');																											//----
 																																															//----
 		for ($i = 1; $i <=  $options['results_prova']; $i++) { 																																//----
@@ -1700,7 +1701,7 @@ class EASistemasClassesTrap {
 																																															//----
 		$order .= ', ResultadoRank.RankAssociado  ASC';																																		//----
 																																															//----
-		$queryRank->select( 'GROUP_CONCAT( ResultadoRank.Rankinscricao  ORDER BY ResultadoRank.Rankrf  DESC, ResultadoRank.rAddColsBefore1  DESC' . $order . ' )' );						//----
+		$queryRank->select( 'GROUP_CONCAT( ResultadoRank.Rankinscricao ORDER BY ResultadoRank.Rankrf DESC, ResultadoRank.RankSrotOff DESC, ResultadoRank.rAddColsBefore1 DESC' . $order . ' )' );						//----
 																																															//----
 		$queryRank->from( '(' . $queryPosition . ') ResultadoRank' );																														//----	
 																																															//----
@@ -1810,7 +1811,7 @@ class EASistemasClassesTrap {
 		$query->group($this->_db->quoteName('id_inscricao'));
 		
 		$query->order($this->_db->quoteName('rf') . ' DESC');
-
+		$query->order($this->_db->quoteName('shotoff_inscricao') . ' DESC');
 		$query->order($this->_db->quoteName('rAddColsBefore1') . ' DESC');
 		
 		for ($i = 1; $i <=  $options['results_prova']; $i++) { 
@@ -1933,6 +1934,7 @@ class EASistemasClassesTrap {
 																																															//----
 		$queryPosition->order($this->_db->quoteName('RankRf') . ' DESC');																													//----
 		$queryPosition->order($this->_db->quoteName('RankSrotOff') . ' DESC');																												//----
+		$queryPosition->order($this->_db->quoteName('rAddColsBefore1') . ' DESC');																											//----
 																																															//----
 		for ($i = 1; $i <=  $options['results_prova']; $i++) { 																																//----
 			$queryPosition->order( 'RankR' . $i . ' DESC');																																	//----
@@ -1946,7 +1948,7 @@ class EASistemasClassesTrap {
 		$queryRank = $this->_db->getQuery(true);																																			//----
 																																															//----
 		$orderInit = '';																																									//----
-		$orderInit .= 'ResultadoRank.OrderGen ASC, ResultadoRank.OrderCat ASC, ResultadoRank.OrderCla ASC, ResultadoRank.Rankrf DESC, ResultadoRank.RankSrotOff DESC';						//----
+		$orderInit .= 'ResultadoRank.OrderGen ASC, ResultadoRank.OrderCat ASC, ResultadoRank.OrderCla ASC, ResultadoRank.Rankrf DESC, ResultadoRank.RankSrotOff DESC, ResultadoRank.rAddColsBefore1 DESC';						//----
 																																															//----
 		$order = '';																																										//----
 		for ($i = 1; $i <= $options['results_prova']; $i++) { 																																//----
@@ -2088,9 +2090,9 @@ class EASistemasClassesTrap {
 		$query->order($this->_db->quoteName('#__ranking_classe.ordering') . ' ASC');
 		
 		$query->order($this->_db->quoteName('rf') . ' DESC');
-		
 		$query->order($this->_db->quoteName('shotoff_inscricao') . ' DESC');
-		
+		$query->order($this->_db->quoteName('rAddColsBefore1') . ' DESC');
+	
 
 		for ($i = 1; $i <=  $options['results_prova']; $i++) { 
 			$query->order( 'r' . $i . ' DESC');
@@ -3230,10 +3232,8 @@ class EASistemasClassesTrap {
 		$queryPosition->from( '(' . $queryRanking . ') ResultadoPosition' );																												//----	
 		$queryPosition->innerJoin($this->_db->quoteName('#__ranking_inscricao') . ' USING('. $this->_db->quoteName('id_inscricao').','. $this->_db->quoteName('id_classe').')' );			//----
 																																															//----
-		$queryPosition->order($this->_db->quoteName('RankRf') . ' DESC');																													//----
-																																															//----
+		$queryPosition->order($this->_db->quoteName('RankRf') . ' DESC');																													//----	
 		$queryPosition->order($this->_db->quoteName('RankSrotOff') . ' DESC');																												//----
-		
 		$queryPosition->order($this->_db->quoteName('rAddColsBefore1') . ' DESC');																											//----
 																																															//----
 		for ($i = 1; $i <=  $options['results_prova']; $i++) { 																																//----
@@ -3254,7 +3254,7 @@ class EASistemasClassesTrap {
 																																															//----
 		$order .= ', ResultadoRank.RankAssociado  ASC';																																		//----
 																																															//----
-		$queryRank->select( 'GROUP_CONCAT( ResultadoRank.Rankinscricao ORDER BY ResultadoRank.Rankrf  DESC, ResultadoRank.RankSrotOff DESC, ResultadoRank.rAddColsBefore1  DESC' 			//----
+		$queryRank->select( 'GROUP_CONCAT( ResultadoRank.Rankinscricao ORDER BY ResultadoRank.Rankrf DESC, ResultadoRank.RankSrotOff DESC, ResultadoRank.rAddColsBefore1 DESC' 				//----
 		. $order . ' )' );																																									//----
 																																															//----
 		$queryRank->from( '(' . $queryPosition . ') ResultadoRank' );																														//----	
