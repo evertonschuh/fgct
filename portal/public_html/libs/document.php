@@ -192,6 +192,7 @@ class EASistemasLibsDocument {
 		return $this->_db->loadAssoc();
 	}
 
+	
 	/*
 	function setSignature($options = array())
 	{

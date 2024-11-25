@@ -248,8 +248,7 @@ class EASistemasModelRequest extends JModel {
 					$this->setFish();
 				}
 			}
-		}
-			
+		}			
 		return true;
 	}
 
