@@ -116,20 +116,20 @@ class EASistemasModelPayment extends JModel
 		else
 			return false;
 
-		$prefix  = 'Intranet';
+
+		$prefix  = 'EASistemas';
 		$type = $_data->module_pagamento_metodo. 'Module';
 		$type = preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
 		$modelClass = $prefix . ucfirst($type);
-		
+
 		if (!class_exists($modelClass))
 			return false;
-		
 		
 		$_module_pagament = new $modelClass();
 		
 		$_module_pagament->setData($this->getValues());
-		//$_module_pagament->setPayment();
-		$_module_pagament->setPayment();
+
+		return $_module_pagament->getPayment();
 
 	}	
 	

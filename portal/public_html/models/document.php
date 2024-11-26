@@ -53,7 +53,6 @@ class EASistemasModelDocument extends JModel {
 														'#__intranet_documento.name_documento',
 														'skin_documento',
 														'id_user',
-														'skin_documento'
 														)));
 			$query->select('CONCAT(ano_documento_numero, \'/\', numero_documento_numero) AS numero_documento_numero');		
 			$query->from($this->_db->quoteName('#__intranet_documento_numero'));

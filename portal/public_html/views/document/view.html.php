@@ -31,7 +31,11 @@ class EASistemasViewDocument extends JView
 			
 			$_module_pdf = new $modelClass();
 			
-			$_module_pdf->setData($this->item);
+			$documento = array();
+			$documento['id'] = $this->item->id_documento_numero;
+			$documento['texto'] = $this->item->texto_documento_numero;
+			$documento['skin'] = $this->item->skin_documento;
+			$_module_pdf->setData($documento);
 			$responsePdf = $_module_pdf->getPdf();
 
 		}

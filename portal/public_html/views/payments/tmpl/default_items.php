@@ -41,7 +41,7 @@ if (count($this->items)) {
     <td class="text-center" width="2%">
         <div class="d-inline-block text-nowrap">
             <?php if(!$pago): ?>
-            <a href="<?php echo JRoute::_('index.php?view=payment&format=pdf&cid=' . $item->id_pagamento); ?>" class="btn btn-sm btn-icon" target="_blank"><i class='bx bx-printer'></i></a>
+            <a href="<?php echo JRoute::_('index.php?view=payment&cid=' . $item->id_pagamento); ?>" class="btn btn-sm btn-icon" target="_blank"><i class='bx bx-printer'></i></a>
             <?php endif; ?>
         </div>
     </td>
