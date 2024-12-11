@@ -21,25 +21,8 @@ class EASistemasViewDocuments extends JView
 
 		$this->pagination->setAdditionalUrlParam('view','documents');
 				
-		$situacao =  $this->get( 'Situacao');
-		$this->assignRef('situacao',$situacao);	
-				
-		$idSession =  $this->get( 'Session');
-		$this->assignRef('idSession',	$idSession);			
+		JToolBarHelper::title('<span class="text-muted fw-light">CADASTRO / </span> Meus Documentos');
 
-		JToolBarHelper::title('<i class="fa fa-file-text fa-fw"></i> ' . JText::_( 'Documentos' ) );
-		//JToolBarHelper::addNew();
-		//JToolBarHelper::editList();
-		//JToolBarHelper::publishList();
-		//JToolBarHelper::unpublishList();	
-		//JToolBarHelper::checkin();
-		JToolBarHelper::deleteList(JText::_( 'JGLOBAL_VIEW_TOOLBAR_DELETE_QUESTION' ));		
-
-		//JSubMenuHelper::addEntry('<i class="fa fa-crosshairs fa-fw"></i> '. JText::_( 'Armas' ), 'index.php?view=protocolos',true);	
-		//JSubMenuHelper::addEntry('<i class="fa fa-building-o fa-fw"></i> '. JText::_( 'Pessoa Jurídica' ), 'index.php?view=pjs');
-	
-		
-			
 		parent::display($tpl);
 
 		

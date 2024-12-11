@@ -43,7 +43,6 @@ if(count($this->items))
         <td class="text-center">
             <span class="fw-semibold"><?php if($item->validate_associado) echo JHtml::date(JFactory::getDate($item->validate_associado, $siteOffset)->toISO8601(), 'DATE_FORMAT', true); else echo '-'; ?></span>
         </td>
-
         <td>
             <div class="d-inline-block text-nowrap">
                 <input type="checkbox" style="display:none" id="mid<?php echo $i; ?>" name="mid[]" value="<?php echo $item->id_user; ?>" >

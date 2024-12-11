@@ -76,7 +76,7 @@ endif;
       <script src="/assets/js/config.js"></script>
     </head>
     <body>
-      <?php if( !$user->get('guest')): ?>
+      <?php if( !$user->get('guest') && $view != 'autenticate'): ?>
 
       <div id="overlay" class="animate">
         <div class="preload-wrap"></div>
@@ -152,11 +152,7 @@ endif;
                 </ul>
               </li>
               <li class="menu-item">
-                <a href="<?php echo JRoute::_('index.php?view=calendar');?>"
-                  <?php /* <a href="javascript:void(0);"
-                  onclick="Swal.fire({title:'Atenção',html:'Este portal está em desenvolvimento.<br/>Em breve mais recursos estarão disponíveis.',icon:'info',confirmButtonColor: '#467119',confirmButtonText: 'Entendi'})"
-                  */?>
-                  class="menu-link">
+                <a href="<?php echo JRoute::_('index.php?view=calendar');?>" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-calendar"></i>  
                   <div data-i18n="Calendários">Calendários</div>
                 </a>
@@ -178,6 +174,13 @@ endif;
                 </a>
               </li>
               <li class="menu-item">
+                <a href="<?php echo JRoute::_('index.php?view=membershipcard');?>" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-id-card" ></i>
+                  <div data-i18n="Cartão de Sócio">Carteira Digital</div>
+                </a>
+              </li>
+              
+              <li class="menu-item">
                 <a href="<?php echo JRoute::_('index.php?view=documents');?>" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-file" ></i>
                   <div data-i18n="Meus Documentos">Meus Documentos</div>
@@ -190,7 +193,7 @@ endif;
                 </a>
               </li>
               <li class="menu-header small text-uppercase">
-                <span class="menu-header-text">Serviços</span>
+                <span class="menu-header-text">FGCT Digital</span>
               </li> 
               <li class="menu-item">
                 <a href="<?php echo JRoute::_('index.php?view=requests');?>" class="menu-link">

@@ -19,9 +19,8 @@ class EASistemasViewPayments extends JView
 		$this->pagination	= $this->get('Pagination');		
 		$this->total		= $this->get('Total');	
 
-		$this->pagination->setAdditionalUrlParam('view','weapons');
-				
-		JToolBarHelper::title('<span class="text-muted fw-light">OUTROS SERVIÇOS / </span>  Cobranças');
+		$this->pagination->setAdditionalUrlParam('view','payments');
+		JToolBarHelper::title('<span class="text-muted fw-light">CADASTRO / </span> Minhas Cobranças');
 
 		parent::display($tpl);
 

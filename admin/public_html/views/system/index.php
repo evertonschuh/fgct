@@ -254,7 +254,14 @@ endif;
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> 
+
+            <li class="menu-item">
+                <a href="<?php echo JRoute::_('index.php?view=membershipcards');?>" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-id-card" ></i>
+                  <div data-i18n="Cartão de Sócio">Carteira Digital</div>
+                </a>
+              </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-envelope"></i>

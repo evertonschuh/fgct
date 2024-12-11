@@ -53,25 +53,11 @@ class EASistemasViewRequest extends JView
 		endif;
 
 
-/*
-		$document->addStyleSheet('/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css');
-		$document->addScript('/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js');
-		$document->addScript('/assets/vendor/libs/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.js');
-		$document->addStyleSheet('/assets/vendor/libs/bootstrap-select/bootstrap-select.css');
-		$document->addStyleSheet('/assets/vendor/libs/bootstrap-select/bootstrap-select.js');
 
-		$document->addScript('/assets/js/jquery.mask.js');
-		$document->addScript('/assets/js-custom/weapon.js');
-
-		$document->addScriptDeclaration('window.Helpers.initCustomOptionCheck();');
-		*/
-		
-
-
-		if( empty($this->id_service) )
-			JToolBarHelper::title('<span class="text-muted fw-light">PEDIDOS / Acompanhar Pedidos / </span> Novo Pedido');
+		if( empty($this->item->id_service) )
+			JToolBarHelper::title('<span class="text-muted fw-light">FGCT Digital / Serviços /</span> Solicitar Serviço');
 		else
-			JToolBarHelper::title('<span class="text-muted fw-light">PEDIDOS / Acompanhar Pedidos / </span> Pedido - ' . $this->id_service);
+			JToolBarHelper::title('<span class="text-muted fw-light">FGCT Digital / Serviços /</span> Histórico Serviço - ' . $this->item->id_service);
 
 
 		parent::display($tpl);	

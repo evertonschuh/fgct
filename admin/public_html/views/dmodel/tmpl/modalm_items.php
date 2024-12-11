@@ -10,19 +10,6 @@ if(count($this->items))
 {	
 	foreach ($this->items as $i => $item) 
 	{
-        $classLine = '';
-	/*	if($item->status_associado==1):
-			if(is_null($item->validate_associado)):
-				$classLine = 'table-success';
-			elseif( JFactory::getDate('now -1 year', $siteOffset)->toFormat('%Y-%m-%d', true) > JFactory::getDate($item->validate_associado, $siteOffset)->toFormat('%Y-%m-%d', true) ):
-				$classLine = 'table-danger';
-			elseif( JFactory::getDate('now', $siteOffset)->toFormat('%Y-%m-%d', true) > JFactory::getDate($item->validate_associado, $siteOffset)->toFormat('%Y-%m-%d', true) ):
-				$classLine = 'table-warning';
-			endif;
-		else:
-			$classLine = 'table-secondary';
-		endif;
-*/
         if($item->id_documento)
             $classLine = 'table-success';
 ?>       
@@ -56,8 +43,6 @@ if(count($this->items))
 		</div>
 	</td>
 </tr> 
-
-
 <?php	
 	}
 	

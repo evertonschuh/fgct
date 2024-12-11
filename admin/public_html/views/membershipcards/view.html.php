@@ -9,7 +9,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class EASistemasViewRequests extends JView 
+class EASistemasViewMembershipCards extends JView 
 {
 	function display($tpl = null)
 	{	
@@ -19,10 +19,11 @@ class EASistemasViewRequests extends JView
 		$this->pagination	= $this->get('Pagination');		
 		$this->total		= $this->get('Total');	
 
-		$this->pagination->setAdditionalUrlParam('view','requests');
-				
-		JToolBarHelper::title('<span class="text-muted fw-light">FGCT Digital /</span> Serviços');
+		$this->pagination->setAdditionalUrlParam('view','membershipcards');
+								
+		JToolBarHelper::title('<span class="text-muted fw-light">CONFIGURAÇÕES /</span> Carteira Digital ' );	
 
+			
 		parent::display($tpl);
 
 		
