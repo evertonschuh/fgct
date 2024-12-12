@@ -19,8 +19,6 @@ class EASistemasViewMembershipCard extends JView
 		{
 			case 'print':
 				
-	
-					
 				require_once(JPATH_MODULE .DS. 'mod_pdf' .DS. 'mod_pdf.php');
 			
 				$prefix  = 'EAsistemas';
@@ -38,6 +36,16 @@ class EASistemasViewMembershipCard extends JView
 				$carteira['values'] = $this->item;
 				$carteira['skin'] = null;
 				$carteira['style'] = 'carteira';
+
+				$carteira['fonts'] = array();
+				$carteira['fonts']['family'] = 'Public Sans';
+				$carteira['fonts']['types'] = Array(	'normal' => 'PublicSans.ttf',
+														'italic' => 'PublicSans-Oblique.ttf',
+														'bold' => 'PublicSans-Bold.ttf',
+														'bold_italic' => 'PublicSans-BoldOblique.ttf'
+													);
+
+
 				$_module_pdf->setData($carteira);
 				$responsePdf = $_module_pdf->getPdf();
 				
@@ -46,7 +54,7 @@ class EASistemasViewMembershipCard extends JView
 				header('Content-type: application/pdf');
 				header("Cache-Control: no-cache");
 				header("Pragma: no-cache");
-				//header('Content-Disposition: inline; filename="'.$this->item->name_documento.'.pdf"');
+				header('Content-Disposition: inline; filename="carteira-digital.pdf"');
 				header("Content-length: ".strlen(base64_decode($responsePdf)));
 				die(base64_decode($responsePdf));
 		

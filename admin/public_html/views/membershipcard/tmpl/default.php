@@ -25,7 +25,7 @@ else:
   $imageBack = $nofile; 
 endif; 
 
-//if(!file_exists(JPATH_BASE . DS . 'cache' . DS .  'qr-code-example.png'))
+if(!file_exists(JPATH_BASE . DS . 'cache' . DS .  'qr-code-example.png'))
   QRcode::png(  'https://portal.fgct.com.br/?view=autenticate&code=testecodigoexemplofgct', JPATH_BASE . DS . 'cache' . DS .  'qr-code-example.png', 'L', 2.3, 2);
 
 $this->item->status_carteira_digital
