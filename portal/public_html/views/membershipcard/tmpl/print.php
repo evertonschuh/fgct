@@ -1,6 +1,8 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 
+ob_start();
+
 require_once(JPATH_LIBRARIES .DS. 'qrcode' .DS. 'qrlib.php');
 
 $config   = JFactory::getConfig();
@@ -36,35 +38,19 @@ endif;
 
 ?>
 
-<form method="post" name="adminForm" enctype="multipart/form-data" class="form-validate">
-  <div class=" flex-grow-1">
-    <div class="row">
-      <div class="col-md-12">
-        <?php if(isset($this->item->name)): ?>
-        <div class="card mb-4">
-          <div class="card-header sticky-element d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
+
+
             <div class="row">
-              <div class="col-md-12">
-                <h5 class="card-title mb-sm-0 me-2">Pré-visualização da Carteira Digital</h5>
-              </div>
-            </div>                
-            <div class="action-btns">
-              <a  class="btn btn-outline-secondary" target="_blank" href="<?php echo JRoute::_('index.php?view=membershipcard&layout=print', false); ?>">Imprimir</a>
-            </div>
-          </div>
-          <hr class="my-0" />
-          <div class="col-md-12 col-lg-8 p-5">
-            <div class="row">
-              <div class="col-xxl-6 mb-3 d-flex justify-content-center align-items-center flex-column flex-sm-row" style="min-width:404px;">
-                <div class="card shadow-none border-0 text-white" style="min-width:404px; height:256px">
+              <div class="col-xxl-6 mb-3 d-flex justify-content-center align-items-center flex-column flex-sm-row">
+                <div class="card shadow-none border-0 text-white" style="width:404px; height:256px">
                   <img class="card-img front" src="<?php echo $imageFront; ?>" alt="Imagen Frente Carteira Digital">
                   <div class="card-img-overlay card-img-overlay-front" style="margin-top:130px">
                     <span style="font-weight: 600; color:<?php echo !empty($this->item->color_front_carteira_digital) ? $this->item->color_front_carteira_digital : '#000';?>" ><?php echo strtoupper( $this->item->name);?></span>
                   </div>
                 </div>
               </div>
-              <div class="col-xxl-6  mb-3 d-flex justify-content-center align-items-center flex-column flex-sm-row"  style="min-width:404px;">
-                <div class="card shadow-none border-0 text-white" style="min-width:404px; height:256px">
+              <div class="col-xxl-6  mb-3 d-flex justify-content-center align-items-center flex-column flex-sm-row">
+                <div class="card shadow-none border-0 text-white" style="width:404px; height:256px">
                   <img class="card-img back" src="<?php echo $imageBack; ?>" alt="Imagen Verso Carteira Digital">
                   <div class="card-img-overlay card-img-overlay-back">
                       <span style="display: inline-block; line-height:20px; text-align: center; margin: 10px 14px; width:328px;  font-size: 0.7375rem; color: <?php echo !empty($this->item->color_back_carteira_digital) ? $this->item->color_back_carteira_digital : '#000';?>"><?php echo $this->item->clube;?></span>
@@ -78,24 +64,33 @@ endif;
                 </div>
               </div>   
             </div>
-          </div>
-        </div>
-        <?php else: ?>
-        <div class="card mb-4">
-          <div class="card-header sticky-element d-flex justify-content-sm-between align-items-sm-center flex-column flex-sm-row">
-            <div class="row">
-              <div class="col-md-12">
-                <h5 class="card-title mb-sm-0 me-2">Sua carteira digital não está disponível</h5>
-              </div>
-            </div>                
-          </div>
-        </div>  
-        <?php endif; ?>  
-      </div>
-    </div>
-  </div>
- 
-  <input type="hidden" name="controller" value="membershipcard" />
-  <input type="hidden" name="view" value="membershipcard" />
-  <?php echo JHTML::_('form.token'); ?>
-</form>
+
+<?php $this->returnPdfVar = ob_get_clean(); 
+
+require_once(JPATH_LIBRARIES .DS. 'Dompdf' .DS. 'src' .DS. 'Dompdf.php');
+require_once(JPATH_LIBRARIES .DS. 'dompdf' .DS. 'vendor' .DS.'autoload.php');
+
+$dompdf = new Dompdf();
+
+$dompdf->loadHtml(mb_convert_encoding($this->returnPdfVar, 'HTML-ENTITIES', 'UTF-8'));
+
+$dompdf->render();
+
+$pdfdata = $dompdf->output();
+
+
+header('Content-type: application/pdf');
+header("Cache-Control: no-cache");
+header("Pragma: no-cache");
+header('Content-Disposition: inline; filename="'.$this->item->name.'.pdf"');
+header("Content-length: ".strlen(base64_decode($this->returnPdfVar)));
+die(base64_decode($this->returnPdfVar));
+
+
+
+
+
+
+
+
+?>
