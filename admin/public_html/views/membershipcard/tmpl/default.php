@@ -28,7 +28,9 @@ endif;
 if(!file_exists(JPATH_BASE . DS . 'cache' . DS .  'qr-code-example.png'))
   QRcode::png(  'https://portal.fgct.com.br/?view=autenticate&code=testecodigoexemplofgct', JPATH_BASE . DS . 'cache' . DS .  'qr-code-example.png', 'L', 2.3, 2);
 
-$this->item->status_carteira_digital
+//$this->item->status_carteira_digital
+
+
 ?>
 
 <form method="post" name="adminForm" enctype="multipart/form-data" class="form-validate">
@@ -175,13 +177,13 @@ $this->item->status_carteira_digital
                       <div class="card shadow-none border-0 text-white" style="width:404px; height:256px">
                         <img class="card-img back" src="<?php echo $imageBack; ?>" alt="Imagen Verso Carteira Digital">
                         <div class="card-img-overlay card-img-overlay-back">
-                            <span style="display: inline-block; line-height:20px; text-align: center; margin: 10px 14px; width:328px;  font-size: 0.7375rem; color: <?php echo !empty($this->item->color_back_carteira_digital) ? $this->item->color_back_carteira_digital : '#000';?>">Nome do Clube do Associado</span>
-                            <span style="display: inline-block; line-height:22px; text-align: center; margin: 10px 12px; width:240px; font-size: 0.7375rem; color: <?php echo !empty($this->item->color_back_carteira_digital) ? $this->item->color_back_carteira_digital : '#000';?>">Cidade do Associado</span>
-                            <span style="display: inline-block; line-height:22px; text-align: center; margin: 10px 0 0 8px; width:78px; font-size: 0.7375rem; color: <?php echo !empty($this->item->color_back_carteira_digital) ? $this->item->color_back_carteira_digital : '#000';?>">000000</span>
-                            <span style="display: inline-block; line-height:22px; text-align: center; margin: 10px 0 0 6px; width:120px; font-size: 0.7375rem; color: <?php echo !empty($this->item->color_back_carteira_digital) ? $this->item->color_back_carteira_digital : '#000';?>">000.000.000-00</span>
-                            <span style="display: inline-block; line-height:22px; text-align: center; margin: 10px 0 0 8px; width:120px; font-size: 0.7375rem; color: <?php echo !empty($this->item->color_back_carteira_digital) ? $this->item->color_back_carteira_digital : '#000';?>">000.000.000-00</span>
-                            <span style="display: inline-block; line-height:22px; text-align: center; margin: 10px 0 0 10px; width:80px; font-size: 0.7375rem; color: <?php echo !empty($this->item->color_back_carteira_digital) ? $this->item->color_back_carteira_digital : '#000';?>">00/00/0000</span>
-                            <img style="float:right;margin-top: 16px;margin-right: -1px;" src="/cache/qr-code-example.png" />
+                            <span style="display: inline-block; line-height:32px; text-align: center; margin:0; margin-top:6px; width:355px;  font-size: 0.7375rem; color: <?php echo !empty($this->item->color_back_carteira_digital) ? $this->item->color_back_carteira_digital : '#000';?>">Nome do Clube do Associado</span>
+                            <span style="display: inline-block; line-height:32px; text-align: center; margin:0; margin-top:8px; width:260px; font-size: 0.7375rem; color: <?php echo !empty($this->item->color_back_carteira_digital) ? $this->item->color_back_carteira_digital : '#000';?>">Cidade do Associado</span>
+                            <span style="display: inline-block; line-height:32px; text-align: center; margin:0; margin-top:8px; margin-left:10px; width:82px; font-size: 0.7375rem; color: <?php echo !empty($this->item->color_back_carteira_digital) ? $this->item->color_back_carteira_digital : '#000';?>">000000</span>
+                            <span style="display: inline-block; line-height:32px; text-align: center; margin:0; margin-top:8px; width:122px; font-size: 0.7375rem; color: <?php echo !empty($this->item->color_back_carteira_digital) ? $this->item->color_back_carteira_digital : '#000';?>">000.000.000-00</span>
+                            <span style="display: inline-block; line-height:32px; text-align: center; margin:0; margin-top:8px; margin-left:10px; width:124px; font-size: 0.7375rem; color: <?php echo !empty($this->item->color_back_carteira_digital) ? $this->item->color_back_carteira_digital : '#000';?>">000.000.000-00</span>
+                            <span style="display: inline-block; line-height:32px; text-align: center; margin:0; margin-top:8px; margin-left:10px; width:82px; font-size: 0.7375rem; color: <?php echo !empty($this->item->color_back_carteira_digital) ? $this->item->color_back_carteira_digital : '#000';?>">00/00/0000</span>
+                            <img style="float:right;margin-top: 10px;margin-right: -1px;" src="/cache/qr-code-example.png" />
                         </div>
                       </div>
                     </div>
