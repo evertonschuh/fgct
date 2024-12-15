@@ -191,7 +191,9 @@
   height: 100px;
   width: 200px;
 }
-
+.app-brand-logo {
+  margin-left: -20px !important;
+}
 .dark-style .app-brand-logo.main {
   background-image: url(/assets/img/logo-dark.png);
 }
