@@ -95,7 +95,7 @@ class EASistemasModelMemberShipCard extends JModel {
 			$query->innerJoin($this->_db->quoteName('#__intranet_anuidade').' USING ('.$this->_db->quoteName('id_anuidade').')');
 			$query->where( $this->_db->quoteName('status_carteira_digital') . '=' . $this->_db->quote( '1' ) );
 			$query->where( $this->_db->quoteName('validate_anuidade') . '=' . $this->_db->quote( $dadosAssociado->validate_associado ) );
-
+			$query->where( $this->_db->quoteName('id_associado_tipo') . '=' . $this->_db->quote( $id_tipo_associado ) );
 			$this->_db->setQuery($query);
 			if((boolean) $this->_data = $this->_db->loadObject()){
 				$this->_data->id_associado = $dadosAssociado->id_associado;
