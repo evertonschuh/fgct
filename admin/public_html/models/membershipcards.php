@@ -78,7 +78,7 @@ class EASistemasModelMembershipCards extends JModelList
 		$query->select('CONCAT(name_anuidade,\' - \', IF(name_associado_tipo = -1, \'Todos\', name_associado_tipo)) AS name_carteira_digital');				
 		$query->from($this->_db->quoteName('#__intranet_carteira_digital'));
 		$query->innerJoin($this->_db->quoteName('#__intranet_anuidade').' USING ('.$this->_db->quoteName('id_anuidade').')');
-		$query->innerJoin($this->_db->quoteName('#__intranet_associado_tipo').' USING ('.$this->_db->quoteName('id_associado_tipo').')');
+		$query->leftJoin($this->_db->quoteName('#__intranet_associado_tipo').' USING ('.$this->_db->quoteName('id_associado_tipo').')');
 		$status = $this->getState('filter.status');
         if ($status!='')		
 			 $query->where($this->_db->quoteName('status_carteira_digital') . '=' . $this->_db->quote($this->_db->escape($status)));
