@@ -49,7 +49,6 @@ class EASistemasModelMemberShipCard extends JModel {
 														'name_cidade',
 														'sigla_estado',
 														'socio.name',
-														
 														'compressed_air_pf', 
 														'copa_brasil_pf',
 														'validate_associado' 
@@ -61,7 +60,7 @@ class EASistemasModelMemberShipCard extends JModel {
 			$query->innerJoin($this->_db->quoteName('#__intranet_estado') . 'USING('.$this->_db->quoteName('id_estado').')');
 			$query->innerJoin($this->_db->quoteName('#__intranet_cidade') . 'USING('.$this->_db->quoteName('id_estado').','.$this->_db->quoteName('id_cidade').')');
 			$query->innerJoin($this->_db->quoteName('#__users') . ' AS socio ON('.$this->_db->quoteName('id_user').'='.$this->_db->quoteName('id').')');
-			$query->innerJoin($this->_db->quoteName('#__users') . ' AS clube ON('.$this->_db->quoteName('id_clube').'='.$this->_db->quoteName('clube.id').')');
+			$query->leftJoin($this->_db->quoteName('#__users') . ' AS clube ON('.$this->_db->quoteName('id_clube').'='.$this->_db->quoteName('clube.id').')');
 			$query->where( $this->_db->quoteName('id_user') . '=' . $this->_db->quote( $this->_user->get('id') ) );
 			$query->where( $this->_db->quoteName('status_associado') . '=' . $this->_db->quote( '1' ) );
 			$query->where( $this->_db->quoteName('status_pf') . '=' . $this->_db->quote( '1' ) );
@@ -69,7 +68,6 @@ class EASistemasModelMemberShipCard extends JModel {
 			$this->_db->setQuery($query);
 
 			$dadosAssociado = $this->_db->loadObject();	
-
 
 			switch(true) {
 
