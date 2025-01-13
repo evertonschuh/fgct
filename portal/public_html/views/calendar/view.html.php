@@ -99,9 +99,20 @@ class EASistemasViewCalendar extends JView
 				end: "'. JFactory::getDate($item->data_end_etapa .' + 01 day ', $this->_siteOffset )->toFormat('%Y-%m-%d', true)  . '",
 				allDay: 1,
 				extendedProps: {
-					calendar: "'.$item->id_modalidade.'"
+					calendar: "'.$item->id_modalidade.'",
+					etapadatebeg: "'.$item->data_beg.'",
+					etapadateend: "'.$item->data_end.'",
+					inscridatebeg: "'.$item->insc_beg.'",
+					inscridateend: "'.$item->insc_end.'",
+					clube: "'.$item->name_clube.'",
+					logo: "'.$item->logo_clube.'",
+					etapa: "'.$item->name_calendar.'",
+					modalidade: "'.$item->name_modalidade.'",
+					campeonato: "'.$item->name_campeonato.'",
+					ano: "'.$item->ano_campeonato.'",
+					provas: "'.$item->name_provas.'",
+					description: "",
 				},
-				description: "Lecture"
 			},';
 		
 		endforeach;

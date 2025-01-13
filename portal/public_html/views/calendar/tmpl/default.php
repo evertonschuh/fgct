@@ -65,76 +65,74 @@ endif;
                             <!-- FullCalendar Offcanvas -->
                             <div class="offcanvas offcanvas-end event-sidebar" tabindex="-1" id="addEventSidebar" aria-labelledby="addEventSidebarLabel">
                                 <div class="offcanvas-header border-bottom">
-                                    <h5 class="offcanvas-title mb-2" id="addEventSidebarLabel">Add Event</h5>
+                                    <h5 class="offcanvas-title mb-2" id="addEventSidebarLabel">Informações da Etapa</h5>
                                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                 </div>
                                 <div class="offcanvas-body">
-                                    <form class="event-form pt-0" id="eventForm" onsubmit="return false">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="eventTitle">Title</label>
-                                            <input type="text" class="form-control" id="eventTitle" name="eventTitle" placeholder="Event Title" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label" for="eventLabel">Label</label>
-                                            <select class="select2 select-event-label form-select" id="eventLabel" name="eventLabel">
-                                                <option data-label="primary" value="Business" selected>Business</option>
-                                                <option data-label="danger" value="Personal">Personal</option>
-                                                <option data-label="warning" value="Family">Family</option>
-                                                <option data-label="success" value="Holiday">Holiday</option>
-                                                <option data-label="info" value="ETC">ETC</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label" for="eventStartDate">Start Date</label>
-                                            <input type="text" class="form-control" id="eventStartDate" name="eventStartDate" placeholder="Start Date" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label" for="eventEndDate">End Date</label>
-                                            <input type="text" class="form-control" id="eventEndDate" name="eventEndDate" placeholder="End Date" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="switch">
-                                                <input type="checkbox" class="switch-input allDay-switch" />
-                                                <span class="switch-toggle-slider">
-                                                <span class="switch-on"></span>
-                                                <span class="switch-off"></span>
-                                                </span>
-                                                <span class="switch-label">All Day</span>
-                                            </label>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label" for="eventURL">Event URL</label>
-                                            <input type="url" class="form-control" id="eventURL" name="eventURL" placeholder="https://www.google.com" />
-                                        </div>
-                                        <div class="mb-3 select2-primary">
-                                            <label class="form-label" for="eventGuests">Add Guests</label>
-                                            <select class="select2 select-event-guests form-select" id="eventGuests" name="eventGuests" multiple>
-                                                <option data-avatar="1.png" value="Jane Foster">Jane Foster</option>
-                                                <option data-avatar="3.png" value="Donna Frank">Donna Frank</option>
-                                                <option data-avatar="5.png" value="Gabrielle Robertson">Gabrielle Robertson</option>
-                                                <option data-avatar="7.png" value="Lori Spears">Lori Spears</option>
-                                                <option data-avatar="9.png" value="Sandy Vega">Sandy Vega</option>
-                                                <option data-avatar="11.png" value="Cheryl May">Cheryl May</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label" for="eventLocation">Location</label>
-                                            <input type="text" class="form-control" id="eventLocation" name="eventLocation" placeholder="Enter Location" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label" for="eventDescription">Description</label>
-                                            <textarea class="form-control" name="eventDescription" id="eventDescription"></textarea>
-                                        </div>
-                                        <div class="mb-3 d-flex justify-content-sm-between justify-content-start my-4">
-                                            <div>
-                                                <button type="submit" class="btn btn-primary btn-add-event me-sm-3 me-1">Add</button>
-                                                <button type="reset" class="btn btn-label-secondary btn-cancel me-sm-0 me-1" data-bs-dismiss="offcanvas">Cancel</button>
-                                            </div>
-                                            <div>
-                                                <button class="btn btn-label-danger btn-delete-event d-none">Delete</button>
+                                    <div class="user-avatar-section">
+                                        <div class=" d-flex align-items-center flex-column">
+                                            <h5 id="nameEtapa"></h5>
+                                            <img class="img-fluid rounded mb-4" id="logoEtapa" src="teste" height="120" width="120" />
+                                            <div class="user-info text-center">
+                                                <span id="clubeEtapa" class="badge bg-label-secondary"></span>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
+                                    <div class="d-flex justify-content-around flex-wrap my-3 gap-0 gap-md-3 gap-lg-4">
+                                        <div>
+                                            <h6 class="mb-2">Etapa</h6>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="avatar">
+                                                    
+                                                    <div class="avatar-initial bg-label-primary rounded w-px-35 h-px-35">
+                                                        <i class="icon-base bx bx-calendar icon-lg"></i>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <small class="text-nowrap text-heading" style="font-size:0.7125rem" id="etapaDateBeg"></small><br/>
+                                                    <small class="text-nowrap text-heading" style="font-size:0.7125rem" id="etapaDateEnd"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-2">Inscrições</h6>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="avatar">
+                                                    <div class="avatar-initial bg-label-primary rounded w-px-35 h-px-35">
+                                                        <i class="icon-base bx bx-customize icon-lg"></i>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <small class="text-nowrap text-heading" style="font-size:0.7125rem" id="etapaInscriBeg"></small><br/>
+                                                    <small class="text-nowrap text-heading" style="font-size:0.7125rem" id="etapaInscriEnd"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h6 class="pb-1 border-bottom mb-2 mt-4">Detalhes</h6>
+                                    <div class="d-flex flex-wrap row-gap-2">
+                                        <div class="me-12">
+                                            <p class="text-nowrap mb-2" style="font-size: 0.75rem;"><i class="icon-base bx bx-check me-2 align-bottom"></i><span  id="nameCampeonato"></span></p>
+                                            <p class="text-nowrap mb-2" style="font-size: 0.75rem;"><i class="icon-base bx bx-check me-2 align-top"></i><span id="anoCampeonato"></span></p>
+                                            <p class="text-nowrap mb-2" style="font-size: 0.75rem;"><i class="icon-base bx bx-check me-2 align-bottom"></i><span id="nameModalidade"></span></p>
+                                        </div>
+                                    </div>
+
+                                    <h6 class="pb-1 border-bottom mb-2 mt-4">Prova(s)</h6>
+                                    <div class="d-flex flex-wrap row-gap-2">
+                                        <div class="me-12">
+                                            <p class="text-nowrap mb-2" style="font-size: 0.75rem;" id="nameProvas"></p>                                        
+                                        </div>
+                                    </div>
+
+        
+                                
+
+
+
+
+
                                 </div>
                             </div>
                         </div>

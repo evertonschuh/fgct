@@ -4,16 +4,27 @@ isRtl && (direction = "rtl"),
 document.addEventListener("DOMContentLoaded", function() {
     {
         const v = document.getElementById("calendar")
-          , m = document.querySelector(".app-calendar-sidebar")
+         // , m = document.querySelector(".app-calendar-sidebar")
           , p = document.getElementById("addEventSidebar")
-          , f = document.querySelector(".app-overlay")
+        //  , f = document.querySelector(".app-overlay")
           , g = colors
-          , b = document.querySelector(".offcanvas-title")
+         // , b = document.querySelector(".offcanvas-title")
           , h = document.querySelector(".btn-toggle-sidebar")
           , y = document.querySelector('button[type="submit"]')
           , S = document.querySelector(".btn-delete-event")
           , L = document.querySelector(".btn-cancel")
           , E = document.querySelector("#eventTitle")
+          , Clube = document.querySelector("#clubeEtapa")
+          , Logo = document.querySelector("#logoEtapa")
+          , DataBeg = document.querySelector("#etapaDateBeg")
+          , DataEnd = document.querySelector("#etapaDateEnd")
+          , InscriBeg = document.querySelector("#etapaInscriBeg")
+          , InscriEnd = document.querySelector("#etapaInscriEnd")
+          , Etapa = document.querySelector("#nameEtapa")
+          , Provas = document.querySelector("#nameProvas")
+          , Campeonato = document.querySelector("#nameCampeonato")
+          , Modalidade = document.querySelector("#nameModalidade")
+          , AnoCampeonato = document.querySelector("#anoCampeonato")
           , k = document.querySelector("#eventStartDate")
           , w = document.querySelector("#eventEndDate")
           , x = document.querySelector("#eventURL")
@@ -24,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
           , T = document.querySelector(".allDay-switch")
           , A = document.querySelector(".select-all")
           , F = [].slice.call(document.querySelectorAll(".input-filter"))
-          , Y = document.querySelector(".inline-calendar");
+          //, Y = document.querySelector(".inline-calendar");
         let a, l = events, r = !1, e;
         const C = new bootstrap.Offcanvas(p);
         function t(e) {
@@ -128,42 +139,29 @@ document.addEventListener("DOMContentLoaded", function() {
             eventClassNames: function({event: e}) {
                 return ["fc-event-" + g[e._def.extendedProps.calendar]]
             },
-            dateClick: function(e) {
-                e = moment(e.date).format("YYYY-MM-DD");
-                u(),
-                C.show(),
-                b && (b.innerHTML = "Add Event"),
-                y.innerHTML = "Add",
-                y.classList.remove("btn-update-event"),
-                y.classList.add("btn-add-event"),
-                S.classList.add("d-none"),
-                k.value = e,
-                w.value = e
-            },
             eventClick: function(e) {
                 e = e,
                 (a = e.event).url && (e.jsEvent.preventDefault(),
                 window.open(a.url, "_blank")),
                 C.show(),
-                b && (b.innerHTML = "Update Event"),
-                y.innerHTML = "Update",
-                y.classList.add("btn-update-event"),
-                y.classList.remove("btn-add-event"),
-                S.classList.remove("d-none"),
-                E.value = a.title,
-                d.setDate(a.start, !0, "Y-m-d"),
-                !0 === a.allDay ? T.checked = !0 : T.checked = !1,
-                null !== a.end ? o.setDate(a.end, !0, "Y-m-d") : o.setDate(a.start, !0, "Y-m-d"),
-                q.val(a.extendedProps.calendar).trigger("change"),
-                void 0 !== a.extendedProps.location && (P.value = a.extendedProps.location),
-                void 0 !== a.extendedProps.guests && D.val(a.extendedProps.guests).trigger("change"),
-                void 0 !== a.extendedProps.description && (M.value = a.extendedProps.description)
-            },
-            datesSet: function() {
-                s()
-            },
-            viewDidMount: function() {
-                s()
+
+                DataBeg.innerHTML= 'De: ' + a.extendedProps.etapadatebeg,
+                DataEnd.innerHTML= 'Até: ' + a.extendedProps.etapadateend,
+
+                InscriBeg.innerHTML = 'De: ' + a.extendedProps.inscridatebeg,
+                InscriEnd.innerHTML = 'Até: ' + a.extendedProps.inscridateend,
+
+                Etapa.innerHTML= a.extendedProps.etapa,
+
+                Campeonato.innerHTML= a.extendedProps.campeonato,
+                AnoCampeonato.innerHTML = 'Ano de  ' + a.extendedProps.ano,
+                Modalidade.innerHTML= 'Modalidade  ' + a.extendedProps.modalidade,
+
+                Provas.innerHTML= a.extendedProps.provas,
+
+                Clube.innerHTML = a.extendedProps.clube,
+                Logo.src = a.extendedProps.logo
+
             }
         });
         i.render(),
@@ -183,50 +181,8 @@ document.addEventListener("DOMContentLoaded", function() {
             L.classList.remove("d-none")
         }
         ),
-        y.addEventListener("click", e=>{
-            var t, n;
-            y.classList.contains("btn-add-event") ? r && (n = {
-                id: i.getEvents().length + 1,
-                title: E.value,
-                start: k.value,
-                end: w.value,
-                startStr: k.value,
-                endStr: w.value,
-                display: "block",
-                extendedProps: {
-                    location: P.value,
-                    guests: D.val(),
-                    calendar: q.val(),
-                    description: M.value
-                }
-            },
-            x.value && (n.url = x.value),
-            T.checked && (n.allDay = !0),
-            n = n,
-            l.push(n),
-            i.refetchEvents(),
-            C.hide()) : r && (n = {
-                id: a.id,
-                title: E.value,
-                start: k.value,
-                end: w.value,
-                url: x.value,
-                extendedProps: {
-                    location: P.value,
-                    guests: D.val(),
-                    calendar: q.val(),
-                    description: M.value
-                },
-                display: "block",
-                allDay: !!T.checked
-            },
-            (t = n).id = parseInt(t.id),
-            l[l.findIndex(e=>e.id === t.id)] = t,
-            i.refetchEvents(),
-            C.hide())
-        }
-        ),
-        S.addEventListener("click", e=>{
+
+       /* S.addEventListener("click", e=>{
             var t;
             t = parseInt(a.id),
             l = l.filter(function(e) {
@@ -235,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function() {
             i.refetchEvents(),
             C.hide()
         }
-        ),
+        ),*/
         p.addEventListener("hidden.bs.offcanvas", function() {
             u()
         }),
