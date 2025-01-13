@@ -16,7 +16,7 @@ if(count($this->items))
     <td class="control" tabindex="0" style="display: none;"></td>
     <td class="sorting_1">
         <a href="<?php echo JRoute::_('index.php?view=membershipcard&cid=' . $item->id_carteira_digital); ?>" class="text-body text-truncate">
-            <span class="fw-semibold"><?php echo $item->name_anuidade; ?></span>
+            <span class="fw-semibold"><?php echo $item->name_carteira_digital; ?></span>
         </a>
     </td>
     <td class="text-center">

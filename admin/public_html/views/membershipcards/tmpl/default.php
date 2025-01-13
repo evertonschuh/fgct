@@ -56,7 +56,7 @@ $saveOrder	= $listOrder == 'ordering';
                 <table class="datatables-users table border-top dataTable no-footer dtr-column">
                     <thead>
                         <tr>
-                            <th class="sorting sorting_desc"><?php echo JHtml::_('grid.sort',  'Nome', 'name_anuidade', $listDirn, $listOrder); ?></th>
+                            <th class="sorting sorting_desc"><?php echo JHtml::_('grid.sort',  'Nome', 'name_carteira_digital', $listDirn, $listOrder); ?></th>
                             <th class="sorting text-center"><?php echo JHtml::_('grid.sort', 'Validade', 'validate_anuidade', $listDirn, $listOrder); ?></th>
                             <th class="sorting text-center"><?php echo JHtml::_('grid.sort', 'Status', 'status_carteira_digital', $listDirn, $listOrder); ?></th>
                             <th class="sorting text-center"><?php echo JHtml::_('grid.sort', 'id', 'id_carteira_digital', $listDirn, $listOrder); ?></th>
