@@ -53,6 +53,11 @@ class EASistemasModelClubes extends JModelList
 														'logo_pj',
 														'name_cidade',
 														'name_estado',
+														'logradouro_pj',
+														'numero_pj',
+														'complemento_pj',
+														'bairro_pj'
+														'telefone'
 														)));				 
 			
 
@@ -83,10 +88,16 @@ class EASistemasModelClubes extends JModelList
 
 		$image_default = $this->_resize->resize(JPATH_IMAGES .DS. 'noclube.png' , 350, 350, 'cache/noclube350x350.png', false, 2);
 		foreach($data as &$item){
-			if(!empty($item->logo_pj))
-				$image_path = $this->_resize->resize($this->_path_logo. $item->logo_pj, 350, 359, 'cache/' .  $item->logo_pj .'350x350.png', false, 2);
-			else
-			$image_path = $image_default;
+			if(!empty($item->logo_pj)){
+
+				$image_path = $this->_resize->resize($this->_path_logo. $item->logo_pj, 350, 359, 'cache/' .  $item->logo_pj .'350x350.png', false, 2);			
+				$item->full_image = 'https://cnd.fgct.com.br/images/logos/' . $item->logo_pj;
+			}		
+			else{
+				$image_path = $image_default;
+				$item->full_image = 'https://cnd.fgct.com.br/assets/img/noclube.png';
+
+			}
 		
 			$image_contents = file_get_contents($image_path) ;
 			$type = pathinfo($image_path, PATHINFO_EXTENSION);
