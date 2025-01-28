@@ -71,6 +71,7 @@ class EASistemasModelClubes extends JModelList
 			
 			$query->where( $this->_db->quoteName('block') . ' = ' . $this->_db->escape('0'));
 			$query->where( $this->_db->quoteName('status_pj') . ' = ' . $this->_db->escape('1'));
+			$query->where( $this->_db->quoteName('id') . '<>' . $this->_db->escape('7617'));
 
 			
 			$query->order($this->_db->quoteName('name') . ' ASC' );
