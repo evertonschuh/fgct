@@ -94,7 +94,7 @@ class EASistemasModelClubes extends JModelList
 			if(!empty($item->logo_pj)){
 
 				$image_path = $this->_resize->resize($this->_path_logo. $item->logo_pj, 350, 359, 'cache/' .  $item->logo_pj .'350x350.png', false, 2);			
-				$item->full_image = 'https://cnd.fgct.com.br/images/logos/' . $item->logo_pj;
+				$item->full_image = 'https://intranet.fgct.com.br/media/images/logos/' . $item->logo_pj;
 			}		
 			else{
 				$image_path = $image_default;
