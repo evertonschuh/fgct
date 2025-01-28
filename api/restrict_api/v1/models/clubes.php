@@ -53,11 +53,14 @@ class EASistemasModelClubes extends JModelList
 														'logo_pj',
 														'name_cidade',
 														'name_estado',
+														'cep_pj',
 														'logradouro_pj',
 														'numero_pj',
 														'complemento_pj',
-														'bairro_pj'
-														'telefone'
+														'bairro_pj',
+														'telefone_pj',
+														'celular_pj',
+														'site_pj'
 														)));				 
 			
 
