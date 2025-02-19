@@ -363,6 +363,7 @@ class EASistemasModelRequest extends JModel {
 		JLog::add($this->_user->get('id')  . JText::_('		New Document -  idDocumento(' . $row->get('id_documento_numero') . ')'), JLog::INFO, 'documents');
 
 		$options['user_info'] = $classDocument->getUserInfo($options['id_user']);
+		$options['numero_documento'] = 1 ;
 		$options['numero_documento'] = $row->get('numero_documento_numero') .'/'. $row->get('ano_documento_numero');
 		$options['text_documento'] = $documento->text_documento;
 
@@ -374,13 +375,9 @@ class EASistemasModelRequest extends JModel {
 		$documentPdf['register_documento_numero'] = $row->register_documento_numero;
 		$documentPdf['numeber'] = $options['numero_documento'];
 
-		/*$documentPdf['id_documento_numero'] = '1';
-		$documentPdf['texto_documento_numero'] = $textDocument;
-		$documentPdf['register_documento_numero'] = '';
-		$documentPdf['numero_documento_numero'] = '1/2024';*/
+
 		$documentPdf['name'] = $documento->name_documento;
 		$documentPdf['skin'] = $documento->skin_documento;
-		//$documentPdf['id_documento'] = $documento->id_documento;
 		$documentPdf['loads'] = $responseDocument->loads;
 
 		$documentPdf['id_user'] = $options['user_info']->id;
@@ -460,6 +457,7 @@ class EASistemasModelRequest extends JModel {
 	function createPDFDocumento($options = array())  {
 
 		require_once(JPATH_INCLUDES .DS. 'document.php');
+
 		$modelClass = 'EASistemasIncludesDocument';
 
 		if (!class_exists($modelClass))

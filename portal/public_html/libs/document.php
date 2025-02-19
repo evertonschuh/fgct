@@ -109,16 +109,21 @@ class EASistemasLibsDocument {
 
 		$textDocument = $options['text_documento'];
 
+
+		if(strpos($textDocument, 'LISTA_PARTICIPACOES') !== false)
+			$printDoc['LISTA_PARTICIPACOES'] = $this->getParticipacoes($options['id_user'], $printDoc['NUMERO_DOCUMENTO'], null, null);
+
+
 		if(strpos($textDocument, 'LISTA_PARTICIPACOES_365') !== false)
-			$printDoc['LISTA_PARTICIPACOES_365'] = $this->getParticipacoes365($options['id_user'], $printDoc['NUMERO_DOCUMENTO'], null);
+			$printDoc['LISTA_PARTICIPACOES_365'] = $this->getParticipacoes($options['id_user'], $printDoc['NUMERO_DOCUMENTO'], null);
 			//$textDocument = str_replace('{{LISTA_PARTICIPACOES_365}}', $this->getParticipacoes365($printDoc['NUMERO_DOCUMENTO'], null), $textDocument);
 
 		if(strpos($textDocument, 'LISTA_PARTICIPACOES_ESTADUAL_365') !== false)
-			$printDoc['LISTA_PARTICIPACOES_ESTADUAL_365'] = $this->getParticipacoes365($options['id_user'], $printDoc['NUMERO_DOCUMENTO'], '1');
+			$printDoc['LISTA_PARTICIPACOES_ESTADUAL_365'] = $this->getParticipacoes($options['id_user'], $printDoc['NUMERO_DOCUMENTO'], '1');
 			//$textDocument = str_replace('{{LISTA_PARTICIPACOES_ESTADUAL_365}}', $this->getParticipacoes365($printDoc['NUMERO_DOCUMENTO'], '1'), $textDocument);
 
 		if(strpos($textDocument, 'LISTA_PARTICIPACOES_NACIONAL_365') !== false)
-			$printDoc['LISTA_PARTICIPACOES_NACIONAL_365'] = $this->getParticipacoes365($options['id_user'], $printDoc['NUMERO_DOCUMENTO'], '2');
+			$printDoc['LISTA_PARTICIPACOES_NACIONAL_365'] = $this->getParticipacoes($options['id_user'], $printDoc['NUMERO_DOCUMENTO'], '2');
 			//$textDocument = str_replace('{{LISTA_PARTICIPACOES_NACIONAL_365}}', $this->getParticipacoes365($printDoc['NUMERO_DOCUMENTO'], '2'), $textDocument);
 
 		if(strpos($textDocument, 'client_habituality') !== false)
@@ -379,9 +384,9 @@ class EASistemasLibsDocument {
 		$query->order($this->_db->quoteName('#__ranking_campeonato.ordering'));
 		$query->order($this->_db->quoteName('#__ranking_etapa.ordering'));
 		$query->order($this->_db->quoteName('#__ranking_prova.ordering'));
-	//	$query->order($this->_db->quoteName('#__ranking_genero.ordering'));
-	//	$query->order($this->_db->quoteName('#__ranking_categoria.ordering'));	
-	//	$query->order($this->_db->quoteName('#__ranking_classe.ordering'));
+		//	$query->order($this->_db->quoteName('#__ranking_genero.ordering'));
+		//	$query->order($this->_db->quoteName('#__ranking_categoria.ordering'));	
+		//	$query->order($this->_db->quoteName('#__ranking_classe.ordering'));
 
 		
 		//$query->group($this->_db->quoteName('id_prova'));
@@ -636,7 +641,7 @@ class EASistemasLibsDocument {
 
 
 	
-	function getParticipacoes365( $id_user = null, $numero_doc = null, $abrangencia = null )
+	function getParticipacoes( $id_user = null, $numero_doc = null, $abrangencia = null, $periodo = '1' )
 	{
 		$query = $this->_db->getQuery(true);
 		$query->select( $this->_db->quoteName(array('#__ranking_inscricao.id_inscricao',
@@ -707,7 +712,9 @@ class EASistemasLibsDocument {
 		$query->where($this->_db->quoteName('#__ranking_inscricao.id_user') . ' = ' . $this->_db->quote( $id_user ));
 		if($abrangencia)
 			$query->where( $this->_db->quoteName('#__ranking_prova.abrangencia_prova') . '=' . $this->_db->quote( $abrangencia ) );
-		$query->where( $this->_db->quoteName('#__ranking_etapa.data_beg_etapa') . ' >= ' . $this->_db->quote( JFactory::getDate('now -4 year', $this->_siteOffset)->format('Y-m-d',true) ) );
+		
+		if(!is_null($periodo))
+			$query->where( $this->_db->quoteName('#__ranking_etapa.data_beg_etapa') . ' >= ' . $this->_db->quote( JFactory::getDate('now -'.$periodo.' year', $this->_siteOffset)->format('Y-m-d',true) ) );
 		
 		$query->order($this->_db->quoteName('#__ranking_etapa.data_beg_etapa') . ' DESC');
 		$query->order($this->_db->quoteName('#__ranking_campeonato.ordering'));
@@ -726,17 +733,22 @@ class EASistemasLibsDocument {
 		$html = '';
 		if(count($items) > 0):
 
-			$html .= '<table cellpadding="0" cellspacing="0" border="1" style="border: 1px" width="100%">';
-			$html .= '<tbody>';
-			$html .= '<tr align="center">';
-			$html .= '<td width="30%"><strong>DATA</strong></td>';
-			$html .= '<td width="40%"><strong>EVENTO/ATIVIDADE</strong></td>';
-			$html .= '<td width="5%"><strong> ARMA </strong></td>';
-			$html .= '<td width="5%"><strong> CAL </strong></td>';
-			$html .= '<td width="5%"><strong> QTD. <br/> MUN. </strong></td>';
-			$html .= '<td width="30%"><strong>LOCAL</strong></td>';
-			$html .= '</tr>';
 
+
+
+
+
+
+
+			$html .= '<table cellpadding="0" cellspacing="0" border="1" style="border: 1px; font-size:14px" width="100%">';
+			$html .= '<thead style="padding: 5px;">';
+			$html .= '<tr align="center">';
+			$html .= '<th style="padding: 5px;">Data do Evento</th>';
+			$html .= '<th style="padding: 5px;">Evento / Atividade</td>';
+			$html .= '<th style="padding: 5px;">Cidade / Uf </th>';
+			$html .= '</tr>';
+			$html .= '</thead>';
+			$html .= '<tbody>';
 			$z = 0;
 			$paginas = 1;
 			foreach ( $items as $i => $item ) :
@@ -754,9 +766,6 @@ class EASistemasLibsDocument {
 				$html .= '<td>';
 				$html .= $item->name_etapa . ' - ' . $item->name_prova;
 				$html .= '</td>';
-				$html .= '<td>&nbsp;</td>';
-				$html .= '<td>&nbsp;</td>';
-				$html .= '<td>&nbsp;</td>';
 				$html .= '<td>';
 				$html .= $item->name_cidade . '/' . $item->sigla_estado;
 				$html .= '</td>';
@@ -765,25 +774,24 @@ class EASistemasLibsDocument {
 
 
 
-				if($z > 10 && $i < count($items) - 1  ) :
+				if(($paginas == 1 && $z > 12 && $i < count($items) - 1)  || ($paginas > 1 && $z > 20 && $i < count($items) - 1)) :
 					$z = 0;
 					$paginas++;
 					$html .= '</tbody>';
 					$html .= '</table>';
 					$html .= '<hr/><br/><div style="page-break-after: always;"></div>';
 					//$html .= '<span style="page-break-before:always;">&nbsp</span>';
-					$html .= '<div style="margin-top: 220px; margin-bottom: 50px">(CONTINUAÇÃO DECLARAÇÃO DE RANKING - FGCT '.$numero_doc.' - PÁGINA '.$paginas.' DE PAGINATOTAL )</div>';						
+					$html .= '<div style="margin-top: 220px; margin-bottom: 50px">(CONTINUAÇÃO DECLARAÇÃO DO HISTÓRICO - FGCT '.$numero_doc.' - PÁGINA '.$paginas.' DE PAGINATOTAL )</div>';						
 					
-					$html .= '<table cellpadding="0" cellspacing="0" border="1" style="border: 1px" width="100%">';
-					$html .= '<tbody>';
+					$html .= '<table cellpadding="0" cellspacing="0" border="1" style="border: 1px; font-size:14px" width="100%">';
+					$html .= '<thead style="padding: 5px;">';
 					$html .= '<tr align="center">';
-					$html .= '<td width="30%"><strong>DATA</strong></td>';
-					$html .= '<td width="40%"><strong>EVENTO/ATIVIDADE</strong></td>';
-					$html .= '<td width="5%"><strong> ARMA </strong></td>';
-					$html .= '<td width="5%"><strong> CAL </strong></td>';
-					$html .= '<td width="5%"><strong> QTD. <br/> MUN. </strong></td>';
-					$html .= '<td width="30%"><strong>LOCAL</strong></td>';
+					$html .= '<th style="padding: 5px;">Data do Evento</th>';
+					$html .= '<th style="padding: 5px;">Evento / Atividade</td>';
+					$html .= '<th style="padding: 5px;">Cidade / Uf </th>';
 					$html .= '</tr>';
+					$html .= '</thead>';
+					$html .= '<tbody>';
 
 				endif;
 			endforeach;
